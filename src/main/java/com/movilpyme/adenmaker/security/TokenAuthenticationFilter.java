@@ -2,6 +2,7 @@ package com.movilpyme.adenmaker.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +23,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private TokenHelper tokenHelper;
 
     @Autowired
-    private UserDetailsService userDetailServiceImpl;
+    private UserDetailsService userDetailsServiceImpl;
 
     private String getToken(HttpServletRequest request) {
         String authHeader = request.getHeader(AUTH_HEADER);
@@ -43,7 +44,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if ( username != null ) {
 
                 // Get user
-                UserDetails userDetails = userDetailServiceImpl.loadUserByUsername( username );
+                UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername( username );
 
                 // Create authentication
                 TokenBasedAuthentication authentication = new TokenBasedAuthentication( userDetails );
@@ -61,4 +62,5 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
 }

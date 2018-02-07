@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.http.HttpMethod;
@@ -33,6 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new TokenAuthenticationFilter();
     }
 
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -40,9 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), BasicAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/login.html").permitAll()
-        /*        .antMatchers(HttpMethod.GET, "/product/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/group/**").permitAll()
+                .antMatchers("/", "/error").permitAll()
+                .antMatchers(HttpMethod.GET, "/material/**").permitAll()
+        /*        .antMatchers(HttpMethod.GET, "/group/**").permitAll()
                 .antMatchers("/cart/**").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
@@ -54,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().hasAuthority("admin")
 
 //               .httpBasic().disable();
-                .and().formLogin().successHandler(authenticationSuccessHandler)
+                .and().formLogin().loginPage("/login.html").permitAll()
+                .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
 
                 // From https://github.com/bfwg/springboot-jwt-starter
