@@ -12,4 +12,9 @@ public class WebController {
         //model.addAttribute("page", "login");
         return "login.html";
     }
+
+    @RequestMapping("/home")
+    public String getHome(Model model){
+        return "pages/home.html";
+    }
 }
