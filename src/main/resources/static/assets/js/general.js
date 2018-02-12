@@ -4,8 +4,10 @@ $(function () {
 });
 
 // Funcion para enviar las peticiones al WS
-function sendPostAction(ur, model, callBackFunction) {
-    $.post(url, JSON.stringify(model), callBackFunction(data));
+function sendPostAction(url, model, callBackFunction) {
+    $.post(url, JSON.stringify(model), function (data){
+        callBackFunction(data);
+    });
 }
 
 // Funcion para recuperar un parametro de la URL
