@@ -17,4 +17,11 @@ public class WebController {
     public String getHome(Model model){
         return "pages/home.html";
     }
+
+    // Direcciones Modulo de Administracion //
+
+    @RequestMapping("/adm/usuarios")
+    public String getUsuariosList(Model model){
+        return "/pages/adm/usuarios.html";
+    }
 }
