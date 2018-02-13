@@ -4,5 +4,9 @@ $(document).ready(function () {
 
 // Funciones de JavaSCript para la pantalla de Usuarios
 function loadTable(data) {
-    var users = JSON.parse(data);
+    for (var i = 0; i < data.length; i++) {
+        var tr = "<tr>";
+
+        tr += "</tr>";
+    }
 }
