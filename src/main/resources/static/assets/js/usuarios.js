@@ -1,5 +1,12 @@
 $(document).ready(function () {
     sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
+    $('#btn-add-user').on('click', function () {
+       showEditCard();
+    });
+    $('#btn-cancel-user').on('click', function () {
+        showDivMessage('Accion Cancelada. No se guardaron los cambios', 'alert-danger', 4000);
+        showTableCard();
+    });
 });
 
 // Funciones de JavaSCript para la pantalla de Usuarios
@@ -9,4 +16,16 @@ function loadTable(data) {
 
         tr += "</tr>";
     }
+}
+
+function showEditCard() {
+    $('#table-card').css('display', 'none');
+    $('#btn-add-user').css('display', 'none');
+    $('#edit-card').css('display', 'block');
+}
+
+function showTableCard() {
+    $('#table-card').css('display', 'block');
+    $('#edit-card').css('display', 'none');
+    $('#btn-add-user').css('display', 'block');
 }

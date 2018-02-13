@@ -22,6 +22,15 @@ function GetURLParameter(sParam) {
     }
 }
 
+function showDivMessage(message,divclass, time) {
+    $('#message-content').html(message);
+    $('#div-message').addClass(divclass);
+    $('#div-message').css('display', 'block');
+    setTimeout(function () {
+        $('#div-message').css('display', 'none');
+    }, time);
+}
+
 // URL Controllers *************************** //
 var USER_CONTROLLER_URL = '/adm/usuarios/';
 

@@ -13,6 +13,7 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="../../assets/material/css/app.min.css">
+    <link rel="stylesheet" href="../../assets/css/custom.css">
 </head>
 <body data-ma-theme="green">
 <main class="main">
@@ -26,20 +27,24 @@
     <div id="header_div"></div>
     <aside class="sidebar" id="sidebar_div"></aside>
     <section class="content" id="main_section">
+        <div class="row alert alert-dismissible" style="display: none; margin-top: 10px" id="div-message">
+            <div class="col-12" id="message-content"></div>
+        </div>
         <header class="content__title">
             <h1>Usuarios Autorizados</h1>
         </header>
         <div class="row">
             <div class="col-10"></div>
             <div class="col-2">
-                <button type="button" class="btn btn-primary float-right">
+                <button id="btn-add-user" type="button" class="btn btn-primary float-right">
                     <i class="zmdi zmdi-folder-person"></i>
                     Agregar Usuario
                 </button>
             </div>
         </div>
+
         <div class="row" style="margin-top: 10px">
-            <div class="card" style="width: 100%">
+            <div id="table-card" class="card" style="width: 100%">
                 <div class="card-body">
                     <table class="table mb-0">
                         <thead>
@@ -56,9 +61,34 @@
                     </table>
                 </div>
             </div>
+            <div id="edit-card" class="card" style="width: 100%; display: none">
+                <div class="card-header">
+                    Agregar/Editar Usuario
+                </div>
+                <div class="card-body">
+                    <div class="row form-group">
+                        <label class="col-form-label">Nombre</label>
+                        <input type="text" id="user-name" class="form-control">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-8"></div>
+                    <div class="col-4">
+                        <button id="btn-save-user" type="button" class="btn btn-outline-primary float-right">
+                            <i class="zmdi zmdi-save"></i>
+                            Grabar
+                        </button>
+                        <button id="btn-cancel-user" type="button" class="btn btn-outline-danger float-right">
+                            <i class="zmdi zmdi-leak-remove"></i>
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>
+
 <!-- Javascript -->
 <!-- Vendors -->
 <script src="../../assets/material/vendors/bower_components/jquery/dist/jquery.min.js"></script>

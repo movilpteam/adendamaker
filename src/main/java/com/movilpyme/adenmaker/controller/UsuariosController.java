@@ -5,11 +5,13 @@ import com.movilpyme.adenmaker.domain.Usuarios;
 import com.movilpyme.adenmaker.repository.RolesRepo;
 import com.movilpyme.adenmaker.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -35,5 +37,17 @@ public class UsuariosController {
     public List<Roles> getRolesList() throws ServletException {
         List<Roles> rolesList = (List<Roles>) rolesRepo.findAll();
         return rolesList;
+    }
+
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public void saveUsuario(@RequestBody Usuarios user) throws ServletException {
+        if (user == null){
+            throw new ServletException("Usuarios Invalido");
+        }
+        try {
+            usuariosRepo.save(user);
+        }catch (Exception ex) {
+            throw new ServletException(ex.getMessage());
+        }
     }
 }
