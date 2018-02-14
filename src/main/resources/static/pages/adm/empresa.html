@@ -32,6 +32,33 @@
         <header class="content__title">
             <h1>Empresas Registradas</h1>
         </header>
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button id="btn-add-empresa" type="button" class="btn btn-primary float-right">
+                    <i class="zmdi zmdi-folder-person"></i>
+                    Agregar Empresa
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div id="table-card" class="card" style="width: 100%">
+                <div class="card-body">
+                    <table class="table mb-0">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Responsable</th>
+                            <th>Usuarios</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody_empresa"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 
@@ -53,6 +80,6 @@
 <script src="../../assets/material/js/app.min.js"></script>
 <script src="../../assets/js/general.js"></script>
 <script src="../../assets/js/modelos.js"></script>
-<script src="../../assets/js/usuarios.js"></script>
+<script src="../../assets/js/adm/empresa.js"></script>
 </body>
 </html>
