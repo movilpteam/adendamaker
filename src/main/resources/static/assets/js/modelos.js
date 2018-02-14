@@ -14,3 +14,13 @@ function Usuarios() {
     this.userRolesById = [];
     this.idEmpresa = 0;
 }
+
+function Empresa() {
+    this.id = 0;
+    this.nombre = "";
+    this.logo = "";
+    this.direccion = "";
+    this.telefono= "";
+    this.responsable = "";
+    this.correoContacto = "";
+}

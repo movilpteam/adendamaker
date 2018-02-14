@@ -1,5 +1,7 @@
 package com.movilpyme.adenmaker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,17 +10,21 @@ import java.util.Objects;
 public class Empresa {
     private long id;
     private String nombre;
-    private String rfc;
     private String logo;
     private String direccion;
     private String telefono;
     private String responsable;
     private String correoContacto;
+    @JsonIgnore
     private Collection<Addenda> addendaById;
+    @JsonIgnore
     private Collection<FacturasProcesadas> facturasProcesadasById;
+    @JsonIgnore
     private Collection<Usuarios> usuariosById;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="empresa_seq_gen")
+    @SequenceGenerator(name="empresa_seq_gen", sequenceName="EMPRESA_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
         return id;
@@ -36,16 +42,6 @@ public class Empresa {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    @Basic
-    @Column(name = "RFC", nullable = true, length = 14)
-    public String getRfc() {
-        return rfc;
-    }
-
-    public void setRfc(String rfc) {
-        this.rfc = rfc;
     }
 
     @Basic
@@ -105,7 +101,6 @@ public class Empresa {
         Empresa empresa = (Empresa) o;
         return id == empresa.id &&
                 Objects.equals(nombre, empresa.nombre) &&
-                Objects.equals(rfc, empresa.rfc) &&
                 Objects.equals(logo, empresa.logo) &&
                 Objects.equals(direccion, empresa.direccion) &&
                 Objects.equals(telefono, empresa.telefono) &&
@@ -116,7 +111,7 @@ public class Empresa {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, nombre, rfc, logo, direccion, telefono, responsable, correoContacto);
+        return Objects.hash(id, nombre, logo, direccion, telefono, responsable, correoContacto);
     }
 
     @OneToMany(mappedBy = "empresaByIdEmpresa")

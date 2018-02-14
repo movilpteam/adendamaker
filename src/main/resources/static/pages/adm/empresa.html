@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Addenda Maker - Usuarios</title>
+    <title>Addenda Maker - Empresas</title>
     <!-- Vendor styles -->
     <link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="../../assets/zmdi/css/material-design-iconic-font.min.css">
@@ -32,7 +32,7 @@
         <header class="content__title">
             <h1>Empresas Registradas</h1>
         </header>
-        <div class="row">
+        <div style="margin-bottom: 10px" class="row">
             <div class="col-10"></div>
             <div class="col-2">
                 <button id="btn-add-empresa" type="button" class="btn btn-primary float-right">
@@ -56,6 +56,76 @@
                         </thead>
                         <tbody id="tbody_empresa"></tbody>
                     </table>
+                </div>
+            </div>
+            <div id="edit-card" class="card" style="width: 100%; display: none">
+                <div class="card-header">
+                    <label class="title-edit">Agregar/Editar Empresa</label>
+                </div>
+                <div class="card-body">
+                    <form id="new-empresa-form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="emp-name">Nombre</label>
+                                    <input  data-validation="required"
+                                            type="text" id="emp-name" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="emp-direccion">Direccion</label>
+                                    <input type="text" id="emp-direccion" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="emp-telefono">Telefono</label>
+                                    <input  data-validation="number"
+                                            type="text" id="emp-telefono" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="emp-resp">Responsable</label>
+                                    <input  data-validation="required"
+                                            type="text" id="emp-resp" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="emp-correo">Correo Contacto</label>
+                                    <input  data-validation="email"
+                                            type="text" id="emp-correo" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <button style="margin-left: 5px" id="btn-cancel-emp" type="button" class="btn btn-outline-danger float-right">
+                                <i class="zmdi zmdi-leak-remove"></i>
+                                Cancelar
+                            </button>
+                            <button id="btn-save-emp" type="button" class="btn btn-outline-primary float-right"
+                                    onclick="$('#new-empresa-form').submit();">
+                                <i class="zmdi zmdi-save"></i>
+                                Grabar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

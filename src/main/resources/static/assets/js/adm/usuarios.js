@@ -2,7 +2,7 @@ $(document).ready(function () {
     sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
     $('#btn-add-user').on('click', function () {
         sendPostAction(USER_CONTROLLER_URL + 'roles/list', null, loadRolesCombo);
-        sendPostAction(USER_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
+        sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
         showEditCard();
     });
     $('#btn-cancel-user').on('click', function () {

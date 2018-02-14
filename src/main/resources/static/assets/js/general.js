@@ -5,8 +5,24 @@ $(function () {
 
 // Funcion para enviar las peticiones al WS
 function sendPostAction(url, model, callBackFunction) {
-    $.post(url, JSON.stringify(model), function (data){
+   /* $.post(url, JSON.stringify(model), function (data){
         callBackFunction(data);
+    }); */
+
+    $.ajax(url, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        'type': 'POST',
+        'data': JSON.stringify(model),
+        'dataType': 'json',
+        'success': callBackFunction,
+        'error': function (data) {
+            var msj = data.responseJSON['status'];
+            var msj = msj + ' - ' + data.responseJSON['message'];
+            showDivMessage(msj, 'alert-danger', 4000);
+        }
     });
 }
 
