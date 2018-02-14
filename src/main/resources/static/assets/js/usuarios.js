@@ -7,6 +7,11 @@ $(document).ready(function () {
         showDivMessage('Accion Cancelada. No se guardaron los cambios', 'alert-danger', 4000);
         showTableCard();
     });
+    $.validate({
+        form: '#new-user-form',
+        lang: 'es',
+        errorMessageClass: 'is-invalid'
+    });
 });
 
 // Funciones de JavaSCript para la pantalla de Usuarios
@@ -16,6 +21,11 @@ function loadTable(data) {
 
         tr += "</tr>";
     }
+}
+
+function validateNewUserForm() {
+    var status = false;
+
 }
 
 function showEditCard() {

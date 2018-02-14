@@ -6,10 +6,10 @@
     <!-- Vendor styles -->
     <link rel="stylesheet"
           href="../../assets/material/vendors/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet"
-          href="../../assets/material/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="../../assets/zmdi/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="../../assets/material/vendors/bower_components/animate.css/animate.min.css">
     <link rel="stylesheet" href="../../assets/material/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.css">
+    <link rel="stylesheet" href="../../assets/material/vendors/bower_components/select2/dist/css/select2.min.css">
 
     <!-- App styles -->
     <link rel="stylesheet" href="../../assets/material/css/app.min.css">
@@ -66,22 +66,97 @@
                     Agregar/Editar Usuario
                 </div>
                 <div class="card-body">
-                    <div class="row form-group">
-                        <label class="col-form-label">Nombre</label>
-                        <input type="text" id="user-name" class="form-control">
-                    </div>
+                    <form id="new-user-form" method="post">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="user-name">Nombre</label>
+                                    <input  data-validation="length alphanumeric" data-validation-length="min3"
+                                            type="text" id="user-name" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="user-apaterno">Apellido Paterno</label>
+                                    <input  data-validation="length alphanumeric" data-validation-length="min3"
+                                            type="text" id="user-apaterno" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="user-amaterno">Apellido Materno</label>
+                                    <input  data-validation="length alphanumeric" data-validation-length="min3"
+                                            type="text" id="user-amaterno" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="user-correo">Correo Electrónico</label>
+                                    <input  data-validation="email"
+                                            type="text" id="user-correo" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="user-correo-2">Confirmar Correo</label>
+                                    <input  data-validation="email"
+                                            type="text" id="user-correo-2" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="user-telefono">Telefono</label>
+                                    <input  data-validation="number" data-validation-length="range[10;10]"
+                                            type="text" id="user-telefono" class="form-control form-control-lg">
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="combo-role">Role</label>
+                                    <select id="combo-role" class="select2" required>
+                                        <option></option>
+                                        <option>Super-Administrador</option>
+                                        <option>Administrador</option>
+                                        <option>Operador</option>
+                                        <option>Auditor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="combo-empresa">Empresa</label>
+                                    <select id="combo-empresa" class="select2" required>
+                                        <option></option>
+                                        <option>Empresa 1</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="card-footer">
-                    <div class="col-8"></div>
-                    <div class="col-4">
-                        <button id="btn-save-user" type="button" class="btn btn-outline-primary float-right">
-                            <i class="zmdi zmdi-save"></i>
-                            Grabar
-                        </button>
-                        <button id="btn-cancel-user" type="button" class="btn btn-outline-danger float-right">
-                            <i class="zmdi zmdi-leak-remove"></i>
-                            Cancelar
-                        </button>
+                    <div class="row">
+                        <div class="col-8"></div>
+                        <div class="col-4">
+                            <button style="margin-left: 5px" id="btn-cancel-user" type="button" class="btn btn-outline-danger float-right">
+                                <i class="zmdi zmdi-leak-remove"></i>
+                                Cancelar
+                            </button>
+                            <button id="btn-save-user" type="button" class="btn btn-outline-primary float-right" disabled>
+                                <i class="zmdi zmdi-save"></i>
+                                Grabar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,24 +172,29 @@
 <script src="../../assets/material/vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js"></script>
 <script src="../../assets/material/vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js"></script>
 
+<!--
 <script src="../../assets/material/vendors/bower_components/Flot/jquery.flot.js"></script>
 <script src="../../assets/material/vendors/bower_components/Flot/jquery.flot.resize.js"></script>
 <script src="../../assets/material/vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
 <script src="../../assets/material/vendors/bower_components/jqvmap/dist/jquery.vmap.min.js"></script>
 <script src="../../assets/material/vendors/bower_components/jqvmap/dist/maps/jquery.vmap.world.js"></script>
 <script src="../../assets/material/vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
-<script src="../../assets/material/vendors/bower_components/salvattore/dist/salvattore.min.js"></script>
+<script src="../../assets/material/vendors/bower_components/salvattore/dist/salvattore.min.js"></script> -->
 <script src="../../assets/material/vendors/jquery.sparkline/jquery.sparkline.min.js"></script>
 <script src="../../assets/material/vendors/bower_components/moment/min/moment.min.js"></script>
 <script src="../../assets/material/vendors/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="../../assets/material/vendors/bower_components/select2/dist/js/select2.full.min.js"></script>
 
-<!-- Charts and maps-->
+<!-- JQuery Validator -->
+<script src="../../assets/js/jquery.form-validator.js"></script>
+
+<!-- Charts and maps
 <script src="../../assets/js/flot-charts/curved-line.js"></script>
 <script src="../../assets/js/flot-charts/dynamic.js"></script>
 <script src="../../assets/js/flot-charts/line.js"></script>
 <script src="../../assets/js/flot-charts/chart-tooltips.js"></script>
 <script src="../../assets/js/other-charts.js"></script>
-<script src="../../assets/js/jqvmap.js"></script>
+<script src="../../assets/js/jqvmap.js"></script> -->
 
 <!-- App functions and actions -->
 <script src="../../assets/material/js/app.min.js"></script>
