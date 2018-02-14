@@ -33,5 +33,6 @@ function showDivMessage(message,divclass, time) {
 
 // URL Controllers *************************** //
 var USER_CONTROLLER_URL = '/adm/usuarios/';
+var EMPRESA_CONTROLLER_URL = '/adm/empresa/';
 
 

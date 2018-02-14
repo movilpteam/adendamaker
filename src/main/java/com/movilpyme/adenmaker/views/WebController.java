@@ -24,4 +24,9 @@ public class WebController {
     public String getUsuariosList(Model model){
         return "/pages/adm/usuarios.html";
     }
+
+    @RequestMapping("/adm/empresas")
+    public String getEmpresaList(Model model) {
+        return "/pages/adm/empresa.html";
+    }
 }
