@@ -24,6 +24,16 @@ public class WebController {
 
     // Direcciones Modulo de Administracion //
 
+    @RequestMapping("/adm/usuarios")
+    public String getUsuariosList(Model model){
+        return "/pages/adm/usuarios.html";
+    }
+
+    @RequestMapping("/adm/empresas")
+    public String getEmpresaList(Model model) {
+        return "/pages/adm/empresa.html";
+    }
+    
     @RequestMapping("/conf/logo")
     public String getLogo(Model model) {
         return "/pages/conf/logo.html";
