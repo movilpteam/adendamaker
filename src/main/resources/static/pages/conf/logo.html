@@ -5,8 +5,7 @@
 <title>Addenda Maker - Logo</title>
 <!-- Vendor styles -->
 <link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css">
-<link rel="stylesheet"
-	href="../../assets/zmdi/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="../../assets/zmdi/css/material-design-iconic-font.min.css">
 <link rel="stylesheet" href="../../assets/css/animate.min.css">
 <link rel="stylesheet" href="../../assets/css/jquery.scrollbar.css">
 <link rel="stylesheet" href="../../assets/select2/css/select2.min.css">
@@ -14,9 +13,7 @@
 <!-- App styles -->
 <link rel="stylesheet" href="../../assets/material/css/app.min.css">
 <link rel="stylesheet" href="../../assets/css/custom.css">
-
-<link rel="stylesheet"
-	href="../../assets/material/vendors/bower_components/dropzone/dist/dropzone.css" />
+<link rel="stylesheet" href="../../assets/js/dropzone/dist/dropzone.css" />
 
 </head>
 <body data-ma-theme="green">
@@ -32,6 +29,10 @@
 	<div id="header_div"></div>
 	<aside class="sidebar" id="sidebar_div"></aside>
 	<section class="content" id="main_section">
+		<div class="row alert alert-dismissible"
+			style="display: none; margin-top: 10px" id="div-message">
+			<div class="col-12" id="message-content"></div>
+		</div>
 		<header class="content__title">
 			<h1>Logo</h1>
 		</header>
@@ -39,12 +40,36 @@
 			<div class="card-body">
 				<h4 class="card-title">Seleccionar Logo</h4>
 				<form id="upload-widget" method="post" action="/conf/upload"
-					enctype="multipart/form-data"
-					class="dropzone">
+					enctype="multipart/form-data" class="dropzone">
 					<div class="fallback">
 						<input name="file" type="file" />
 					</div>
 				</form>
+				<form id="new-logo-form" method="post">
+					<div class="row">
+						<div class="col-4">
+							<div class="form-group">
+								<label for="combo-empresa-logo">Empresa</label> <select
+									id="combo-empresa-logo" class="select2"
+									data-validation="required">
+									<option></option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="row">
+					<div class="col-8"></div>
+					<div class="col-4">
+						<button id="btn-save-logo" type="button"
+							class="btn btn-outline-primary float-right"
+							onclick="$('#new-logo-form').submit();">
+							<i class="zmdi zmdi-save"></i> Grabar
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -60,9 +85,7 @@
 	<script src="../../assets/js/jquery.sparkline.min.js"></script>
 	<script src="../../assets/js/moment/min/moment.min.js"></script>
 	<script src="../../assets/select2/js/select2.full.min.js"></script>
-	<script
-		src="../../assets/material/vendors/bower_components/dropzone/dist/dropzone.js"></script>
-
+	<script src="../../assets/js/dropzone/dist/dropzone.js"></script>
 
 	<!-- JQuery Validator -->
 	<script src="../../assets/js/jquery.form-validator.js"></script>

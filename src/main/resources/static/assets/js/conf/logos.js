@@ -1,3 +1,8 @@
+var nameLogo;
+Dropzone.prototype.submitRequest = function(xhr, formData, files) {
+	nameLogo = files[0].name;
+	return xhr.send(formData);
+};
 Dropzone.options.uploadWidget = {
   paramName: 'file',
   maxFilesize: 500, // MB
@@ -28,3 +33,29 @@ Dropzone.options.uploadWidget = {
     };
   }
 };
+$(document).ready(function () {
+    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
+	$('#new-logo-form').on('submit', function () {
+       var empresa = new Empresa();
+	   empresa.id = $('#combo-empresa-logo').val();
+       empresa.logo = nameLogo;
+	   sendPostAction(EMPRESA_CONTROLLER_URL + 'update', empresa, saveEmpresa);
+	   return false;
+    });
+});
+$.validate({
+    form: '#new-logo-form'
+});
+function loadEmpresaCombo(data) {
+    for (var i = 0; i < data.length; i++){
+        var op = new Option(data[i].nombre, data[i].id);
+        $('#combo-empresa-logo').append(op);
+    }
+}
+function saveEmpresa(data) {
+    if (data === true){
+        showDivMessage('Logo Guardado', 'alert-info', 3000);
+    }else {
+        showDivMessage('Error al guardar informacion', 'alert-danger', 3000);
+    }
+}

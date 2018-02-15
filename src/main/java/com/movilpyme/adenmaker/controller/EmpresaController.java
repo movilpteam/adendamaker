@@ -40,4 +40,20 @@ public class EmpresaController {
             throw new ServletException(e.getMessage());
         }
     }
+    
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public boolean updateEmpresa(@RequestBody Empresa empresa) throws ServletException {
+        if (empresa == null){
+            throw new ServletException("Empresa Inválida");
+        }
+        try {
+        	Empresa empresaFind = empresaRepo.findOne(empresa.getId());
+        	empresaFind.setId(empresa.getId());
+        	empresaFind.setLogo(empresa.getLogo());
+        	empresaRepo.save(empresaFind);
+            return true;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
 }
