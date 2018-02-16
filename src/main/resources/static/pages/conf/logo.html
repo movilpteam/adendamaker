@@ -38,19 +38,13 @@
 		</header>
 		<div class="card">
 			<div class="card-body">
-				<h4 class="card-title">Seleccionar Logo</h4>
-				<form id="upload-widget" method="post" action="/conf/upload"
-					enctype="multipart/form-data" class="dropzone">
-					<div class="fallback">
-						<input name="file" type="file" />
-					</div>
-				</form>
 				<form id="new-logo-form" method="post">
 					<div class="row">
-						<div class="col-4">
+						<div class="col-6">
 							<div class="form-group">
 								<label for="combo-empresa-logo">Empresa</label> <select
-									id="combo-empresa-logo" class="select2"
+									id="combo-empresa-logo" 
+									class="select2"
 									data-validation="required">
 									<option></option>
 								</select>
@@ -58,6 +52,32 @@
 						</div>
 					</div>
 				</form>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					
+					<div class="col-6">
+						<div class="form-group">
+							<h2 class="card-title">Logo Actual</h2>
+							<div class="span4">
+								<img id="imagen-actual" class="img-thumbnail" src="" />
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-6">
+						<div class="form-group">
+							<h2 class="card-title">Nuevo Logo</h2>
+							<form id="upload-widget" method="post" action="/conf/upload"
+								enctype="multipart/form-data" class="dropzone" style="text-align: center !important;">
+								<div class="fallback">
+									<input name="file" type="file" />
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
 			</div>
 			<div class="card-footer">
 				<div class="row">
