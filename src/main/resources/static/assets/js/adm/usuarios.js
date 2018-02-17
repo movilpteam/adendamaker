@@ -17,7 +17,28 @@ $(document).ready(function () {
        }
     });
     $('#new-user-form').on('submit', function () {
-        alert('Antes del Submit');
+        var dataEmp = $('#combo-empresa').select2('data');
+        var dataRole = $('#combo-role').select2('data');
+        var empresaSelected = new Empresa();
+        empresaSelected.id = dataEmp[0].id;
+        empresaSelected.nombre = dataEmp[0].text;
+        var roleSelected = new UserRoles();
+        var role = new Roles();
+        role.id = dataRole[0].id;
+        role.nombre = dataRole[0].text;
+        roleSelected.idRole = role.id;
+        roleSelected.rolesByIdRole = role;
+        var user = new Usuarios();
+        user.nombre = $('#user-name').val();
+        user.apaterno = $('#user-apaterno').val();
+        user.amaterno = $('#user-amaterno').val();
+        user.correo = $('#user-correo').val();
+        user.telefono = $('#user-telefono').val();
+        user.empresaByIdEmpresa = empresaSelected;
+        user.userRolesById = [roleSelected];
+        user.cambiarPwd = true;
+        sendPostAction(USER_CONTROLLER_URL + 'save', user, userSaved);
+        return false;
     });
 });
 $.validate({
@@ -25,11 +46,32 @@ $.validate({
 });
 
 // Funciones de JavaSCript para la pantalla de Usuarios
-function loadTable(data) {
-    for (var i = 0; i < data.length; i++) {
-        var tr = "<tr>";
 
+function userSaved(data) {
+    showDivMessage("Usuario Guardado Correctamente", "alert-info", 3000);
+    sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
+    showTableCard();
+}
+
+function loadTable(data) {
+    $('#tbody_users').empty();
+    for (var i = 0; i < data.length; i++) {
+        var tr = "<tr>" +
+            "<td></td>" +
+            "<td>"+ data[i].id +"</td>" +
+            "<td>"+ data[i].nombre +"</td>" +
+            "<td>"+ data[i].apaterno + " " + data[i].amaterno +"</td>" +
+            "<td>"+ data[i].correo +"</td>" +
+            "<td id='role"+ data[i].id +"'></td>";
         tr += "</tr>";
+        sendPostAction(USER_CONTROLLER_URL + 'roles/' + data[i].id, null, loadRolesByUser);
+        $('#tbody_users').append(tr);
+    }
+}
+
+function loadRolesByUser(data) {
+    for (var i = 0; i < data.length; i++){
+
     }
 }
 
@@ -44,17 +86,6 @@ function loadRolesCombo(data) {
     for (var i = 0; i < data.length; i++){
         var op = new Option(data[i].nombre, data[i].id);
         $('#combo-role').append(op);
-    }
-}
-
-function validateNewUserForm() {
-    var bad_input = $('#new-user-form .is-invalid');
-    if (bad_input.length > 0) {
-        $('#btn-save-user').prop('disabled', true);
-    }else {
-        var valid = true;
-
-        $('#btn-save-user').prop('disabled', false);
     }
 }
 

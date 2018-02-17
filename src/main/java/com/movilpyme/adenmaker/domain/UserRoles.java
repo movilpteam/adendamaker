@@ -1,5 +1,7 @@
 package com.movilpyme.adenmaker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,10 +11,13 @@ public class UserRoles {
     private long id;
     private long idUser;
     private long idRole;
+    @JsonIgnore
     private Usuarios usuariosByIdUser;
     private Roles rolesByIdRole;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="useroles_seq_gen")
+    @SequenceGenerator(name="useroles_seq_gen", sequenceName="USEROLES_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
         return id;

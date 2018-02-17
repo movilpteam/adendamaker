@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -16,17 +17,20 @@ public class Usuarios {
     private String amaterno;
     private String correo;
     private String password;
-    private String enabled;
+    private String telefono;
+    private boolean enabled;
     private String preguntaSecreta;
     private String respuestaSecreta;
     private boolean cambiarPwd;
-    private Time lastPwdChg;
+    private Date lastPwdChg;
     private long idEmpresa;
     private Collection<BitacoraAddenda> bitacoraAddendaById;
     private Collection<UserRoles> userRolesById;
     private Empresa empresaByIdEmpresa;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="usuarios_seq_gen")
+    @SequenceGenerator(name="usuarios_seq_gen", sequenceName="USUARIOS_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
         return id;
@@ -97,12 +101,22 @@ public class Usuarios {
     }
 
     @Basic
+    @Column(name = "TELEFONO", nullable = true, length = 20)
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    @Basic
     @Column(name = "ENABLED", nullable = true, length = 1)
-    public String getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(String enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
@@ -139,11 +153,11 @@ public class Usuarios {
 
     @Basic
     @Column(name = "LAST_PWD_CHG", nullable = true)
-    public Time getLastPwdChg() {
+    public Date getLastPwdChg() {
         return lastPwdChg;
     }
 
-    public void setLastPwdChg(Time lastPwdChg) {
+    public void setLastPwdChg(Date lastPwdChg) {
         this.lastPwdChg = lastPwdChg;
     }
 

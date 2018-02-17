@@ -3,10 +3,7 @@ package com.movilpyme.adenmaker.controller;
 import com.movilpyme.adenmaker.domain.Empresa;
 import com.movilpyme.adenmaker.repository.EmpresaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.util.List;
@@ -20,6 +17,18 @@ public class EmpresaController {
     @Autowired
     public EmpresaController(EmpresaRepo empresaRepo) {
         this.empresaRepo = empresaRepo;
+    }
+
+    @RequestMapping(value = "byId/{id}", method = RequestMethod.POST)
+    public Empresa getEmpresaById(@PathVariable Long id) throws ServletException {
+        if (id == 0){
+            throw new ServletException("ID Inválido");
+        }
+        Empresa empresa = empresaRepo.findOne(id);
+        if (empresa == null){
+            throw new ServletException("No se encontro empresa");
+        }
+        return empresa;
     }
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
@@ -48,7 +57,6 @@ public class EmpresaController {
         }
         try {
         	Empresa empresaFind = empresaRepo.findOne(empresa.getId());
-        	empresaFind.setId(empresa.getId());
         	empresaFind.setLogo(empresa.getLogo());
         	empresaRepo.save(empresaFind);
             return true;

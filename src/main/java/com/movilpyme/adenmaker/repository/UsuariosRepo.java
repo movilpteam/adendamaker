@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuariosRepo extends CrudRepository<Usuarios, Integer>{
+
+    public int countByUsername(String username);
 }

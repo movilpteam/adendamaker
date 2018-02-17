@@ -5,7 +5,7 @@ Dropzone.prototype.submitRequest = function(xhr, formData, files) {
 };
 Dropzone.options.uploadWidget = {
   paramName: 'file',
-  maxFilesize: 500, // MB
+  maxFilesize: 5, // MB
   maxFiles: 1,
   dictDefaultMessage: 'Arrastre una imagen aquí para cargar, o haga clic para seleccionar una',
   headers: {
