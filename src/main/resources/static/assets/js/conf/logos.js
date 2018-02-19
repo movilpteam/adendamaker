@@ -1,4 +1,5 @@
 var nameLogo;
+var currentFile = null;
 Dropzone.prototype.submitRequest = function(xhr, formData, files) {
 	nameLogo = files[0].name;
 	return xhr.send(formData);
@@ -25,6 +26,12 @@ Dropzone.options.uploadWidget = {
         file.acceptDimensions();
       }
     });
+    this.on("addedfile", function(file) {
+		if (currentFile) {
+			this.removeFile(currentFile);
+		}
+		currentFile = file;
+	});
   },
   accept: function(file, done) {
     file.acceptDimensions = done;
@@ -68,7 +75,7 @@ function loadEmpresaCombo(data) {
 function saveEmpresa(data) {
     if (data === true){
     	addImage(nameLogo);
-        showDivMessage('Logo Guardado', 'alert-info', 3000);
+    	showDivMessage('Logo Guardado', 'alert-info', 3000);
     }else {
         showDivMessage('Error al guardar informacion', 'alert-danger', 3000);
     }
