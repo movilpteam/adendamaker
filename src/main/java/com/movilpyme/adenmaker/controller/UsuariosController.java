@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("adm/usuarios")
@@ -35,6 +36,24 @@ public class UsuariosController {
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
         this.sendMail = sendMail;
+    }
+
+    @RequestMapping(value = "changePassword", method = RequestMethod.POST)
+    public boolean changePassword(@RequestBody Map<String, String> requestData) throws ServletException {
+        if (requestData.get("username") == null || requestData.get("actual") == null || requestData.get("nuevo") == null){
+            throw new ServletException("Información Inválida");
+        }
+        Usuarios user = usuariosRepo.findByUsername(requestData.get("username"));
+        if (user == null){
+            throw new ServletException("Información Inválida");
+        }
+        if (!BCrypt.checkpw(requestData.get("actual"), user.getPassword())){
+            throw new ServletException("Información Inválida");
+        }
+        user.setPassword(BCrypt.hashpw(requestData.get("nuevo"), BCrypt.gensalt()));
+        user.setCambiarPwd(requestData.get("changePwd") != null);
+        usuariosRepo.save(user);
+        return true;
     }
 
     @RequestMapping(value = "roles/{iduser}", method = RequestMethod.POST)

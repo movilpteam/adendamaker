@@ -33,7 +33,15 @@
             <h1>Usuarios Autorizados</h1>
         </header>
         <div class="row">
-            <div class="col-10"></div>
+            <div class="col-6"></div>
+            <div class="col-4">
+                <div class="form-group">
+                    <!--<label for="combo-empresa">Empresa</label>-->
+                    <select id="combo-empresa" class="select2 select2-custom" data-validation="required">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
             <div class="col-2">
                 <button id="btn-add-user" type="button" class="btn btn-primary float-right">
                     <i class="zmdi zmdi-folder-person"></i>
@@ -50,6 +58,7 @@
                         <tr>
                             <th></th>
                             <th>#</th>
+                            <th>Login ID</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
                             <th>Correo</th>
@@ -128,12 +137,7 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="form-group">
-                                    <label for="combo-empresa">Empresa</label>
-                                    <select id="combo-empresa" class="select2" data-validation="required">
-                                        <option></option>
-                                    </select>
-                                </div>
+
                             </div>
                         </div>
                     </form>

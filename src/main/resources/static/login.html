@@ -1,183 +1,192 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Vendor styles -->
-        <link rel="stylesheet" href="assets/zmdi/css/material-design-iconic-font.min.css">
-        <link rel="stylesheet" href="assets/css/animate.min.css">
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="assets/zmdi/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
 
-        <!-- App styles -->
-        <link rel="stylesheet" href="assets/material/css/app.min.css">
-    </head>
+    <!-- App styles -->
+    <link rel="stylesheet" href="assets/material/css/app.min.css">
+</head>
 
-    <body data-ma-theme="green">
-        <div class="login">
+<body data-ma-theme="green">
+<div class="row alert alert-dismissible" style="display: none; margin-top: 10px" id="div-message">
+    <div class="col-12" id="message-content"></div>
+</div>
+<div class="login">
 
-            <!-- Login -->
-            <div class="login__block active" id="l-login">
-                <div class="login__block__header">
-                    <i class="zmdi zmdi-account-circle"></i>
-                    Iniciar Sesion
+    <!-- Login -->
+    <div class="login__block active" id="l-login">
+        <div class="login__block__header">
+            <i class="zmdi zmdi-account-circle"></i>
+            Iniciar Sesion
 
-                    <div class="actions actions--inverse login__block__actions">
-                        <div class="dropdown">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create an account</a>
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password" href="">Forgot password?</a>
-                            </div>
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create
+                            an account</a>
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+                           href="">Forgot password?</a>
                     </div>
-                </div>
-
-                <div class="login__block__body">
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="text" class="form-control">
-                        <label>Correo Electrónico</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="password" class="form-control">
-                        <label>Contraseña</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-                    <a href="home">
-                        <button class="btn btn--icon login__block__btn">
-                            <i class="zmdi zmdi-long-arrow-right"></i>
-                        </button>
-                    </a>
-
-                </div>
-            </div>
-
-            <!-- Register -->
-            <div class="login__block" id="l-register">
-                <div class="login__block__header palette-Blue bg">
-                    <i class="zmdi zmdi-account-circle"></i>
-                    Create an account
-
-                    <div class="actions actions--inverse login__block__actions">
-                        <div class="dropdown">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Already have an account?</a>
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password" href="">Forgot password?</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="login__block__body">
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="text" class="form-control">
-                        <label>Name</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="text" class="form-control">
-                        <label>Email Address</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="password" class="form-control">
-                        <label>Password</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator"></span>
-                            <span class="custom-control-description">Accept the license agreement</span>
-                        </label>
-                    </div>
-
-                    <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
-                </div>
-            </div>
-
-            <!-- Forgot Password -->
-            <div class="login__block" id="l-forget-password">
-                <div class="login__block__header palette-Purple bg">
-                    <i class="zmdi zmdi-account-circle"></i>
-                    Forgot Password?
-
-                    <div class="actions actions--inverse login__block__actions">
-                        <div class="dropdown">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Already have an account?</a>
-                                <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create an account</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="login__block__body">
-                    <p class="mt-4">Lorem ipsum dolor fringilla enim feugiat commodo sed ac lacus.</p>
-
-                    <div class="form-group form-group--float form-group--centered">
-                        <input type="text" class="form-control">
-                        <label>Email Address</label>
-                        <i class="form-group__bar"></i>
-                    </div>
-
-                    <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- Older IE warning message -->
-            <!--[if IE]>
-        <div class="ie-warning">
-            <h1>Warning!!</h1>
-            <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web
-                browsers to access this website.</p>
-
-            <div class="ie-warning__downloads">
-                <a href="http://www.google.com/chrome">
-                    <img src="material/img/browsers/chrome.png" alt="">
-                </a>
-
-                <a href="https://www.mozilla.org/en-US/firefox/new">
-                    <img src="material/img/browsers/firefox.png" alt="">
-                </a>
-
-                <a href="http://www.opera.com">
-                    <img src="material/img/browsers/opera.png" alt="">
-                </a>
-
-                <a href="https://support.apple.com/downloads/safari">
-                    <img src="material/img/browsers/safari.png" alt="">
-                </a>
-
-                <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
-                    <img src="material/img/browsers/edge.png" alt="">
-                </a>
-
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="material/img/browsers/ie.png" alt="">
-                </a>
+        <div class="login__block__body">
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" id="txt_login_id" class="form-control">
+                <label>Login ID</label>
+                <i class="form-group__bar"></i>
             </div>
-            <p>Sorry for the inconvenience!</p>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="password" class="form-control" id="txt_pwd_login">
+                <label>Contraseña</label>
+                <i class="form-group__bar"></i>
+            </div>
+            <button class="btn btn--icon login__block__btn" onclick="checkCredentials()">
+                <i class="zmdi zmdi-long-arrow-right"></i>
+            </button>
+
         </div>
-        <![endif]-->
+    </div>
 
-        <!-- Javascript -->
-        <!-- Vendors -->
-        <script src="assets/js/vendors/jquery/jquery.min.js"></script>
-        <script src="assets/js/popper/umd/popper.min.js"></script>
-        <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+    <!-- Register -->
+    <div class="login__block" id="l-register">
+        <div class="login__block__header palette-Blue bg">
+            <i class="zmdi zmdi-account-circle"></i>
+            Create an account
 
-        <!-- App functions and actions -->
-        <script src="assets/material/js/app.min.js"></script>
-    </body>
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Already
+                            have an account?</a>
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+                           href="">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__block__body">
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control">
+                <label>Name</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control">
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="password" class="form-control">
+                <label>Password</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <div class="form-group">
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Accept the license agreement</span>
+                </label>
+            </div>
+
+            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+        </div>
+    </div>
+
+    <!-- Forgot Password -->
+    <div class="login__block" id="l-forget-password">
+        <div class="login__block__header palette-Purple bg">
+            <i class="zmdi zmdi-account-circle"></i>
+            Forgot Password?
+
+            <div class="actions actions--inverse login__block__actions">
+                <div class="dropdown">
+                    <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Already
+                            have an account?</a>
+                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create
+                            an account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login__block__body">
+            <p class="mt-4">Lorem ipsum dolor fringilla enim feugiat commodo sed ac lacus.</p>
+
+            <div class="form-group form-group--float form-group--centered">
+                <input type="text" class="form-control">
+                <label>Email Address</label>
+                <i class="form-group__bar"></i>
+            </div>
+
+            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Older IE warning message -->
+<!--[if IE]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web
+        browsers to access this website.</p>
+
+    <div class="ie-warning__downloads">
+        <a href="http://www.google.com/chrome">
+            <img src="material/img/browsers/chrome.png" alt="">
+        </a>
+
+        <a href="https://www.mozilla.org/en-US/firefox/new">
+            <img src="material/img/browsers/firefox.png" alt="">
+        </a>
+
+        <a href="http://www.opera.com">
+            <img src="material/img/browsers/opera.png" alt="">
+        </a>
+
+        <a href="https://support.apple.com/downloads/safari">
+            <img src="material/img/browsers/safari.png" alt="">
+        </a>
+
+        <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
+            <img src="material/img/browsers/edge.png" alt="">
+        </a>
+
+        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+            <img src="material/img/browsers/ie.png" alt="">
+        </a>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+
+<!-- Javascript -->
+<!-- Vendors -->
+<script src="assets/js/vendors/jquery/jquery.min.js"></script>
+<script src="assets/js/vendors/popper/umd/popper.min.js"></script>
+<script src="assets/js/vendors/bootstrap/bootstrap.js"></script>
+<script src="assets/js/general.js"></script>
+<script src="assets/js/login/login.js"></script>
+
+<!-- App functions and actions -->
+<script src="assets/material/js/app.min.js"></script>
+</body>
 </html>

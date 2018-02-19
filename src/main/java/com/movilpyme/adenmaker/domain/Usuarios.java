@@ -1,9 +1,9 @@
 package com.movilpyme.adenmaker.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -16,16 +16,21 @@ public class Usuarios {
     private String apaterno;
     private String amaterno;
     private String correo;
+    @JsonIgnore
     private String password;
     private String telefono;
     private boolean enabled;
+    @JsonIgnore
     private String preguntaSecreta;
+    @JsonIgnore
     private String respuestaSecreta;
     private boolean cambiarPwd;
     private Date lastPwdChg;
     private long idEmpresa;
     private Collection<BitacoraAddenda> bitacoraAddendaById;
     private Collection<UserRoles> userRolesById;
+    @JsonIgnore
+    private Collection<Login> logins;
     private Empresa empresaByIdEmpresa;
 
     @Id
@@ -213,6 +218,15 @@ public class Usuarios {
 
     public void setUserRolesById(Collection<UserRoles> userRolesById) {
         this.userRolesById = userRolesById;
+    }
+
+    @OneToMany(mappedBy = "usuario")
+    public Collection<Login> getLogins() {
+        return logins;
+    }
+
+    public void setLogins(Collection<Login> logins) {
+        this.logins = logins;
     }
 
     @ManyToOne

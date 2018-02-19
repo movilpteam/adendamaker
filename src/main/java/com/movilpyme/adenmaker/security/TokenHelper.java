@@ -17,9 +17,6 @@ public class TokenHelper {
     @Value("${app.name}")
     private String APP_NAME;
 
-    @Value("${jwt.secret}")
-    private String SECRET;
-
     @Value("${jwt.expires_in}")
     private int EXPIRES_IN;
 
@@ -42,7 +39,7 @@ public class TokenHelper {
                 .setSubject(username)
                 .setIssuedAt(generateCurrentDate())
                 .setExpiration(generateExpirationDate())
-                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+                .signWith(SIGNATURE_ALGORITHM, SecurityConstants.SECRET).compact();
         return jws;
     }
 
@@ -50,7 +47,7 @@ public class TokenHelper {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(this.SECRET)
+                    .setSigningKey(SecurityConstants.SECRET)
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

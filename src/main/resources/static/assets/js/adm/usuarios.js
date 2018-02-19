@@ -1,8 +1,10 @@
+var EMPRESA_SELECTED = new Empresa();
+
 $(document).ready(function () {
+    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
     sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
     $('#btn-add-user').on('click', function () {
         sendPostAction(USER_CONTROLLER_URL + 'roles/list', null, loadRolesCombo);
-        sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
         showEditCard();
     });
     $('#btn-cancel-user').on('click', function () {
@@ -17,11 +19,8 @@ $(document).ready(function () {
        }
     });
     $('#new-user-form').on('submit', function () {
-        var dataEmp = $('#combo-empresa').select2('data');
+        setEmpresaSelected();
         var dataRole = $('#combo-role').select2('data');
-        var empresaSelected = new Empresa();
-        empresaSelected.id = dataEmp[0].id;
-        empresaSelected.nombre = dataEmp[0].text;
         var roleSelected = new UserRoles();
         var role = new Roles();
         role.id = dataRole[0].id;
@@ -34,7 +33,7 @@ $(document).ready(function () {
         user.amaterno = $('#user-amaterno').val();
         user.correo = $('#user-correo').val();
         user.telefono = $('#user-telefono').val();
-        user.empresaByIdEmpresa = empresaSelected;
+        user.empresaByIdEmpresa = EMPRESA_SELECTED;
         user.userRolesById = [roleSelected];
         user.cambiarPwd = true;
         sendPostAction(USER_CONTROLLER_URL + 'save', user, userSaved);
@@ -53,19 +52,28 @@ function userSaved(data) {
     showTableCard();
 }
 
+function setEmpresaSelected(){
+    var dataEmp = $('#combo-empresa').select2('data');
+    EMPRESA_SELECTED = new Empresa();
+    EMPRESA_SELECTED.id = dataEmp[0].id;
+    EMPRESA_SELECTED.nombre = dataEmp[0].text;
+}
+
 function loadTable(data) {
-    $('#tbody_users').empty();
+    var tbody_users = $('#tbody_users');
+    tbody_users.empty();
     for (var i = 0; i < data.length; i++) {
         var tr = "<tr>" +
             "<td></td>" +
             "<td>"+ data[i].id +"</td>" +
+            "<td>"+ data[i].username +"</td>" +
             "<td>"+ data[i].nombre +"</td>" +
             "<td>"+ data[i].apaterno + " " + data[i].amaterno +"</td>" +
             "<td>"+ data[i].correo +"</td>" +
             "<td id='role"+ data[i].id +"'></td>";
         tr += "</tr>";
         sendPostAction(USER_CONTROLLER_URL + 'roles/' + data[i].id, null, loadRolesByUser);
-        $('#tbody_users').append(tr);
+        tbody_users.append(tr);
     }
 }
 

@@ -5,10 +5,6 @@ $(function () {
 
 // Funcion para enviar las peticiones al WS
 function sendPostAction(url, model, callBackFunction) {
-   /* $.post(url, JSON.stringify(model), function (data){
-        callBackFunction(data);
-    }); */
-
     $.ajax(url, {
         headers: {
             'Accept': 'application/json',
@@ -61,6 +57,7 @@ function showDivMessage(message,divclass, time) {
 }
 
 // URL Controllers *************************** //
+var LOGIN_CONTROLLER_URL = '/login/';
 var USER_CONTROLLER_URL = '/adm/usuarios/';
 var EMPRESA_CONTROLLER_URL = '/adm/empresa/';
 
