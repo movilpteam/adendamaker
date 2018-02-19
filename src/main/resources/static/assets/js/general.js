@@ -21,20 +21,6 @@ function sendPostAction(url, model, callBackFunction) {
         }
     });
 }
-function callbackFunctionHttp(xmlhttp) {}
-function sendPostActionParams(url, model, callBackFunction) {
-	try{
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = callbackFunctionHttp(xmlhttp);
-		xmlhttp.open("POST", url, false);
-		xmlhttp.setRequestHeader("Content-Type", "application/json");
-		xmlhttp.onreadystatechange = callbackFunctionHttp(xmlhttp);
-		xmlhttp.send(JSON.stringify(model));
-		callBackFunction(xmlhttp.responseText);
-	} catch (e) {
-		showDivMessage(e, 'alert-danger', 4000);
-	}
-}
 // Funcion para recuperar un parametro de la URL
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);

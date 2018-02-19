@@ -11,7 +11,7 @@ Dropzone.options.uploadWidget = {
   headers: {
     'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
   },
-  acceptedFiles: 'image/*',
+  acceptedFiles: ".jpg, .jpeg, .png",
   init: function() {
     this.on('success', function( file, resp ){
       console.log( file );
@@ -48,8 +48,7 @@ $(document).ready(function () {
 			var empresa = new Empresa();
 			empresa.id = $('#combo-empresa-logo').val();
 			if(empresa.id != ""){
-				//sendPostActionParams(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
-                sendPostAction(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
+				sendPostAction(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
 			}
 		});
 	}).change();
@@ -68,6 +67,7 @@ function loadEmpresaCombo(data) {
 }
 function saveEmpresa(data) {
     if (data === true){
+    	addImage(nameLogo);
         showDivMessage('Logo Guardado', 'alert-info', 3000);
     }else {
         showDivMessage('Error al guardar informacion', 'alert-danger', 3000);
