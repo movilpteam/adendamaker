@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -72,7 +73,7 @@ public class EmpresaController {
         }
     }
 
-    @RequestMapping(value = "viewLogo", method = RequestMethod.POST)
+    /*@RequestMapping(value = "viewLogo", method = RequestMethod.POST)
     public @ResponseBody ResponseEntity<String> viewLogo(@RequestBody Empresa empresa) throws ServletException {
         if (empresa == null){
             throw new ServletException("Empresa Inválida");
@@ -83,6 +84,22 @@ public class EmpresaController {
         	return new ResponseEntity<String>(empresaFind != null ? empresaFind.getLogo() : "", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+
+    @RequestMapping(value = "viewLogo", method = RequestMethod.POST)
+    public HashMap<String, String> viewLogo(@RequestBody Empresa empresa) throws ServletException {
+        if (empresa == null){
+            throw new ServletException("Empresa Inválida");
+        }
+        try {
+            Empresa empresaFind = empresaRepo.findOne(empresa.getId());
+            System.out.println("empresaFind.getLogo(): " + empresaFind.getLogo());
+            HashMap<String, String> responseData = new HashMap<>();
+            responseData.put("logo", empresaFind.getLogo());
+            return responseData;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
         }
     }
 }

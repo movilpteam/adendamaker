@@ -48,7 +48,8 @@ $(document).ready(function () {
 			var empresa = new Empresa();
 			empresa.id = $('#combo-empresa-logo').val();
 			if(empresa.id != ""){
-				sendPostActionParams(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
+				//sendPostActionParams(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
+                sendPostAction(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
 			}
 		});
 	}).change();
@@ -76,6 +77,6 @@ function srcViewLogo(data){
 	if (data === null){
 		showDivMessage('No existe logo para esa empresa.', 'alert-danger', 3000);
 	} else{
-		addImage(data);
+		addImage(data.logo);
 	}
 }
