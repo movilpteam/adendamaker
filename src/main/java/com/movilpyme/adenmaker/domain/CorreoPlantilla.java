@@ -1,7 +1,14 @@
 package com.movilpyme.adenmaker.domain;
 
-import javax.persistence.*;
 import java.util.Objects;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "CORREO_PLANTILLA", schema = "AW_ADMIN", catalog = "")
@@ -11,6 +18,8 @@ public class CorreoPlantilla {
     private String asunto;
     private String body;
     private String html;
+    private long idCorreo;
+    private Correo correoByIdCorreo;
 
     @Id
     @Column(name = "ID", nullable = false, precision = 0)
@@ -61,8 +70,28 @@ public class CorreoPlantilla {
     public void setHtml(String html) {
         this.html = html;
     }
+    
+    @Basic
+    @Column(name = "ID_CORREO", nullable = false, precision = 0, insertable = false, updatable = false)
+    public long getIdCorreo() {
+		return idCorreo;
+	}
 
-    @Override
+	public void setIdCorreo(long idCorreo) {
+		this.idCorreo = idCorreo;
+	}
+
+	@ManyToOne
+    @JoinColumn(name = "ID_CORREO", referencedColumnName = "ID", nullable = false)
+    public Correo getCorreoByIdCorreo() {
+		return correoByIdCorreo;
+	}
+
+	public void setCorreoByIdCorreo(Correo correoByIdCorreo) {
+		this.correoByIdCorreo = correoByIdCorreo;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
