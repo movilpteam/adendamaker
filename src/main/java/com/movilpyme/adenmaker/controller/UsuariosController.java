@@ -11,7 +11,6 @@ import com.movilpyme.adenmaker.utils.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin2.os.windows.SECURITY_ATTRIBUTES;
 
 import javax.servlet.ServletException;
 import javax.sql.DataSource;

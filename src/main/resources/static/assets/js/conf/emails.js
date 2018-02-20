@@ -15,11 +15,8 @@ $(document).ready(function () {
        email.id = ID_CURRENT_EMAIL;
        email.nameUser = $('#user-name').val();
        email.pwd = $('#password').val();
-       email.initServer = $('#init-server').val();
        email.endServer = $('#end-server').val();
        email.entrancePort = $('#entrance-port').val();
-       email.exitPort = $('#exit-port').val();
-       email.issuerName = $('#issuer-name').val();
        sendPostAction(EMAIL_CONTROLLER_URL + 'save', email, saveEmail);
        return false;
     });
@@ -37,11 +34,8 @@ function loadTableEmail(data) {
             '<td>'+ data[i].id +'</td>' +
             '<td>'+ data[i].nameUser +'</td>' +
             '<td>'+ data[i].pwd +'</td>' +
-            '<td>'+ data[i].initServer +'</td>' +
             '<td>'+ data[i].endServer +'</td>' +
-            '<td>'+ data[i].entrancePort +'</td>' +
-            '<td>'+ data[i].exitPort +'</td>' +
-            '<td>'+ data[i].issuerName +'</td>';
+            '<td>'+ data[i].entrancePort +'</td>';
         $('#tbody_email').append(tr);
     }
 }
@@ -50,11 +44,8 @@ function cleanForm() {
 	ID_CURRENT_EMAIL = 0;
     $('#user-name').val('');
     $('#password').val('');
-    $('#init-server').val('');
     $('#end-server').val('');
     $('#entrance-port').val('');
-    $('#exit-port').val('');
-    $('#issuer-name').val('');
 }
 
 function onEditAction(id) {
@@ -65,11 +56,8 @@ function onEditResponse(data) {
 	ID_CURRENT_EMAIL = data.id;
     $('#user-name').val(data.nameUser);
     $('#password').val(data.pwd);
-    $('#init-server').val(data.initServer);
     $('#end-server').val(data.endServer);
     $('#entrance-port').val(data.entrancePort);
-    $('#exit-port').val(data.exitPort);
-    $('#issuer-name').val(data.issuerName);
     showEditCard();
 }
 

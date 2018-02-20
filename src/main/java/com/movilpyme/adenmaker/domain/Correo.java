@@ -13,11 +13,8 @@ public class Correo {
     private long id;
     private String nameUser;
     private String pwd;
-    private String initServer;
     private String endServer;
     private String entrancePort;
-    private String exitPort;
-    private String issuerName;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO, generator="correo_seq_gen")
@@ -49,15 +46,6 @@ public class Correo {
 	}
 	
 	@Basic
-    @Column(name = "INIT_SERVER", nullable = true, length = 100)
-	public String getInitServer() {
-		return initServer;
-	}
-	public void setInitServer(String initServer) {
-		this.initServer = initServer;
-	}
-	
-	@Basic
     @Column(name = "END_SERVER", nullable = true, length = 100)
 	public String getEndServer() {
 		return endServer;
@@ -75,34 +63,13 @@ public class Correo {
 		this.entrancePort = entrancePort;
 	}
 	
-	@Basic
-    @Column(name = "EXIT_PORT", nullable = true, length = 100)
-	public String getExitPort() {
-		return exitPort;
-	}
-	public void setExitPort(String exitPort) {
-		this.exitPort = exitPort;
-	}
-	
-	@Basic
-    @Column(name = "ISSUER_NAME", nullable = true, length = 100)
-	public String getIssuerName() {
-		return issuerName;
-	}
-	public void setIssuerName(String issuerName) {
-		this.issuerName = issuerName;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((endServer == null) ? 0 : endServer.hashCode());
 		result = prime * result + ((entrancePort == null) ? 0 : entrancePort.hashCode());
-		result = prime * result + ((exitPort == null) ? 0 : exitPort.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((initServer == null) ? 0 : initServer.hashCode());
-		result = prime * result + ((issuerName == null) ? 0 : issuerName.hashCode());
 		result = prime * result + ((nameUser == null) ? 0 : nameUser.hashCode());
 		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
 		return result;
@@ -126,22 +93,7 @@ public class Correo {
 				return false;
 		} else if (!entrancePort.equals(other.entrancePort))
 			return false;
-		if (exitPort == null) {
-			if (other.exitPort != null)
-				return false;
-		} else if (!exitPort.equals(other.exitPort))
-			return false;
 		if (id != other.id)
-			return false;
-		if (initServer == null) {
-			if (other.initServer != null)
-				return false;
-		} else if (!initServer.equals(other.initServer))
-			return false;
-		if (issuerName == null) {
-			if (other.issuerName != null)
-				return false;
-		} else if (!issuerName.equals(other.issuerName))
 			return false;
 		if (nameUser == null) {
 			if (other.nameUser != null)
