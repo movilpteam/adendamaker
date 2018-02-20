@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" name="csrf-token" content="XYZ123">
+<title>Addenda Maker - Correo Electrónico</title>
+<!-- Vendor styles -->
+<link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css">
+<link rel="stylesheet"
+	href="../../assets/zmdi/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="../../assets/css/animate.min.css">
+<link rel="stylesheet" href="../../assets/css/jquery.scrollbar.css">
+<link rel="stylesheet" href="../../assets/select2/css/select2.min.css">
+
+<!-- App styles -->
+<link rel="stylesheet" href="../../assets/material/css/app.min.css">
+<link rel="stylesheet" href="../../assets/css/custom.css">
+
+</head>
+<body data-ma-theme="green">
+	<main class="main">
+	<div class="page-loader">
+		<div class="page-loader__spinner">
+			<svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none"
+					stroke-width="2" stroke-miterlimit="10" />
+            </svg>
+		</div>
+	</div>
+	<div id="header_div"></div>
+	<aside class="sidebar" id="sidebar_div"></aside>
+	<section class="content" id="main_section">
+		<div class="row alert alert-dismissible"
+			style="display: none; margin-top: 10px" id="div-message">
+			<div class="col-12" id="message-content"></div>
+		</div>
+		<header class="content__title">
+			<h1>Correo Electrónico</h1>
+		</header>
+		<div style="margin-bottom: 10px" class="row">
+			<div class="col-10"></div>
+			<div class="col-2">
+				<button id="btn-add-email" type="button"
+					class="btn btn-primary float-right">
+					<i class="zmdi zmdi-folder-person"></i> Agregar Correo
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div id="table-card" class="card" style="width: 100%">
+				<div class="card-body">
+					<table id="emp-table" class="table mb-0">
+						<thead>
+							<tr>
+								<th></th>
+								<th>ID</th>
+								<th>Nombre de usuario</th>
+								<th>Contraseña</th>
+								<th>Servidor de entrada</th>
+								<th>Servidor de salida</th>
+								<th>Puerto de entrada</th>
+								<th>Puerto de salida</th>
+								<th>Nombre del emisor</th>
+							</tr>
+						</thead>
+						<tbody id="tbody_email"></tbody>
+					</table>
+				</div>
+			</div>
+			<div id="edit-card" class="card" style="width: 100%; display: none">
+				<div class="card-header">
+					<label class="title-edit">Agregar/Editar Correo</label>
+				</div>
+				<div class="card-body">
+					<form id="new-email-form" method="post">
+						<div class="row">
+
+							<div class="col-4">
+								<div class="form-group">
+									<label for="user-name">Nombre de usuario</label> <input
+										data-validation-length="min3" type="text" id="user-name"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="password">Contraseña</label> <input
+										data-validation-length="min5" type="password" id="password"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="init-server">Servidor de entrada</label> <input
+										data-validation-length="min3" type="text" id="init-server"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="end-server">Servidor de salida</label> <input
+										data-validation-length="min3" type="text" id="end-server"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="entrance-port">Puerto de entrada</label> <input
+										data-validation="number" data-validation-length="min3"
+										type="text" id="entrance-port"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="exit-port">Puerto de salida</label> <input
+										data-validation="number" data-validation-length="min3"
+										type="text" id="exit-port"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<label for="issuer-name">Nombre del emisor</label> <input
+										data-validation-length="min3" type="text" id="issuer-name"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
+								</div>
+							</div>
+
+						</div>
+					</form>
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-8"></div>
+						<div class="col-4">
+							<button style="margin-left: 5px" id="btn-cancel-email"
+								type="button" class="btn btn-outline-danger float-right">
+								<i class="zmdi zmdi-leak-remove"></i> Cancelar
+							</button>
+							<button id="btn-save-email" type="button"
+								class="btn btn-outline-primary float-right"
+								onclick="$('#new-email-form').submit();">
+								<i class="zmdi zmdi-save"></i> Grabar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</main>
+
+	<!-- Javascript -->
+	<!-- Vendors -->
+	<script src="../../assets/js/vendors/jquery/jquery.min.js"></script>
+	<script src="../../assets/js/vendors/popper/umd/popper.min.js"></script>
+	<script src="../../assets/js/vendors/bootstrap/bootstrap.js"></script>
+	<script src="../../assets/js/vendors/jquery.scrollbar.min.js"></script>
+	<script src="../../assets/js/vendors/jquery-scrollLock.min.js"></script>
+	<script src="../../assets/js/vendors/jquery.sparkline.min.js"></script>
+	<script src="../../assets/js/vendors/moment/min/moment.min.js"></script>
+	<script src="../../assets/select2/js/select2.full.min.js"></script>
+
+	<!-- JQuery Validator -->
+	<script src="../../assets/js/vendors/jquery.form-validator.js"></script>
+
+	<!-- App functions and actions -->
+	<script src="../../assets/material/js/app.min.js"></script>
+	<script src="../../assets/js/general.js"></script>
+	<script src="../../assets/js/modelos.js"></script>
+	<script src="../../assets/js/conf/emails.js"></script>
+</body>
+</html>

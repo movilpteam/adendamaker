@@ -92,4 +92,67 @@ public class Correo {
 	public void setIssuerName(String issuerName) {
 		this.issuerName = issuerName;
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endServer == null) ? 0 : endServer.hashCode());
+		result = prime * result + ((entrancePort == null) ? 0 : entrancePort.hashCode());
+		result = prime * result + ((exitPort == null) ? 0 : exitPort.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((initServer == null) ? 0 : initServer.hashCode());
+		result = prime * result + ((issuerName == null) ? 0 : issuerName.hashCode());
+		result = prime * result + ((nameUser == null) ? 0 : nameUser.hashCode());
+		result = prime * result + ((pwd == null) ? 0 : pwd.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Correo other = (Correo) obj;
+		if (endServer == null) {
+			if (other.endServer != null)
+				return false;
+		} else if (!endServer.equals(other.endServer))
+			return false;
+		if (entrancePort == null) {
+			if (other.entrancePort != null)
+				return false;
+		} else if (!entrancePort.equals(other.entrancePort))
+			return false;
+		if (exitPort == null) {
+			if (other.exitPort != null)
+				return false;
+		} else if (!exitPort.equals(other.exitPort))
+			return false;
+		if (id != other.id)
+			return false;
+		if (initServer == null) {
+			if (other.initServer != null)
+				return false;
+		} else if (!initServer.equals(other.initServer))
+			return false;
+		if (issuerName == null) {
+			if (other.issuerName != null)
+				return false;
+		} else if (!issuerName.equals(other.issuerName))
+			return false;
+		if (nameUser == null) {
+			if (other.nameUser != null)
+				return false;
+		} else if (!nameUser.equals(other.nameUser))
+			return false;
+		if (pwd == null) {
+			if (other.pwd != null)
+				return false;
+		} else if (!pwd.equals(other.pwd))
+			return false;
+		return true;
+	}
 }

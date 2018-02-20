@@ -38,3 +38,24 @@ function UserRoles() {
     this.usuariosByIdUser = new Usuarios();
     this.rolesByIdRole = new Roles();
 }
+
+function CorreoPlantilla(){
+	this.id = 0;
+	this.nombre = "";
+	this.asunto = "";
+	this.body = "";
+	this.html = "";
+	this.idCorreo = 0;
+    this.correoByIdCorreo = new Correo();
+}
+
+function Correo(){
+	this.id = 0;
+	this.nameUser = "";
+	this.pwd = "";
+	this.initServer = "";
+	this.endServer = "";
+	this.entrancePort = "";
+	this.exitPort = "";
+	this.issuerName = "";
+}

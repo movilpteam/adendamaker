@@ -44,4 +44,9 @@ public class WebController {
     	new Utils().copyFile(file);
         return "/pages/conf/logo.html";
     }
+    
+    @RequestMapping("/conf/email")
+    public String getCorreo(Model model) {
+        return "/pages/conf/email.html";
+    }
 }
