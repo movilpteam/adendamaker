@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" name="csrf-token" content="XYZ123">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Addenda Maker - Correo Electrónico</title>
 <!-- Vendor styles -->
 <link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css">
@@ -14,6 +15,7 @@
 <!-- App styles -->
 <link rel="stylesheet" href="../../assets/material/css/app.min.css">
 <link rel="stylesheet" href="../../assets/css/custom.css">
+<link rel="stylesheet" href="../../assets/js/vendors/jquery-te/jquery-te-1.4.0.css">
 
 </head>
 <body data-ma-theme="green">
@@ -57,6 +59,7 @@
 								<th>Contraseña</th>
 								<th>Servidor de salida</th>
 								<th>Puerto de entrada</th>
+								<th>Plantilla</th>
 							</tr>
 						</thead>
 						<tbody id="tbody_email"></tbody>
@@ -70,7 +73,6 @@
 				<div class="card-body">
 					<form id="new-email-form" method="post">
 						<div class="row">
-
 							<div class="col-4">
 								<div class="form-group">
 									<label for="user-name">Nombre de usuario</label> <input
@@ -82,7 +84,7 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="password">Contraseña</label> <input
-										data-validation-length="min5" type="password" id="password"
+										data-validation-length="min5" type="text" id="password"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
@@ -127,6 +129,48 @@
 		</div>
 	</section>
 	</main>
+	
+	<div id="mi-modal-email" class="modal fade bd-example-modal-lg"
+		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Plantillas</h5>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<ul class="nav nav-tabs">
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#welcome">Bienvenida</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#reset">Reset de contraseña</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#recover">Recuperación de contraseña</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div id="welcome" class="tab-pane fade in active">
+								<textarea class="editor-welcome" name="text1"></textarea>
+							</div>
+							<div id="reset" class="tab-pane fade">
+								<textarea class="editor-reset" name="text2"></textarea>
+							</div>
+							<div id="recover" class="tab-pane fade">
+								<textarea class="editor-recover" name="text3"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id="modal-btn-si">Guardar</button>
+					<button type="button" class="btn btn-primary" id="modal-btn-no">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Javascript -->
 	<!-- Vendors -->
@@ -138,7 +182,8 @@
 	<script src="../../assets/js/vendors/jquery.sparkline.min.js"></script>
 	<script src="../../assets/js/vendors/moment/min/moment.min.js"></script>
 	<script src="../../assets/select2/js/select2.full.min.js"></script>
-
+	<script src="../../assets/js/vendors/jquery-te/jquery-te-1.4.0.min.js"></script>
+	
 	<!-- JQuery Validator -->
 	<script src="../../assets/js/vendors/jquery.form-validator.js"></script>
 

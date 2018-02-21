@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movilpyme.adenmaker.bean.StpSelCursorRes;
 import com.movilpyme.adenmaker.domain.Correo;
+import com.movilpyme.adenmaker.domain.CorreoPlantilla;
+import com.movilpyme.adenmaker.persistence.dao.ApplicationBuroDao;
 import com.movilpyme.adenmaker.repository.EmailRepo;
 
 @RestController
@@ -19,6 +22,8 @@ import com.movilpyme.adenmaker.repository.EmailRepo;
 public class EmailController {
 
     private final EmailRepo emailRepo;
+    @Autowired
+	private ApplicationBuroDao catalogoDao;
 
     @Autowired
     public EmailController(EmailRepo emailRepo) {
@@ -51,6 +56,18 @@ public class EmailController {
         try {
         	emailRepo.save(correo);
             return true;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+    
+    @RequestMapping(value = "findSelTemplate", method = RequestMethod.POST)
+    public StpSelCursorRes findSelTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
+        if (correoPlantilla == null){
+            throw new ServletException("Correo Plantilla Inválido");
+        }
+        try {
+            return catalogoDao.stpSelTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre());
         }catch (Exception e){
             throw new ServletException(e.getMessage());
         }
