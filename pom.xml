@@ -58,6 +58,11 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.0.5.RELEASE</version>
+		</dependency>
         <!-- ORACLE JDBC Driver -->
         <dependency>
             <groupId>com.oracle</groupId>
