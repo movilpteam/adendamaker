@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Correo {
     private long id;
@@ -15,6 +17,7 @@ public class Correo {
     private String pwd;
     private String endServer;
     private String entrancePort;
+    private boolean certificate;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO, generator="correo_seq_gen")
@@ -63,10 +66,21 @@ public class Correo {
 		this.entrancePort = entrancePort;
 	}
 	
+	@Basic
+    @Type(type = "yes_no")
+    @Column(name = "CERTIFICATE")
+	public boolean isCertificate() {
+		return certificate;
+	}
+	public void setCertificate(boolean certificate) {
+		this.certificate = certificate;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (certificate ? 1231 : 1237);
 		result = prime * result + ((endServer == null) ? 0 : endServer.hashCode());
 		result = prime * result + ((entrancePort == null) ? 0 : entrancePort.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
@@ -83,6 +97,8 @@ public class Correo {
 		if (getClass() != obj.getClass())
 			return false;
 		Correo other = (Correo) obj;
+		if (certificate != other.certificate)
+			return false;
 		if (endServer == null) {
 			if (other.endServer != null)
 				return false;

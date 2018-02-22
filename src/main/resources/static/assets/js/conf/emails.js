@@ -17,6 +17,11 @@ $(document).ready(function () {
        email.pwd = $('#password').val();
        email.endServer = $('#end-server').val();
        email.entrancePort = $('#entrance-port').val();
+       if($('#combo-ssl').val() == 'Si'){
+    	   email.certificate = true;
+       } else {
+    	   email.certificate = false;
+       }
        sendPostAction(EMAIL_CONTROLLER_URL + 'save', email, saveEmail);
        return false;
     });

@@ -58,4 +58,5 @@ function Correo(){
 	this.entrancePort = "";
 	this.exitPort = "";
 	this.issuerName = "";
+	this.certificate = true;
 }
