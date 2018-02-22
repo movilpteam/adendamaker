@@ -19,3 +19,6 @@ INSERT INTO AW_ADMIN.USUARIOS(
   CAMBIAR_PWD,
   PASSWORD,
   ID_EMPRESA) VALUES ('admin', 'Administrador', '', '', '', 'Y', 'N', '$2a$10$/oVsMeMEz2FoaxpUEEiTB.Rypjm3KXR4dmynzIoShH2grbEyqvY0a', 1);
+
+-- Se asigna el Role Super-Administrador al usuario creado --
+INSERT INTO AW_ADMIN.USER_ROLES (ID_USER, ID_ROLE) VALUES (1, 1);
