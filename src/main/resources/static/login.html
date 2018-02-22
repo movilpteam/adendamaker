@@ -24,17 +24,18 @@
             <i class="zmdi zmdi-account-circle"></i>
             Iniciar Sesion
 
-            <div class="actions actions--inverse login__block__actions">
-                <div class="dropdown">
+            <div class="actions actions&#45;&#45;inverse login__block__actions">
+                <a style="display: none" id="a_chgpwd" class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href=""></a>
+                <!--<div class="dropdown">
                     <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create
+                        <a id="a_chgpwd" class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-register" href="">Create
                             an account</a>
                         <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
                            href="">Forgot password?</a>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
 
@@ -53,7 +54,8 @@
             <button class="btn btn--icon login__block__btn" onclick="checkCredentials()">
                 <i class="zmdi zmdi-long-arrow-right"></i>
             </button>
-
+            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+               href="">¿Olvidaste tu Contraseña?</a>
         </div>
     </div>
 
@@ -61,9 +63,9 @@
     <div class="login__block" id="l-register">
         <div class="login__block__header palette-Blue bg">
             <i class="zmdi zmdi-account-circle"></i>
-            Create an account
+            Cambiar Contraseña
 
-            <div class="actions actions--inverse login__block__actions">
+           <!-- <div class="actions actions&#45;&#45;inverse login__block__actions">
                 <div class="dropdown">
                     <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
 
@@ -74,37 +76,33 @@
                            href="">Forgot password?</a>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div class="login__block__body">
+            <p class="mt-4">
+                Es necesario que cambies tu contraseña
+            </p>
             <div class="form-group form-group--float form-group--centered">
-                <input type="text" class="form-control">
-                <label>Name</label>
+                <input id="chg_pwd_actual" type="password" class="form-control">
+                <label>Contraseña Actual</label>
                 <i class="form-group__bar"></i>
             </div>
 
             <div class="form-group form-group--float form-group--centered">
-                <input type="text" class="form-control">
-                <label>Email Address</label>
+                <input id="chg_pwd_new" type="password" class="form-control">
+                <label>Nueva Contraseña</label>
                 <i class="form-group__bar"></i>
             </div>
 
             <div class="form-group form-group--float form-group--centered">
-                <input type="password" class="form-control">
-                <label>Password</label>
+                <input id="chg_pwd_confirm" type="password" class="form-control">
+                <label>Confirmar Contraseña</label>
                 <i class="form-group__bar"></i>
             </div>
-
-            <div class="form-group">
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description">Accept the license agreement</span>
-                </label>
-            </div>
-
-            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            <button onclick="btnchangeInitPwd()" class="btn btn--icon login__block__btn">
+                <i class="zmdi zmdi-check"></i>
+            </button>
         </div>
     </div>
 
@@ -112,9 +110,9 @@
     <div class="login__block" id="l-forget-password">
         <div class="login__block__header palette-Purple bg">
             <i class="zmdi zmdi-account-circle"></i>
-            Forgot Password?
+            ¿Olvidaste tu contraseña?
 
-            <div class="actions actions--inverse login__block__actions">
+           <!-- <div class="actions actions&#45;&#45;inverse login__block__actions">
                 <div class="dropdown">
                     <i data-toggle="dropdown" class="zmdi zmdi-more-vert actions__item"></i>
 
@@ -125,19 +123,20 @@
                             an account</a>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <div class="login__block__body">
-            <p class="mt-4">Lorem ipsum dolor fringilla enim feugiat commodo sed ac lacus.</p>
+            <p class="mt-4">Ingresar tu Nombre de Usuario. Se enviara la nueva contraseña a tu correo configurado</p>
 
             <div class="form-group form-group--float form-group--centered">
                 <input type="text" class="form-control">
-                <label>Email Address</label>
+                <label>Nombre de Usuario</label>
                 <i class="form-group__bar"></i>
             </div>
 
             <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            <a id="a_login" class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Regresar a Iniciar Sesion</a>
         </div>
     </div>
 </div>

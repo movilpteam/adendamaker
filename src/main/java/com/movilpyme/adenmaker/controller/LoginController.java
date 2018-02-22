@@ -52,6 +52,9 @@ public class LoginController {
         if (!BCrypt.checkpw(requestData.get("pwd"), user.getPassword())){
             throw new ServletException("Usuario o contraseña Incorrecta");
         }
+        if (loginRepo.findAllByUsuarioAndActivaTrue(user).size() > 0){
+            throw new ServletException("Ya existe una sesion activa. Cierre la sesion o contacte al Administrador");
+        }
         try {
             Login login = new Login();
             login.setUsuario(user);

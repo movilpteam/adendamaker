@@ -16,17 +16,17 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    @Value("$(jwt.header)")
-    private String AUTH_HEADER;
+    /*@Value("$(jwt.header)")
+    private String AUTH_HEADER;*/
 
     @Autowired
     private TokenHelper tokenHelper;
 
     @Autowired
-    private UserDetailsService userDetailsServiceImpl;
+    private UserDetailServiceImpl userDetailsServiceImpl;
 
     private String getToken(HttpServletRequest request) {
-        String authHeader = request.getHeader(AUTH_HEADER);
+        String authHeader = request.getHeader(SecurityConstants.HEADER_STRING);
         if ( authHeader != null && authHeader.startsWith("Bearer ")){
             return authHeader.substring(7);
         }
@@ -57,7 +57,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             error = "Authentication failed - no Bearer token provided.";
         }
         if( ! error.equals("")){
-            System.out.println(error);
+            // System.out.println(error);
             SecurityContextHolder.getContext().setAuthentication( new AnonAuthentication() );//prevent show login form...
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

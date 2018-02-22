@@ -3,6 +3,7 @@ package com.movilpyme.adenmaker.utils;
 import java.io.File;
 import java.io.Serializable;
 
+import com.movilpyme.adenmaker.domain.Usuarios;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.FileCopyUtils;

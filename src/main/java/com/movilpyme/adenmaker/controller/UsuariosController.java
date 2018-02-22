@@ -1,8 +1,10 @@
 package com.movilpyme.adenmaker.controller;
 
+import com.movilpyme.adenmaker.domain.Login;
 import com.movilpyme.adenmaker.domain.Roles;
 import com.movilpyme.adenmaker.domain.UserRoles;
 import com.movilpyme.adenmaker.domain.Usuarios;
+import com.movilpyme.adenmaker.repository.LoginRepo;
 import com.movilpyme.adenmaker.repository.RolesRepo;
 import com.movilpyme.adenmaker.repository.UserRolesRepo;
 import com.movilpyme.adenmaker.repository.UsuariosRepo;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,13 +31,15 @@ public class UsuariosController {
     private final UsuariosRepo usuariosRepo;
     private final RolesRepo rolesRepo;
     private final UserRolesRepo userRolesRepo;
+    private final LoginRepo loginRepo;
     private final SendMail sendMail;
 
     @Autowired
-    public UsuariosController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, SendMail sendMail) {
+    public UsuariosController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, SendMail sendMail) {
         this.usuariosRepo = usuariosRepo;
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
+        this.loginRepo = loginRepo;
         this.sendMail = sendMail;
     }
 
@@ -49,10 +55,14 @@ public class UsuariosController {
         if (!BCrypt.checkpw(requestData.get("actual"), user.getPassword())){
             throw new ServletException("Información Inválida");
         }
-        user.setPassword(BCrypt.hashpw(requestData.get("nuevo"), BCrypt.gensalt()));
-        user.setCambiarPwd(requestData.get("changePwd") != null);
-        usuariosRepo.save(user);
-        return true;
+        try {
+            user.setPassword(BCrypt.hashpw(requestData.get("nuevo"), BCrypt.gensalt()));
+            user.setCambiarPwd(requestData.get("changePwd") != null);
+            usuariosRepo.save(user);
+            return true;
+        } catch (Exception e) {
+            throw new ServletException(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "roles/{iduser}", method = RequestMethod.POST)
@@ -83,7 +93,7 @@ public class UsuariosController {
         try {
             if (user.getId() == 0){
                 String str_pwd = PwdGenerator.generatePassword(8);
-                String hash_pwd = BCrypt.hashpw(str_pwd, BCrypt.gensalt());
+                String hash_pwd = PwdGenerator.passwordSHA512(str_pwd);
                 String username = user.getNombre().substring(0,1) + user.getApaterno();
                 if (usuariosRepo.countByUsername(username.toLowerCase()) > 0){
                     username = user.getNombre().substring(0,1) + user.getApaterno().substring(0,2) + user.getAmaterno().substring(0,2);
@@ -92,7 +102,7 @@ public class UsuariosController {
                 to[0] = user.getCorreo();
                 sendMail.sendWelcomeEmail("Bienvenido a AddenMaker", str_pwd, username.toLowerCase(), to);
                 user.setUsername(username.toLowerCase());
-                user.setPassword(hash_pwd);
+                user.setPassword(BCrypt.hashpw(hash_pwd, BCrypt.gensalt()));
                 user.setEnabled(true);
                 user.setCambiarPwd(true);
                 user.setLastPwdChg(new Date());
@@ -111,5 +121,19 @@ public class UsuariosController {
         }catch (Exception ex) {
             throw new ServletException(ex.getMessage());
         }
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    public boolean logout(@RequestBody Login login) throws ServletException {
+        if (login == null){
+            throw new ServletException("Login Invalido");
+        }
+        Login l = loginRepo.findOne(login.getId());
+        l.setBeat(new Date());
+        l.setFecha_final(new Date());
+        l.setLogout_comments("LogOut Correcto Solicitado por Usuario");
+        l.setActiva(false);
+        loginRepo.save(l);
+        return true;
     }
 }

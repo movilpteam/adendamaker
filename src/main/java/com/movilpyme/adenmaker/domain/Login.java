@@ -12,8 +12,10 @@ public class Login {
     private String token;
     private Date fecha_inicio;
     private Date fecha_final;
+    private Date beat;
     private Usuarios usuario;
     private boolean activa;
+    private String logout_comments;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO, generator="login_seq_gen")
@@ -38,7 +40,7 @@ public class Login {
     }
 
     @Basic
-    @Column(name = "TOKEN", nullable = true, length = 200)
+    @Column(name = "TOKEN", nullable = true, length = 250)
     public String getToken() {
         return token;
     }
@@ -67,6 +69,16 @@ public class Login {
         this.fecha_final = fecha_final;
     }
 
+    @Basic
+    @Column(name = "BEAT")
+    public Date getBeat() {
+        return beat;
+    }
+
+    public void setBeat(Date beat) {
+        this.beat = beat;
+    }
+
     @ManyToOne
     @JoinColumn(name = "ID_USER", referencedColumnName = "ID", nullable = false)
     public Usuarios getUsuario() {
@@ -86,5 +98,15 @@ public class Login {
 
     public void setActiva(boolean activa) {
         this.activa = activa;
+    }
+
+    @Basic
+    @Column(name = "LOGOUT_COMMENTS", length = 250)
+    public String getLogout_comments() {
+        return logout_comments;
+    }
+
+    public void setLogout_comments(String logout_comments) {
+        this.logout_comments = logout_comments;
     }
 }
