@@ -124,20 +124,20 @@ modalConfirm(function(confirm) {
 		
 		correoPlantilla.id = ID_CURRENT_EMAIL;
 		correoPlantilla.nombre = 'welcome';
-		correoPlantilla.asunto = $('#asunto-welcome').val();
-		correoPlantilla.body = $('.editor-welcome').val();
+		correoPlantilla.asunto = "" + $('#asunto-welcome').val();
+		correoPlantilla.body = "" + $('.editor-welcome').val();
 		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
 		
 		correoPlantilla.id = ID_CURRENT_EMAIL;
 		correoPlantilla.nombre = 'reset';
-		correoPlantilla.asunto = $('#asunto-reset').val();
-		correoPlantilla.body = $('.editor-reset').val();
+		correoPlantilla.asunto = "" + $('#asunto-reset').val();
+		correoPlantilla.body = "" + $('.editor-reset').val();
 		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
 		
 		correoPlantilla.id = ID_CURRENT_EMAIL;
 		correoPlantilla.nombre = 'recover';
-		correoPlantilla.asunto = $('#asunto-recover').val();
-		correoPlantilla.body = $('.editor-recover').val();
+		correoPlantilla.asunto = "" + $('#asunto-recover').val();
+		correoPlantilla.body = "" + $('.editor-recover').val();
 		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
 	} else {
 		//Acciones si el usuario no confirma

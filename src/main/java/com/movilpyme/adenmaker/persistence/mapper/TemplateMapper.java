@@ -11,9 +11,9 @@ public class TemplateMapper implements ParameterizedRowMapper<CorreoPlantilla>{
 	
 	public CorreoPlantilla mapRow(ResultSet rs, int rowNum) throws SQLException {
 		CorreoPlantilla list = new CorreoPlantilla();
-		list.setAsunto(rs.getString("ASUNTO"));
-		list.setBody(rs.getString("BODY"));
-		list.setNombre(rs.getString("NOMBRE"));
+		list.setAsunto(rs.getString("ASUNTO") == null ? "" : rs.getString("ASUNTO"));
+		list.setBody(rs.getString("BODY") == null ? "" : rs.getString("BODY"));
+		list.setNombre(rs.getString("NOMBRE") == null ? "" : rs.getString("NOMBRE"));
 		return list;
 	}	
 }
