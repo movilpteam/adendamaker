@@ -7,7 +7,7 @@ $(document).ready(function () {
         showEditCard();
     });
     $('#btn-cancel-email').on('click', function () {
-        showDivMessage('Accion Cancelada. No se guardaron los cambios', 'alert-danger', 3000);
+        showDivMessage('Acción Cancelada. No se guardaron los cambios', 'alert-danger', 3000);
         showTableCard();
     });
     $('#new-email-form').on('submit', function () {
@@ -40,7 +40,7 @@ function loadTableEmail(data) {
             '<td>'+ data[i].pwd +'</td>' +
             '<td>'+ data[i].endServer +'</td>' +
             '<td>'+ data[i].entrancePort +'</td>' + 
-            '<td><i style="cursor: pointer" class="zmdi zmdi-globe-alt btn-link" onclick="onModalAction('+ data[i].id +')"></i></td>';
+            '<td><i style="cursor: pointer" class="zmdi zmdi-globe-alt btn-link" onclick="onModalAction('+ data[i].id +',\''+ data[i].nameUser +'\')"></i></td>';
         $('#tbody_email').append(tr);
     }
 }
@@ -57,7 +57,9 @@ function onEditAction(id) {
     sendPostAction(EMAIL_CONTROLLER_URL + 'byId/' + id, null, onEditResponse);
 }
 
-function onModalAction(id){
+function onModalAction(id, nameUserTemplate){
+	ID_CURRENT_EMAIL = id;
+	$('#user-name-templete').text("- " + nameUserTemplate);
 	// Llenar editor
 	var correoPlantilla = new CorreoPlantilla();
 	correoPlantilla.id = id;
@@ -117,18 +119,37 @@ var modalConfirm = function(callback) {
 };
 modalConfirm(function(confirm) {
 	if (confirm) {
-		//Acciones si el usuario confirma
-		var valEditor = $('.editor-welcome').val();
-		var valEditor = $('.editor-reset').val();
-		var valEditor = $('.editor-recover').val();
+		// Guardado welcome
+		var correoPlantilla = new CorreoPlantilla();
+		
+		correoPlantilla.id = ID_CURRENT_EMAIL;
+		correoPlantilla.nombre = 'welcome';
+		correoPlantilla.asunto = $('#asunto-welcome').val();
+		correoPlantilla.body = $('.editor-welcome').val();
+		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		
+		correoPlantilla.id = ID_CURRENT_EMAIL;
+		correoPlantilla.nombre = 'reset';
+		correoPlantilla.asunto = $('#asunto-reset').val();
+		correoPlantilla.body = $('.editor-reset').val();
+		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		
+		correoPlantilla.id = ID_CURRENT_EMAIL;
+		correoPlantilla.nombre = 'recover';
+		correoPlantilla.asunto = $('#asunto-recover').val();
+		correoPlantilla.body = $('.editor-recover').val();
+		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
 	} else {
 		//Acciones si el usuario no confirma
 		initEditor();
-		showDivMessage('Accion Cancelada en Plantilla. No se guardaron los cambios', 'alert-danger', 3000);
+		showDivMessage('Acción Cancelada en Plantilla. No se guardaron los cambios', 'alert-danger', 3000);
 	}
 });
 
 function initEditor(){
+	$('#asunto-welcome').val("");
+	$('#asunto-reset').val("");
+	$('#asunto-recover').val("");
 	$('.editor-welcome').jqteVal("");
 	$('.editor-reset').jqteVal("");
 	$('.editor-recover').jqteVal("");
@@ -136,24 +157,40 @@ function initEditor(){
 
 function loadEditorWelcome(data) {
 	if(data.pContent.length > 0){
+		$('#asunto-welcome').val("" + data.pContent[0].asunto);
 		$('.editor-welcome').jqteVal("" + data.pContent[0].body);
 	} else {
+		$('#asunto-welcome').val("");
 		$('.editor-welcome').jqteVal("");
 	}
 }
 
 function loadEditorReset(data) {
 	if(data.pContent.length > 0){
+		$('#asunto-reset').val("" + data.pContent[0].asunto);
 		$('.editor-reset').jqteVal("" + data.pContent[0].body);
 	} else {
+		$('#asunto-reset').val("");
 		$('.editor-reset').jqteVal("");
 	}
 }
 
 function loadEditorRecover(data) {
 	if(data.pContent.length > 0){
+		$('#asunto-recover').val("" + data.pContent[0].asunto);
 		$('.editor-recover').jqteVal("" + data.pContent[0].body);
 	} else {
+		$('#asunto-recover').val("");
 		$('.editor-recover').jqteVal("");
+	}
+}
+
+function saveEditor(data) {
+	if(data.pSpStatus == 0){
+		initEditor();
+		showDivMessage(data.pSpStatusMsg, 'alert-info', 3000);
+	} else {
+		initEditor();
+		showDivMessage(data.pSpStatusMsg, 'alert-danger', 3000);
 	}
 }

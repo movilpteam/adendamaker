@@ -136,7 +136,7 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Plantillas</h5>
+					<h5 class="modal-title">Plantillas <label id="user-name-templete"></label></h5>
 				</div>
 				<div class="modal-body">
 					<div class="container">
@@ -153,13 +153,43 @@
 						</ul>
 						<div class="tab-content">
 							<div id="welcome" class="tab-pane fade in active">
-								<textarea class="editor-welcome" name="text1"></textarea>
+								<div class="row">
+									<div class="col-11">
+										<div class="form-group">
+											<label for="asunto-welcome">Asunto</label> <input
+												data-validation-length="min3" type="text"
+												id="asunto-welcome" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
+										</div>
+									</div>
+								</div>
+								<textarea class="editor-welcome" name="text-welcome"></textarea>
 							</div>
 							<div id="reset" class="tab-pane fade">
-								<textarea class="editor-reset" name="text2"></textarea>
+								<div class="row">
+									<div class="col-11">
+										<div class="form-group">
+											<label for="asunto-reset">Asunto</label> <input
+												data-validation-length="min3" type="text"
+												id="asunto-reset" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
+										</div>
+									</div>
+								</div>
+								<textarea class="editor-reset" name="text-reset"></textarea>
 							</div>
 							<div id="recover" class="tab-pane fade">
-								<textarea class="editor-recover" name="text3"></textarea>
+								<div class="row">
+									<div class="col-11">
+										<div class="form-group">
+											<label for="asunto-recover">Asunto</label> <input
+												data-validation-length="min3" type="text"
+												id="asunto-recover" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
+										</div>
+									</div>
+								</div>
+								<textarea class="editor-recover" name="text-recover"></textarea>
 							</div>
 						</div>
 					</div>

@@ -5,9 +5,13 @@ import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +26,8 @@ public class CorreoPlantilla {
     private Correo correoByIdCorreo;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="correo_plantilla_seq_gen")
+    @SequenceGenerator(name="correo_plantilla_seq_gen", sequenceName="CORREO_PLANTILLA_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
         return id;
@@ -52,7 +58,8 @@ public class CorreoPlantilla {
     }
 
     @Basic
-    @Column(name = "BODY", nullable = true, length = 500)
+    @Lob
+    @Column(name = "BODY", nullable = true)
     public String getBody() {
         return body;
     }

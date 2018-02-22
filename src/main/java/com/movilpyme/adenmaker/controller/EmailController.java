@@ -23,7 +23,7 @@ public class EmailController {
 
     private final EmailRepo emailRepo;
     @Autowired
-	private ApplicationBuroDao catalogoDao;
+	private ApplicationBuroDao applicationBuroDao;
 
     @Autowired
     public EmailController(EmailRepo emailRepo) {
@@ -67,7 +67,19 @@ public class EmailController {
             throw new ServletException("Correo Plantilla Inválido");
         }
         try {
-            return catalogoDao.stpSelTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre());
+            return applicationBuroDao.stpSelTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre());
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+    
+    @RequestMapping(value = "callInsTemplate", method = RequestMethod.POST)
+    public StpSelCursorRes callInsTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
+        if (correoPlantilla == null){
+            throw new ServletException("Correo Plantilla Inválido");
+        }
+        try {
+            return applicationBuroDao.stpInsTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre(), correoPlantilla.getAsunto(), correoPlantilla.getBody());
         }catch (Exception e){
             throw new ServletException(e.getMessage());
         }
