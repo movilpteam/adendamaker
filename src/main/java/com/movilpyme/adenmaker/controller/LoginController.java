@@ -7,6 +7,7 @@ import com.movilpyme.adenmaker.repository.RolesRepo;
 import com.movilpyme.adenmaker.repository.UserRolesRepo;
 import com.movilpyme.adenmaker.repository.UsuariosRepo;
 import com.movilpyme.adenmaker.security.TokenHelper;
+import com.movilpyme.adenmaker.utils.PwdGenerator;
 import com.movilpyme.adenmaker.utils.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Map;
 
@@ -38,6 +41,29 @@ public class LoginController {
         this.loginRepo = loginRepo;
         this.sendMail = sendMail;
         this.tokenHelper = tokenHelper;
+    }
+
+    @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
+    public boolean resetPassword(@RequestBody Map<String, String> requestData) throws ServletException {
+        if (requestData.get("username") == null){
+            throw new ServletException("No proporciono nombre de usuario");
+        }
+        Usuarios user = usuariosRepo.findByUsername(requestData.get("username"));
+        if (user != null){
+            try {
+                String str_pwd = PwdGenerator.generatePassword(8);
+                String hash_pwd = PwdGenerator.passwordSHA512(str_pwd);
+                String[] to = new String[1];
+                to[0] = user.getCorreo();
+                user.setPassword(BCrypt.hashpw(hash_pwd, BCrypt.gensalt()));
+                user.setCambiarPwd(true);
+                usuariosRepo.save(user);
+                sendMail.sendResetPwdEmail("Reseteo de Contraseña", str_pwd, user.getUsername(), to);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return true;
     }
 
     @RequestMapping(value = "credentials", method = RequestMethod.POST)

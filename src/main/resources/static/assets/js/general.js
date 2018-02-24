@@ -6,25 +6,19 @@ $(function () {
             $('div.user__name').text(login.usuario.nombre + ' ' + login.usuario.apaterno);
             $('div.user__email').text(login.usuario.correo);
         });
-        $(document).inactivity({
-            timeout: 15000
-        });
-        $(document).on('inactivity', function () {
-            showDivMessage("La sesion de cerrará por inactividad en <label id='seg_to_close'></label> segundos", 'alert-danger', 8000);
-            showMessageInactivity(5);
+        $.jTimeout({
+            'timeoutAfter': 1800,
+            'heartbeat': 1,
+            'secondsPrior': 30,
+            'flashingTitleText': 'Sesion por Terminar',
+            'onTimeout': function (jTimeout) {
+                logout();
+            }
         });
     }else {
         // window.location = '/';
     }
 });
-
-function showMessageInactivity(seg) {
-    if (seg > 0){
-        seg--;
-        $('#seg_to_close').text(seg);
-        setTimeout(showMessageInactivity(seg), 1000);
-    }
-}
 
 // Funcion para enviar las peticiones al WS
 function sendPostAction(url, model, callBackFunction) {
@@ -99,7 +93,6 @@ function showDivMessage(message,divclass, time) {
 function logout() {
     var login = JSON.parse(sessionStorage.getItem('login'));
     if (login == null){
-        $(document).inactivity("destroy");
         window.location = "/";
     }else {
         sendPostAction(USER_CONTROLLER_URL + 'logout', login, logout_callback);
@@ -107,9 +100,8 @@ function logout() {
 }
 
 function logout_callback(data) {
-    if (data == true){
+    if (data === true){
         sessionStorage.clear();
-        $(document).inactivity("destroy");
         window.location = "/";
     }else {
         showDivMessage("Error al cerrar sesion", "alert-danger", 3000);

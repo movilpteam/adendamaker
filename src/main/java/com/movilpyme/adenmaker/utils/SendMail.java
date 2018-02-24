@@ -17,6 +17,13 @@ public class SendMail {
         this.mailSender = mailSender;
     }
 
+    public void sendResetPwdEmail(String subject, String newPwd, String username, String[] to) throws Exception {
+        String message = "Ha solicitado la creacion de una nueva contraseña para ingresar a AddendaMaker";
+        message = message + "<br><br>Su usuario para ingresar es: <strong>" + username + "</strong>";
+        message = message + "<br>Su clave temporal de acceso es: <strong>" + newPwd + "</strong>";
+        prepareAndSendMessage(message, subject, to);
+    }
+
     public void sendWelcomeEmail(String subject, String newPwd, String username, String[] to) throws Exception {
         String message = "Bienvenido al sistema de creacion de Addendas AddendaMaker";
         message = message + "<br><br>Su usuario para ingresar es: <strong>" + username + "</strong>";

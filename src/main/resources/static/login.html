@@ -130,12 +130,14 @@
             <p class="mt-4">Ingresar tu Nombre de Usuario. Se enviara la nueva contraseña a tu correo configurado</p>
 
             <div class="form-group form-group--float form-group--centered">
-                <input type="text" class="form-control">
+                <input id="username_reset" type="text" class="form-control">
                 <label>Nombre de Usuario</label>
                 <i class="form-group__bar"></i>
             </div>
 
-            <button href="index.html" class="btn btn--icon login__block__btn"><i class="zmdi zmdi-check"></i></button>
+            <button onclick="resetPassword()" class="btn btn--icon login__block__btn">
+                <i class="zmdi zmdi-check"></i>
+            </button>
             <a id="a_login" class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-login" href="">Regresar a Iniciar Sesion</a>
         </div>
     </div>

@@ -33,6 +33,8 @@ public class WebController {
     public String getEmpresaList(Model model) {
         return "/pages/adm/empresa.html";
     }
+
+    // Direcciones Modulo de Configuracion //
     
     @RequestMapping("/conf/logo")
     public String getLogo(Model model) {
@@ -48,5 +50,12 @@ public class WebController {
     @RequestMapping("/conf/email")
     public String getCorreo(Model model) {
         return "/pages/conf/email.html";
+    }
+
+    // Direcciones Modulo Addendas //
+
+    @RequestMapping("/addenda/list")
+    public String getListaAddendas(Model model) {
+        return "/pages/addenda/addenda_list.html";
     }
 }

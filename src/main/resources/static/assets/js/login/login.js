@@ -7,6 +7,18 @@ $(document).ready(function () {
     });
 });
 
+function resetPassword() {
+    var model = {
+        username: $('#username_reset').val()
+    };
+    sendPostLogin(LOGIN_CONTROLLER_URL + 'resetPwd', model, resetPasswordSend);
+}
+
+function resetPasswordSend() {
+    $('#a_login').trigger('click');
+    showDivMessage('Correo Enviado. Ingrese con su nueva Contraseña', 'alert-info', 4000);
+}
+
 function btnchangeInitPwd() {
     var login = JSON.parse(sessionStorage.getItem('login'));
     var model = {
