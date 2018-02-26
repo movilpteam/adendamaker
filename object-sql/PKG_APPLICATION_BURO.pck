@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE PKG_APPLICATION_BURO IS
+CREATE OR REPLACE AW_ADMIN.PACKAGE PKG_APPLICATION_BURO IS
   --
   /* ---------------------- DESCRIPCION ----------------------------------------------||
   || Paquete Cotrol de Aplicaciones JAVA                                              ||
@@ -53,7 +53,7 @@ CREATE OR REPLACE PACKAGE PKG_APPLICATION_BURO IS
   --
 END PKG_APPLICATION_BURO;
 /
-CREATE OR REPLACE PACKAGE BODY PKG_APPLICATION_BURO IS
+CREATE OR REPLACE PACKAGE BODY AW_ADMIN.PKG_APPLICATION_BURO IS
   --
   /* ---------------------- DESCRIPCION ----------------------------------------------||
   || Paquete Cotrol de Aplicaciones JAVA                                              ||
