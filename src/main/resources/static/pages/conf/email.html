@@ -76,8 +76,8 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="user-name">Nombre de usuario</label> <input
-										data-validation="required" data-validation-length="min3"
-										type="text" id="user-name"
+										data-validation="length alphanumeric"
+										data-validation-length="min3" type="text" id="user-name"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
@@ -85,16 +85,17 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="password">Contraseña</label> <input
-										data-validation="required" data-validation-length="min5"
-										type="password" id="password" class="form-control form-control-lg">
-									<i class="form-group__bar"></i>
+										data-validation="length alphanumeric"
+										data-validation-length="min3" type="password" id="password"
+										class="form-control form-control-lg"> <i
+										class="form-group__bar"></i>
 								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group">
 									<label for="end-server">Servidor de salida</label> <input
-										data-validation="required" data-validation-length="min3"
-										type="text" id="end-server"
+										data-validation="length alphanumeric"
+										data-validation-length="min3" type="text" id="end-server"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
@@ -102,17 +103,16 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="entrance-port">Puerto de entrada</label> <input
-										data-validation="number" data-validation-length="min3"
-										type="text" id="entrance-port"
+										data-validation="number"
+										data-validation-length="min2" type="text" id="entrance-port"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group">
-									<label for="combo-ssl">SSL</label> <select
-										id="combo-ssl" class="select2"
-										data-validation="required">
+									<label for="combo-ssl">SSL</label> <select id="combo-ssl"
+										class="select2" data-validation="required">
 										<option>Si</option>
 										<option>No</option>
 									</select>
@@ -227,7 +227,7 @@
 	<script src="../../assets/js/vendors/jquery.sparkline.min.js"></script>
 	<script src="../../assets/js/vendors/moment/min/moment.min.js"></script>
 	<script src="../../assets/select2/js/select2.full.min.js"></script>
-	<script src="../../assets/js/vendors/jquery-te/jquery-te-1.4.0.min.js"></script>
+	<script src="../../assets/js/vendors/jquery-te/uncompressed/jquery-te-1.4.0.js"></script>
 
 	<script src="../../assets/js/jAlert.min.js"></script>
 	<script src="../../assets/js/jAlert-functions.min.js"></script>

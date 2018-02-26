@@ -3,7 +3,11 @@ package com.movilpyme.adenmaker.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
 import java.util.Objects;
 
 @Entity
@@ -13,6 +17,8 @@ public class Parametros {
     private String valor;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO, generator="parametros_seq_gen")
+    @SequenceGenerator(name="parametros_seq_gen", sequenceName="PARAMETROS_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
     public long getId() {
         return id;

@@ -143,6 +143,9 @@
 		addParams('remove','removeformat','.','',false); // remove all styles --> ctrl + delete
 		addParams('rule','inserthorizontalrule','H',["hr"],false); // insertion horizontal rule --> ctrl + H
 		addParams('source','displaysource','','',false); // feature of displaying source
+		
+		// By N. Dazaeev
+		addParams('addCredential','addCredential','','',false); // justify center --> no hotkey
 
 		return this.each(function(){
 			if(!$(this).data("jqte") || $(this).data("jqte")==null || $(this).data("jqte")=="undefined")
@@ -329,6 +332,13 @@
 				}
 			}
 			
+			// By N. Dazaeev
+			// add this button to the toolbar
+			toolbar.append('<div class="jqte_tool" role="button" data-tool="21" unselectable><a unselectable>{ - Add credentials - }</a></div>');
+			// add the parameters to this button
+			toolbar.find('.jqte_tool[data-tool=21]').data({tag : '', command : 'addCredential', emphasis : false, title : '- Add User Credentials -'});
+			// -------------
+			
 			// the default value of the link-type
 			linktypes.data("linktype","0");
 			
@@ -398,12 +408,37 @@
 					return document.selection.createRange();
 			}
 			
+			// By N. Dazaeev
+			var byBuroMcCount = 0;
 			// the function of changing to the selected text with "execCommand" method
 			function selectionSet(addCommand,thirdParam)
 			{
 				var	range,
 					sel = selectionGet();
-
+				
+				// By N. Dazaeev
+				if(addCommand == 'addCredential'){
+					byBuroMcCount = byBuroMcCount + 1;
+					if(byBuroMcCount > 0){
+						byBuroMcCount = 0;
+						// Validar que editor es
+						if(NAME_EDITOR_EMAIL == 'welcome'){
+							var valEditor = "" + $('.editor-welcome').val();
+							// Agregar Campo de texto
+							$('.editor-welcome').jqteVal("" + valEditor + "{username} <br \/> {password}");
+						}
+						if(NAME_EDITOR_EMAIL == 'reset'){
+							var valEditor = "" + $('.editor-reset').val();
+							// Agregar Campo de texto
+							$('.editor-reset').jqteVal("" + valEditor + "{username} <br \/> {password}");
+						}
+						if(NAME_EDITOR_EMAIL == 'recover'){
+							var valEditor = "" + $('.editor-recover').val();
+							// Agregar Campo de texto
+							$('.editor-recover').jqteVal("" + valEditor + "{username} <br \/> {password}");
+						}
+					}
+				}
 				// for webkit, mozilla, opera
 				if (window.getSelection)
 				{

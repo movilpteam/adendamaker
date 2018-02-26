@@ -1,5 +1,5 @@
 var ID_CURRENT_EMAIL = 0;
-
+var NAME_EDITOR_EMAIL = '';
 $(document).ready(function () {
     sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
@@ -32,6 +32,11 @@ $(document).ready(function () {
 });
 $.validate({
     form: '#new-email-form'
+});
+
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    var tab = $(e.target);
+    NAME_EDITOR_EMAIL = tab.attr("href").replace('#', '');
 });
 
 // Funciones de la pantalla de Email
