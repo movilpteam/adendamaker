@@ -3,7 +3,7 @@ Description=AddenMaker Demo Service
 After=networking.service
 
 [Service]
-ExecStart=/bin/bash /home/oracle/amaker/adendamaker/target/adenmaker-0.0.1-SNAPSHOT.jar
+ExecStart=/usr/java/jdk1.8.0_161/jre/bin/java -jar /home/oracle/amaker/adendamaker/target/adenmaker-0.0.1-SNAPSHOT.jar
 SuccessExitStatus=143
 WorkingDirectory=/home/oracle/amaker/adendamaker/
 

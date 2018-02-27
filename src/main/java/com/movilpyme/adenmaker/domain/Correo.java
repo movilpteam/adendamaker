@@ -1,14 +1,11 @@
 package com.movilpyme.adenmaker.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
+
+import java.util.Collection;
 
 @Entity
 public class Correo {
@@ -18,6 +15,8 @@ public class Correo {
     private String endServer;
     private String entrancePort;
     private boolean certificate;
+    @JsonIgnore
+    private Collection<CorreoPlantilla> plantillas;
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO, generator="correo_seq_gen")
@@ -75,8 +74,17 @@ public class Correo {
 	public void setCertificate(boolean certificate) {
 		this.certificate = certificate;
 	}
-	
-	@Override
+
+	@OneToMany(mappedBy = "correoByIdCorreo")
+    public Collection<CorreoPlantilla> getPlantillas() {
+        return plantillas;
+    }
+
+    public void setPlantillas(Collection<CorreoPlantilla> plantillas) {
+        this.plantillas = plantillas;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

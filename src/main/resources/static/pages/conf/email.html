@@ -23,8 +23,7 @@
 	<div class="page-loader">
 		<div class="page-loader__spinner">
 			<svg viewBox="25 25 50 50">
-                <circle cx="50" cy="50" r="20" fill="none"
-					stroke-width="2" stroke-miterlimit="10" />
+                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"></circle>
             </svg>
 		</div>
 	</div>
@@ -57,8 +56,8 @@
 								<th>ID</th>
 								<th>Nombre de usuario</th>
 								<th>Contraseña</th>
-								<th>Servidor de salida</th>
-								<th>Puerto de entrada</th>
+								<th>Servidor</th>
+								<th>Puerto</th>
 								<th>Plantilla</th>
 							</tr>
 						</thead>
@@ -93,7 +92,7 @@
 							</div>
 							<div class="col-4">
 								<div class="form-group">
-									<label for="end-server">Servidor de salida</label> <input
+									<label for="end-server">Servidor</label> <input
 										data-validation="length alphanumeric"
 										data-validation-length="min3" type="text" id="end-server"
 										class="form-control form-control-lg"> <i
@@ -102,7 +101,7 @@
 							</div>
 							<div class="col-4">
 								<div class="form-group">
-									<label for="entrance-port">Puerto de entrada</label> <input
+									<label for="entrance-port">Puerto</label> <input
 										data-validation="number"
 										data-validation-length="min2" type="text" id="entrance-port"
 										class="form-control form-control-lg"> <i
@@ -111,7 +110,8 @@
 							</div>
 							<div class="col-4">
 								<div class="form-group">
-									<label for="combo-ssl">SSL</label> <select id="combo-ssl"
+									<label for="combo-ssl">SSL</label>
+                                    <select id="combo-ssl"
 										class="select2" data-validation="required">
 										<option>Si</option>
 										<option>No</option>
@@ -210,8 +210,14 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="modal-btn-si">Guardar</button>
-					<button type="button" class="btn btn-primary" id="modal-btn-no">Cancelar</button>
+					<button type="button" class="btn btn-primary" id="modal-btn-si">
+						<i class="zmdi zmdi-save"></i>
+						Guardar
+					</button>
+					<button type="button" class="btn btn-danger" id="modal-btn-no">
+						<i class="zmdi zmdi-leak-remove"></i>
+						Cancelar
+					</button>
 				</div>
 			</div>
 		</div>

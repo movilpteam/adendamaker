@@ -1,5 +1,8 @@
 var ID_CURRENT_EMAIL = 0;
 var NAME_EDITOR_EMAIL = '';
+var WELCOME_TEMPLATE = new CorreoPlantilla();
+var RESET_TEMPLATE = new CorreoPlantilla();
+var RECOVER_TEMPLATE = new CorreoPlantilla();
 $(document).ready(function () {
     sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
@@ -71,16 +74,37 @@ function onModalAction(id, nameUserTemplate){
 	ID_CURRENT_EMAIL = id;
 	$('#user-name-templete').text("- " + nameUserTemplate);
 	// Llenar editor
-	var correoPlantilla = new CorreoPlantilla();
+/*	var correoPlantilla = new CorreoPlantilla();
 	correoPlantilla.id = id;
 	correoPlantilla.nombre = 'welcome';
 	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorWelcome);
 	correoPlantilla.nombre = 'reset';
 	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorReset);
 	correoPlantilla.nombre = 'recover';
-	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorRecover);
-    // 
+	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorRecover); */
+    //
+
+    sendPostAction(EMAIL_CONTROLLER_URL + 'getPlantillas/' + ID_CURRENT_EMAIL, null, loadTemplates);
+
     $("#mi-modal-email").modal('show');
+}
+
+function loadTemplates(data) {
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].nombre === 'welcome'){
+            WELCOME_TEMPLATE = data[i];
+        }else if (data[i].nombre === 'reset') {
+            RESET_TEMPLATE = data[i];
+        }else if (data[i].nombre === 'recover'){
+            RECOVER_TEMPLATE = data[i];
+        }
+    }
+    $('#asunto-welcome').val(WELCOME_TEMPLATE.asunto);
+    $('.editor-welcome').jqteVal(WELCOME_TEMPLATE.body);
+    $('#asunto-reset').val(RESET_TEMPLATE.asunto);
+    $('.editor-reset').jqteVal(RESET_TEMPLATE.body);
+    $('#asunto-recover').val(RECOVER_TEMPLATE.asunto);
+    $('.editor-recover').jqteVal(RECOVER_TEMPLATE.body);
 }
 
 function onEditResponse(data) {
@@ -130,25 +154,27 @@ var modalConfirm = function(callback) {
 modalConfirm(function(confirm) {
 	if (confirm) {
 		// Guardado welcome
-		var correoPlantilla = new CorreoPlantilla();
+		// var correoPlantilla = new CorreoPlantilla();
 		
-		correoPlantilla.id = ID_CURRENT_EMAIL;
-		correoPlantilla.nombre = 'welcome';
-		correoPlantilla.asunto = "" + $('#asunto-welcome').val();
-		correoPlantilla.body = "" + $('.editor-welcome').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		// correoPlantilla.id = 0;
+		WELCOME_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+		WELCOME_TEMPLATE.nombre = 'welcome';
+		WELCOME_TEMPLATE.asunto = "" + $('#asunto-welcome').val();
+		WELCOME_TEMPLATE.body = "" + $('.editor-welcome').val();
+		// sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', WELCOME_TEMPLATE, saveEditor);
 		
-		correoPlantilla.id = ID_CURRENT_EMAIL;
-		correoPlantilla.nombre = 'reset';
-		correoPlantilla.asunto = "" + $('#asunto-reset').val();
-		correoPlantilla.body = "" + $('.editor-reset').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		RESET_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+		RESET_TEMPLATE.nombre = 'reset';
+		RESET_TEMPLATE.asunto = "" + $('#asunto-reset').val();
+		RESET_TEMPLATE.body = "" + $('.editor-reset').val();
+		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RESET_TEMPLATE, saveEditor);
 		
-		correoPlantilla.id = ID_CURRENT_EMAIL;
-		correoPlantilla.nombre = 'recover';
-		correoPlantilla.asunto = "" + $('#asunto-recover').val();
-		correoPlantilla.body = "" + $('.editor-recover').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
+		RECOVER_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+		RECOVER_TEMPLATE.nombre = 'recover';
+		RECOVER_TEMPLATE.asunto = "" + $('#asunto-recover').val();
+		RECOVER_TEMPLATE.body = "" + $('.editor-recover').val();
+		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RECOVER_TEMPLATE, saveEditor);
 	} else {
 		//Acciones si el usuario no confirma
 		initEditor();
@@ -196,11 +222,12 @@ function loadEditorRecover(data) {
 }
 
 function saveEditor(data) {
-	if(data.pSpStatus == 0){
+//	if(data.pSpStatus == 0){
+    if (data) {
 		initEditor();
-		showDivMessage(data.pSpStatusMsg, 'alert-info', 3000);
+		showDivMessage('Plantilla Guardada', 'alert-info', 3000);
 	} else {
 		initEditor();
-		showDivMessage(data.pSpStatusMsg, 'alert-danger', 3000);
+		showDivMessage('Error al guardar plantilla', 'alert-danger', 3000);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import com.movilpyme.adenmaker.repository.CorreoPlantillaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +23,14 @@ import com.movilpyme.adenmaker.repository.EmailRepo;
 public class EmailController {
 
     private final EmailRepo emailRepo;
-    @Autowired
-	private ApplicationBuroDao applicationBuroDao;
+    private final CorreoPlantillaRepo correoPlantillaRepo;
+	private final ApplicationBuroDao applicationBuroDao;
 
-    @Autowired
-    public EmailController(EmailRepo emailRepo) {
+	@Autowired
+    public EmailController(EmailRepo emailRepo, CorreoPlantillaRepo correoPlantillaRepo, ApplicationBuroDao applicationBuroDao) {
         this.emailRepo = emailRepo;
+        this.correoPlantillaRepo = correoPlantillaRepo;
+        this.applicationBuroDao = applicationBuroDao;
     }
 
     @RequestMapping(value = "byId/{id}", method = RequestMethod.POST)
@@ -82,6 +85,35 @@ public class EmailController {
             return applicationBuroDao.stpInsTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre(), correoPlantilla.getAsunto(), correoPlantilla.getBody());
         }catch (Exception e){
             throw new ServletException(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "saveEmailTemplate", method = RequestMethod.POST)
+    public boolean saveEmailTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
+        if (correoPlantilla == null){
+            throw new ServletException("Correo Plantilla Inválido");
+        }
+        try {
+            Correo correo = emailRepo.findOne(correoPlantilla.getIdCorreo());
+            correoPlantilla.setCorreoByIdCorreo(correo);
+            correoPlantillaRepo.save(correoPlantilla);
+            return true;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "getPlantillas/{idcorreo}", method = RequestMethod.POST)
+    public List<CorreoPlantilla> getPlantillasAllByCorreo(@PathVariable Long idcorreo) throws ServletException {
+	    if (idcorreo == 0){
+	        throw new ServletException("Configuracion Correo Inválida");
+        }
+        try {
+	        Correo correo = emailRepo.findOne(idcorreo);
+            List<CorreoPlantilla> plantillaList = correoPlantillaRepo.findAllByCorreoByIdCorreo(correo);
+            return plantillaList;
+        }catch (Exception e){
+	        throw new ServletException(e.getMessage());
         }
     }
 }

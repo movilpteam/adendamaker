@@ -309,7 +309,6 @@ CREATE OR REPLACE TRIGGER aw_admin.empresa_seq_trg
   BEGIN
     :new.id := aw_admin.empresa_seq.nextval;
   END;
-/
 
 CREATE SEQUENCE aw_admin.usuarios_seq
   START WITH 1
@@ -324,6 +323,22 @@ CREATE OR REPLACE TRIGGER aw_admin.usuarios_seq_trg
   WHEN ( new.id IS NULL )
   BEGIN
     :new.id := aw_admin.usuarios_seq.nextval;
+  END;
+/
+
+CREATE SEQUENCE aw_admin.userroles_seq
+  START WITH 1
+  NOCACHE
+  ORDER;
+
+CREATE OR REPLACE TRIGGER aw_admin.userroles_seq_trg
+  BEFORE
+  INSERT
+  ON aw_admin.user_roles
+  FOR EACH ROW
+  WHEN ( new.id IS NULL )
+  BEGIN
+    :new.id := aw_admin.userroles_seq.nextval;
   END;
 /
 

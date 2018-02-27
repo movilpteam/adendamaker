@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CORREO_PLANTILLA", schema = "AW_ADMIN", catalog = "")
 public class CorreoPlantilla {
-    private long id;
+    private Long id;
     private String nombre;
     private String asunto;
     private String body;
@@ -29,11 +29,11 @@ public class CorreoPlantilla {
     @GeneratedValue(strategy=GenerationType.AUTO, generator="correo_plantilla_seq_gen")
     @SequenceGenerator(name="correo_plantilla_seq_gen", sequenceName="CORREO_PLANTILLA_SEQ")
     @Column(name = "ID", nullable = false, precision = 0)
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -58,8 +58,7 @@ public class CorreoPlantilla {
     }
 
     @Basic
-    @Lob
-    @Column(name = "BODY", nullable = true)
+    @Column(name = "BODY", nullable = true, length = 500)
     public String getBody() {
         return body;
     }
