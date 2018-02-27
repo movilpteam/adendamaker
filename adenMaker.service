@@ -1,0 +1,11 @@
+[Unit]
+Description=AddenMaker Demo Service
+After=networking.service
+
+[Service]
+ExecStart=/home/oracle/amaker/adendamaker/target/adenmaker-0.0.1-SNAPSHOT.jar
+SuccessExitStatus=143
+WorkingDirectory=/home/oracle/amaker/adendamaker/
+
+[Install]
+WantedBy=multi-user.target
