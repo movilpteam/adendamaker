@@ -4,10 +4,7 @@ import com.movilpyme.adenmaker.domain.Login;
 import com.movilpyme.adenmaker.domain.Roles;
 import com.movilpyme.adenmaker.domain.UserRoles;
 import com.movilpyme.adenmaker.domain.Usuarios;
-import com.movilpyme.adenmaker.repository.LoginRepo;
-import com.movilpyme.adenmaker.repository.RolesRepo;
-import com.movilpyme.adenmaker.repository.UserRolesRepo;
-import com.movilpyme.adenmaker.repository.UsuariosRepo;
+import com.movilpyme.adenmaker.repository.*;
 import com.movilpyme.adenmaker.utils.PwdGenerator;
 import com.movilpyme.adenmaker.utils.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import javax.sql.DataSource;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,15 +27,17 @@ public class UsuariosController {
     private final RolesRepo rolesRepo;
     private final UserRolesRepo userRolesRepo;
     private final LoginRepo loginRepo;
-    private final SendMail sendMail;
+    private final EmailRepo emailRepo;
+    private final CorreoPlantillaRepo plantillaRepo;
 
     @Autowired
-    public UsuariosController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, SendMail sendMail) {
+    public UsuariosController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, EmailRepo emailRepo, CorreoPlantillaRepo plantillaRepo) {
         this.usuariosRepo = usuariosRepo;
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
         this.loginRepo = loginRepo;
-        this.sendMail = sendMail;
+        this.emailRepo = emailRepo;
+        this.plantillaRepo = plantillaRepo;
     }
 
     @RequestMapping(value = "changePassword", method = RequestMethod.POST)
@@ -75,8 +72,12 @@ public class UsuariosController {
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
     public List<Usuarios> getUsuariosList() throws ServletException {
-        List<Usuarios> usuariosList = (List<Usuarios>) usuariosRepo.findAll();
-        return usuariosList;
+        try {
+            List<Usuarios> usuariosList = usuariosRepo.findAllByEnabledTrue();
+            return usuariosList;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
     }
 
     @RequestMapping(value = "roles/list", method = RequestMethod.POST)
@@ -100,7 +101,8 @@ public class UsuariosController {
                 }
                 String[] to = new String[1];
                 to[0] = user.getCorreo();
-                sendMail.sendWelcomeEmail("Bienvenido a AddenMaker", str_pwd, username.toLowerCase(), to);
+                SendMail sendMail = new SendMail(emailRepo, plantillaRepo);
+                sendMail.sendTemplateEmail(str_pwd, username.toLowerCase(), to, "welcome");
                 user.setUsername(username.toLowerCase());
                 user.setPassword(BCrypt.hashpw(hash_pwd, BCrypt.gensalt()));
                 user.setEnabled(true);
@@ -120,6 +122,50 @@ public class UsuariosController {
             return true;
         }catch (Exception ex) {
             throw new ServletException(ex.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "resetPwd/{iduser}", method = RequestMethod.POST)
+    public boolean resetPassword(@PathVariable Long iduser) throws ServletException {
+        if (iduser == 0){
+            throw new ServletException("Usuario Inválido");
+        }
+        try {
+            Usuarios user = usuariosRepo.findOne(iduser);
+            if (user == null){
+                throw new ServletException("Usuario Inválido");
+            }
+            String str_pwd = PwdGenerator.generatePassword(8);
+            String hash_pwd = PwdGenerator.passwordSHA512(str_pwd);
+            String[] to = new String[1];
+            to[0] = user.getCorreo();
+            SendMail sendMail = new SendMail(emailRepo, plantillaRepo);
+            sendMail.sendTemplateEmail(str_pwd, user.getUsername(), to, "reset");
+            user.setPassword(BCrypt.hashpw(hash_pwd, BCrypt.gensalt()));
+            user.setCambiarPwd(true);
+            user.setLastPwdChg(new Date());
+            usuariosRepo.save(user);
+            return true;
+        } catch (Exception e) {
+            throw new ServletException(e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "disabledUser/{iduser}", method = RequestMethod.POST)
+    public Long disabledUser(@PathVariable Long iduser) throws ServletException {
+        if (iduser == 0){
+            throw new ServletException("Usuario Inválido");
+        }
+        Usuarios usuarios = usuariosRepo.findOne(iduser);
+        if (usuarios == null){
+            throw new ServletException("Usuario Inválido");
+        }
+        usuarios.setEnabled(false);
+        try {
+            usuariosRepo.save(usuarios);
+            return usuarios.getId();
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
         }
     }
 

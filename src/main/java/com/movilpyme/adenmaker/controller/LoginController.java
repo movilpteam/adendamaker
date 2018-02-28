@@ -2,10 +2,7 @@ package com.movilpyme.adenmaker.controller;
 
 import com.movilpyme.adenmaker.domain.Login;
 import com.movilpyme.adenmaker.domain.Usuarios;
-import com.movilpyme.adenmaker.repository.LoginRepo;
-import com.movilpyme.adenmaker.repository.RolesRepo;
-import com.movilpyme.adenmaker.repository.UserRolesRepo;
-import com.movilpyme.adenmaker.repository.UsuariosRepo;
+import com.movilpyme.adenmaker.repository.*;
 import com.movilpyme.adenmaker.security.TokenHelper;
 import com.movilpyme.adenmaker.utils.PwdGenerator;
 import com.movilpyme.adenmaker.utils.SendMail;
@@ -30,16 +27,20 @@ public class LoginController {
     private final RolesRepo rolesRepo;
     private final UserRolesRepo userRolesRepo;
     private final LoginRepo loginRepo;
-    private final SendMail sendMail;
+    private final EmailRepo emailRepo;
+    private final CorreoPlantillaRepo plantillaRepo;
     private final TokenHelper tokenHelper;
 
+    private SendMail sendMail;
+
     @Autowired
-    public LoginController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, SendMail sendMail, TokenHelper tokenHelper) {
+    public LoginController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, EmailRepo emailRepo, CorreoPlantillaRepo plantillaRepo, TokenHelper tokenHelper) {
         this.usuariosRepo = usuariosRepo;
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
         this.loginRepo = loginRepo;
-        this.sendMail = sendMail;
+        this.emailRepo = emailRepo;
+        this.plantillaRepo = plantillaRepo;
         this.tokenHelper = tokenHelper;
     }
 
@@ -51,6 +52,7 @@ public class LoginController {
         Usuarios user = usuariosRepo.findByUsername(requestData.get("username"));
         if (user != null){
             try {
+                sendMail = new SendMail(emailRepo, plantillaRepo);
                 String str_pwd = PwdGenerator.generatePassword(8);
                 String hash_pwd = PwdGenerator.passwordSHA512(str_pwd);
                 String[] to = new String[1];
@@ -58,7 +60,7 @@ public class LoginController {
                 user.setPassword(BCrypt.hashpw(hash_pwd, BCrypt.gensalt()));
                 user.setCambiarPwd(true);
                 usuariosRepo.save(user);
-                sendMail.sendResetPwdEmail("Reseteo de Contraseña", str_pwd, user.getUsername(), to);
+                sendMail.sendTemplateEmail(str_pwd, user.getUsername(), to, "reset");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

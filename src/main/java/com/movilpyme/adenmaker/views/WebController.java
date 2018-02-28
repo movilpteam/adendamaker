@@ -58,4 +58,10 @@ public class WebController {
     public String getListaAddendas(Model model) {
         return "/pages/addenda/addenda_list.html";
     }
+
+    @RequestMapping("/addenda/create_edit")
+    public String getAddendasForm(Model model) {
+        return "/pages/addenda/addenda.html";
+    }
+
 }

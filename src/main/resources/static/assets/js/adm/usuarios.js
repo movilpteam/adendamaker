@@ -63,8 +63,11 @@ function loadTable(data) {
     var tbody_users = $('#tbody_users');
     tbody_users.empty();
     for (var i = 0; i < data.length; i++) {
-        var tr = "<tr>" +
-            "<td></td>" +
+        var tr = "<tr id='user_"+ data[i].id +"'>" +
+            "<td>" +
+            "<i class='zmdi zmdi-delete zmdi-hc-2x' title='Eliminar Usuario' style='cursor: pointer' onclick='deleteUserAction("+ data[i].id +")'></i>" +
+            "<i class='zmdi zmdi-key zmdi-hc-2x' title='Generar Nueva Contraseña' style='cursor: pointer;margin-left: 5px' onclick='resetPasswordAction("+ data[i].id +")'></i>" +
+            "</td>" +
             "<td>"+ data[i].id +"</td>" +
             "<td>"+ data[i].username +"</td>" +
             "<td>"+ data[i].nombre +"</td>" +
@@ -74,6 +77,63 @@ function loadTable(data) {
         tr += "</tr>";
         sendPostAction(USER_CONTROLLER_URL + 'roles/' + data[i].id, null, loadRolesByUser);
         tbody_users.append(tr);
+    }
+}
+
+function resetPasswordAction(iduser) {
+    $.jAlert({
+        'type': 'confirm',
+        'title': 'Confirmación',
+        'confirmQuestion': '¿ Seguro de generar una nueva contraseña del usuario con ID = ' + iduser + ' ?',
+        'confirmBtnText': 'Generar Nueva Contraseña',
+        'denyBtnText': 'Cancelar',
+        'theme': 'red',
+        'size': 'md',
+        'showAnimation': 'fadeInUp',
+        'hideAnimation': 'fadeOutDown',
+        'onConfirm': function (e, btn) {
+            sendPostAction(USER_CONTROLLER_URL + 'resetPwd/' + iduser, null, resetPasswordResponse);
+        },
+        'onDeny': function (e, btn) {
+            errorAlert('Accion Cancelada');
+        }
+    });
+}
+
+function resetPasswordResponse(data) {
+    if (data) {
+        showDivMessage('Nueva Contraseña enviada al correo del usuario', 'alert-info', 3000);
+    }else {
+        showDivMessage('Error al generar nueva contraseña', 'alert-danger', 3000);
+    }
+}
+
+function deleteUserAction(iduser) {
+    $.jAlert({
+        'type': 'confirm',
+        'title': 'Confirmación',
+        'confirmQuestion': '¿ Seguro de eliminar al usuario con ID = ' + iduser + ' ?',
+        'confirmBtnText': 'Eliminar',
+        'denyBtnText': 'Cancelar',
+        'theme': 'red',
+        'size': 'md',
+        'showAnimation': 'fadeInUp',
+        'hideAnimation': 'fadeOutDown',
+        'onConfirm': function (e, btn) {
+            sendPostAction(USER_CONTROLLER_URL + 'disabledUser/' + iduser, null, deleteUserResponse);
+        },
+        'onDeny': function (e, btn) {
+            errorAlert('Accion Cancelada');
+        }
+    });
+}
+
+function deleteUserResponse(data) {
+    if (data > 0){
+        showDivMessage('Usuario Eliminado', 'alert-info', 3000);
+        $('#tbody_users tr#user_' + data).remove();
+    }else {
+        showDivMessage('Error al eliminar usuario', 'alert-danger', 3000);
     }
 }
 

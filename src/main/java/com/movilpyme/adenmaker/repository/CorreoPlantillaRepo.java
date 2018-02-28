@@ -14,4 +14,6 @@ public interface CorreoPlantillaRepo extends CrudRepository<CorreoPlantilla, Lon
     public List<CorreoPlantilla> findAllByNombre (String nombre);
 
     public List<CorreoPlantilla> findAllByCorreoByIdCorreo(Correo correo);
+
+    public CorreoPlantilla findByCorreoByIdCorreoAndNombre(Correo correo, String nombre);
 }
