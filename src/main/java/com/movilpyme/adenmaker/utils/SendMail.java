@@ -1,35 +1,29 @@
 package com.movilpyme.adenmaker.utils;
 
-import com.movilpyme.adenmaker.bean.StpSelCursorRes;
-import com.movilpyme.adenmaker.domain.Correo;
-import com.movilpyme.adenmaker.domain.CorreoPlantilla;
-import com.movilpyme.adenmaker.persistence.dao.ApplicationBuroDao;
-import com.movilpyme.adenmaker.persistence.dao.impl.ApplicationBuroDaoImpl;
-import com.movilpyme.adenmaker.repository.CorreoPlantillaRepo;
-import com.movilpyme.adenmaker.repository.EmailRepo;
-import org.hibernate.validator.constraints.Email;
+import java.util.List;
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Properties;
+import com.movilpyme.adenmaker.domain.Correo;
+import com.movilpyme.adenmaker.domain.CorreoPlantilla;
+import com.movilpyme.adenmaker.repository.CorreoPlantillaRepo;
+import com.movilpyme.adenmaker.repository.EmailRepo;
 
 @Service
 public class SendMail {
 
     private JavaMailSenderImpl mailSender;
-    private final ApplicationBuroDaoImpl buroDao;
     private final EmailRepo emailRepo;
     private final CorreoPlantillaRepo plantillaRepo;
     private Long id_config;
 
     @Autowired
-    public SendMail(ApplicationBuroDaoImpl buroDao, EmailRepo emailRepo, CorreoPlantillaRepo plantillaRepo) throws Exception {
-        this.buroDao = buroDao;
+    public SendMail(EmailRepo emailRepo, CorreoPlantillaRepo plantillaRepo) throws Exception {
         this.emailRepo = emailRepo;
         this.plantillaRepo = plantillaRepo;
         this.id_config = 1L;

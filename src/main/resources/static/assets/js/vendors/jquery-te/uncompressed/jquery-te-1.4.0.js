@@ -145,8 +145,8 @@
 		addParams('source','displaysource','','',false); // feature of displaying source
 		
 		// By N. Dazaeev
-		addParams('addCredential','addCredential','','',false); // justify center --> no hotkey
-
+		addParams('addCredential','addCredential','','',false); // Agrega credenciales
+		
 		return this.each(function(){
 			if(!$(this).data("jqte") || $(this).data("jqte")==null || $(this).data("jqte")=="undefined")
 				$(this).data("jqte",true);
