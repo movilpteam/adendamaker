@@ -177,15 +177,12 @@
 										</div>
 									</div>
 									<div class="col-3">
-										<div class="form-group">
-											<label for="file-welcome">Imagen</label>  
-											<form id="upload-widget-email" method="post" action="/adm/correo/fileInsTemplate"
-												enctype="multipart/form-data" class="dropzone" style="text-align: center !important;">
-												<div class="fallback">
-													<input name="file" type="file" />
-												</div>
-											</form>
-											<i class="form-group__bar"></i>
+										<div id="div_image_welcome" class="form-group">
+                                            <form enctype="multipart/form-data" method="post">
+                                                <label for="id_welcome_image">Imagen</label>
+                                                <input id="id_welcome_image" name="welcome_image" type="file" />
+                                                <i class="form-group__bar"></i>
+                                            </form>
 										</div>
 									</div>
 								</div>
@@ -205,7 +202,7 @@
 									<div class="col-3">
 										<div class="form-group">
 											<label for="file-welcome">Imagen</label>  
-											<form id="upload-widget-email" method="post" action="/adm/correo/fileInsTemplate"
+											<form id="reset-image" method="post" action="/adm/correo/fileInsTemplate"
 												enctype="multipart/form-data" class="dropzone" style="text-align: center !important;">
 												<div class="fallback">
 													<input name="file" type="file" />
@@ -231,7 +228,7 @@
 									<div class="col-3">
 										<div class="form-group">
 											<label for="file-welcome">Imagen</label>  
-											<form id="upload-widget-email" method="post" action="/adm/correo/fileInsTemplate"
+											<form id="recover-image" method="post" action="/adm/correo/fileInsTemplate"
 												enctype="multipart/form-data" class="dropzone" style="text-align: center !important;">
 												<div class="fallback">
 													<input name="file" type="file" />

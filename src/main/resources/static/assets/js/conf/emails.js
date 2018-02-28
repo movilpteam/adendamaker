@@ -21,7 +21,7 @@ $(document).ready(function () {
        email.pwd = $('#password').val();
        email.endServer = $('#end-server').val();
        email.entrancePort = $('#entrance-port').val();
-       if($('#combo-ssl').val() == 'Si'){
+       if($('#combo-ssl').val() === 'Si'){
     	   email.certificate = true;
        } else {
     	   email.certificate = false;
@@ -36,6 +36,13 @@ $(document).ready(function () {
 });
 $.validate({
     form: '#new-email-form'
+});
+
+$('div#id_welcome_image').dropzone({
+    url: '/adm/correo/fileInsTemplate',
+    maxFilesize: 0.5,
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true
 });
 
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
