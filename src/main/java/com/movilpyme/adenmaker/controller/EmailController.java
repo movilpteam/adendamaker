@@ -4,19 +4,20 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import com.movilpyme.adenmaker.repository.CorreoPlantillaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.movilpyme.adenmaker.bean.StpSelCursorRes;
 import com.movilpyme.adenmaker.domain.Correo;
 import com.movilpyme.adenmaker.domain.CorreoPlantilla;
-import com.movilpyme.adenmaker.persistence.dao.ApplicationBuroDao;
+import com.movilpyme.adenmaker.repository.CorreoPlantillaRepo;
 import com.movilpyme.adenmaker.repository.EmailRepo;
+import com.movilpyme.adenmaker.utils.Utils;
 
 @RestController
 @RequestMapping("adm/correo")
@@ -24,13 +25,11 @@ public class EmailController {
 
     private final EmailRepo emailRepo;
     private final CorreoPlantillaRepo correoPlantillaRepo;
-	private final ApplicationBuroDao applicationBuroDao;
-
+	
 	@Autowired
-    public EmailController(EmailRepo emailRepo, CorreoPlantillaRepo correoPlantillaRepo, ApplicationBuroDao applicationBuroDao) {
+    public EmailController(EmailRepo emailRepo, CorreoPlantillaRepo correoPlantillaRepo) {
         this.emailRepo = emailRepo;
         this.correoPlantillaRepo = correoPlantillaRepo;
-        this.applicationBuroDao = applicationBuroDao;
     }
 
     @RequestMapping(value = "byId/{id}", method = RequestMethod.POST)
@@ -64,30 +63,6 @@ public class EmailController {
         }
     }
     
-    @RequestMapping(value = "findSelTemplate", method = RequestMethod.POST)
-    public StpSelCursorRes findSelTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
-        if (correoPlantilla == null){
-            throw new ServletException("Correo Plantilla Inválido");
-        }
-        try {
-            return applicationBuroDao.stpSelTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre());
-        }catch (Exception e){
-            throw new ServletException(e.getMessage());
-        }
-    }
-    
-    @RequestMapping(value = "callInsTemplate", method = RequestMethod.POST)
-    public StpSelCursorRes callInsTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
-        if (correoPlantilla == null){
-            throw new ServletException("Correo Plantilla Inválido");
-        }
-        try {
-            return applicationBuroDao.stpInsTemplate("" + correoPlantilla.getId(), correoPlantilla.getNombre(), correoPlantilla.getAsunto(), correoPlantilla.getBody());
-        }catch (Exception e){
-            throw new ServletException(e.getMessage());
-        }
-    }
-
     @RequestMapping(value = "saveEmailTemplate", method = RequestMethod.POST)
     public boolean saveEmailTemplate(@RequestBody CorreoPlantilla correoPlantilla) throws ServletException {
         if (correoPlantilla == null){
@@ -114,6 +89,20 @@ public class EmailController {
             return plantillaList;
         }catch (Exception e){
 	        throw new ServletException(e.getMessage());
+        }
+    }
+    
+    @RequestMapping(value = "fileInsTemplate", method = RequestMethod.POST)
+    public boolean fileInsTemplate(@RequestParam("file") MultipartFile file) throws ServletException {
+        if (file == null){
+            throw new ServletException("file Inválido");
+        }
+        try {
+        	System.out.println("file: " + file);
+        	return new Utils().copyFile(file, "/static/images/email/");
+        }catch (Exception e){
+        	System.out.println(e);
+            throw new ServletException(e.getMessage());
         }
     }
 }

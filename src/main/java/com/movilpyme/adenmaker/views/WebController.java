@@ -43,7 +43,7 @@ public class WebController {
     
     @RequestMapping("/conf/upload")
     public String getLogoUpload(@RequestParam("file") MultipartFile file, Model model) {
-    	new Utils().copyFile(file);
+    	new Utils().copyFile(file, "/static/images/logos/");
         return "/pages/conf/logo.html";
     }
     

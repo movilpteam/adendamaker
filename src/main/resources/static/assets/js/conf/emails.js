@@ -3,6 +3,7 @@ var NAME_EDITOR_EMAIL = '';
 var WELCOME_TEMPLATE = new CorreoPlantilla();
 var RESET_TEMPLATE = new CorreoPlantilla();
 var RECOVER_TEMPLATE = new CorreoPlantilla();
+Dropzone.prototype.defaultOptions.dictDefaultMessage = "Agregar";
 $(document).ready(function () {
     sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
@@ -74,18 +75,7 @@ function onModalAction(id, nameUserTemplate){
 	ID_CURRENT_EMAIL = id;
 	$('#user-name-templete').text("- " + nameUserTemplate);
 	// Llenar editor
-/*	var correoPlantilla = new CorreoPlantilla();
-	correoPlantilla.id = id;
-	correoPlantilla.nombre = 'welcome';
-	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorWelcome);
-	correoPlantilla.nombre = 'reset';
-	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorReset);
-	correoPlantilla.nombre = 'recover';
-	sendPostAction(EMAIL_CONTROLLER_URL + 'findSelTemplate', correoPlantilla, loadEditorRecover); */
-    //
-
     sendPostAction(EMAIL_CONTROLLER_URL + 'getPlantillas/' + ID_CURRENT_EMAIL, null, loadTemplates);
-
     $("#mi-modal-email").modal('show');
 }
 
@@ -161,7 +151,6 @@ modalConfirm(function(confirm) {
 		WELCOME_TEMPLATE.nombre = 'welcome';
 		WELCOME_TEMPLATE.asunto = "" + $('#asunto-welcome').val();
 		WELCOME_TEMPLATE.body = "" + $('.editor-welcome').val();
-		// sendPostAction(EMAIL_CONTROLLER_URL + 'callInsTemplate', correoPlantilla, saveEditor);
 		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', WELCOME_TEMPLATE, saveEditor);
 		
 		RESET_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
@@ -189,36 +178,6 @@ function initEditor(){
 	$('.editor-welcome').jqteVal("");
 	$('.editor-reset').jqteVal("");
 	$('.editor-recover').jqteVal("");
-}
-
-function loadEditorWelcome(data) {
-	if(data.pContent.length > 0){
-		$('#asunto-welcome').val("" + data.pContent[0].asunto);
-		$('.editor-welcome').jqteVal("" + data.pContent[0].body);
-	} else {
-		$('#asunto-welcome').val("");
-		$('.editor-welcome').jqteVal("");
-	}
-}
-
-function loadEditorReset(data) {
-	if(data.pContent.length > 0){
-		$('#asunto-reset').val("" + data.pContent[0].asunto);
-		$('.editor-reset').jqteVal("" + data.pContent[0].body);
-	} else {
-		$('#asunto-reset').val("");
-		$('.editor-reset').jqteVal("");
-	}
-}
-
-function loadEditorRecover(data) {
-	if(data.pContent.length > 0){
-		$('#asunto-recover').val("" + data.pContent[0].asunto);
-		$('.editor-recover').jqteVal("" + data.pContent[0].body);
-	} else {
-		$('#asunto-recover').val("");
-		$('.editor-recover').jqteVal("");
-	}
 }
 
 function saveEditor(data) {
