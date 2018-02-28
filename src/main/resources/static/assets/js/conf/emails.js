@@ -6,7 +6,7 @@ var RECOVER_TEMPLATE = new CorreoPlantilla();
 var COUNT_TABLE = 0;
 Dropzone.prototype.defaultOptions.dictDefaultMessage = "Agregar";
 $(document).ready(function () {
-    sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
+	sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
         cleanForm();
         showEditCard();
@@ -52,13 +52,13 @@ function loadTableEmail(data) {
     }
     for (var i = 0; i < data.length; i++) {
         var tr = '<tr>' +
-            '<td><i style="cursor: pointer" class="zmdi zmdi-edit btn-link" onclick="onEditAction('+ data[i].id +')"></i></td>' +
+            '<td><i style="cursor: pointer" class="zmdi zmdi-edit zmdi-hc-2x" onclick="onEditAction('+ data[i].id +')"></i></td>' +
             '<td>'+ data[i].id +'</td>' +
             '<td>'+ data[i].nameUser +'</td>' +
             '<td>'+ data[i].pwd +'</td>' +
             '<td>'+ data[i].endServer +'</td>' +
             '<td>'+ data[i].entrancePort +'</td>' + 
-            '<td><i style="cursor: pointer" class="zmdi zmdi-globe-alt btn-link" onclick="onModalAction('+ data[i].id +',\''+ data[i].nameUser +'\')"></i></td>';
+            '<td><i style="cursor: pointer" class="zmdi zmdi-globe-alt zmdi-hc-2x" onclick="onModalAction('+ data[i].id +',\''+ data[i].nameUser +'\')"></i></td>';
         $('#tbody_email').append(tr);
     }
 }
@@ -148,9 +148,6 @@ var modalConfirm = function(callback) {
 modalConfirm(function(confirm) {
 	if (confirm) {
 		// Guardado welcome
-		// var correoPlantilla = new CorreoPlantilla();
-		
-		// correoPlantilla.id = 0;
 		WELCOME_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
 		WELCOME_TEMPLATE.nombre = 'welcome';
 		WELCOME_TEMPLATE.asunto = "" + $('#asunto-welcome').val();
