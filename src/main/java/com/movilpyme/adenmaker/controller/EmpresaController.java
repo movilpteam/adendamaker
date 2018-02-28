@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.movilpyme.adenmaker.domain.Empresa;
 import com.movilpyme.adenmaker.repository.EmpresaRepo;
+import com.movilpyme.adenmaker.utils.Utils;
 
 @RestController
 @RequestMapping("adm/empresa")
@@ -84,6 +87,20 @@ public class EmpresaController {
             responseData.put("logo", empresaFind.getLogo());
             return responseData;
         }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+    
+    @RequestMapping(value = "fileInsLogo", method = RequestMethod.POST)
+    public boolean fileInsLogo(@RequestParam("file") MultipartFile file) throws ServletException {
+        if (file == null){
+            throw new ServletException("file Inválido");
+        }
+        try {
+        	System.out.println("file: " + file);
+        	return new Utils().copyFile(file, "/static/images/logos/");
+        }catch (Exception e){
+        	System.out.println(e);
             throw new ServletException(e.getMessage());
         }
     }

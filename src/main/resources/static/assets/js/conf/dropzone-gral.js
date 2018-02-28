@@ -1,5 +1,13 @@
 var nameImageDrop;
 var currentFile = null;
+Dropzone.prototype.defaultOptions.dictFallbackText = "Utilice el siguiente formulario alternativo para cargar sus archivos como en los viejos tiempos.";
+Dropzone.prototype.defaultOptions.dictFileTooBig = "El archivo es demasiado grande ({{tamaño de archivo}} MiB). Max tamaño de archivo: {{maxFilesize}} MiB.";
+Dropzone.prototype.defaultOptions.dictInvalidFileType = "No puede cargar archivos de este tipo.";
+Dropzone.prototype.defaultOptions.dictResponseError = "El servidor respondió con el código {{statusCode}}.";
+Dropzone.prototype.defaultOptions.dictCancelUpload = "Cancelar carga";
+Dropzone.prototype.defaultOptions.dictCancelUploadConfirmation = "¿Seguro que quieres cancelar esta carga?";
+Dropzone.prototype.defaultOptions.dictRemoveFile = "Eliminar archivo";
+Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "No puede cargar más archivos.";
 Dropzone.prototype.submitRequest = function(xhr, formData, files) {
 	nameImageDrop = files[0].name;
 	return xhr.send(formData);
