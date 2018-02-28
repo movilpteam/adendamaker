@@ -335,13 +335,25 @@
 			
 			// By N. Dazaeev
 			// add this button to the toolbar
-			toolbar.append('<div class="jqte_tool" role="button" data-tool="21" unselectable><a unselectable>{User Name}</a></div>');
+			toolbar.append('<div class="jqte_tool" role="button" data-tool="21" unselectable>' +
+				'<a unselectable>' +
+                '<button type="button" class="btn btn-link btn-sm">' +
+                '<strong>Usuario ID</strong>' +
+                '</button> ' +
+                '</a>' +
+                '</div>');
 			// add the parameters to this button
-			toolbar.find('.jqte_tool[data-tool=21]').data({tag : '', command : 'addCredentialUserName', emphasis : false, title : '- Add User Name -'});
+			toolbar.find('.jqte_tool[data-tool=21]').data({tag : '', command : 'addCredentialUserName', emphasis : false, title : '- Agregar Usuario ID -'});
 			// add this button to the toolbar
-			toolbar.append('<div class="jqte_tool" role="button" data-tool="22" unselectable><a unselectable>{Password}</a></div>');
+			toolbar.append('<div class="jqte_tool" role="button" data-tool="22" unselectable>' +
+                '<a unselectable>' +
+                '<button type="button" class="btn btn-link btn-sm">' +
+                '<strong>Contraseña</strong>' +
+                '</button> ' +
+                '</a>' +
+                '</div>');
 			// add the parameters to this button
-			toolbar.find('.jqte_tool[data-tool=22]').data({tag : '', command : 'addCredentialPassword', emphasis : false, title : '- Add Password -'});
+			toolbar.find('.jqte_tool[data-tool=22]').data({tag : '', command : 'addCredentialPassword', emphasis : false, title : '- Agregar Contraseña -'});
 			// -------------
 			
 			// the default value of the link-type

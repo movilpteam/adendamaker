@@ -1,11 +1,12 @@
-
+Dropzone.prototype.defaultOptions.dictDefaultMessage = "Agregar XSD";
+Dropzone.autoDiscover = false;
 $(document).ready(function () {
-    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
+
 });
 
-function loadEmpresaCombo(data) {
-    for (var i = 0; i < data.length; i++){
-        var op = new Option(data[i].nombre, data[i].id);
-        $('#combo-empresa').append(op);
-    }
-}
+$('.dropzone').dropzone({
+    url: '/addenda/upload/xsd',
+    maxFilesize: 1,
+    acceptedFiles: '.xsd',
+    addRemoveLinks: false
+});

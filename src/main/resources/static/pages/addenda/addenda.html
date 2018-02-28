@@ -13,6 +13,7 @@
     <!-- App styles -->
     <link rel="stylesheet" href="../../assets/material/css/app.min.css">
     <link rel="stylesheet" href="../../assets/css/jAlert.css">
+    <link rel="stylesheet" href="../../assets/js/vendors/dropzone/dropzone.css" />
     <link rel="stylesheet" href="../../assets/css/custom.css">
 </head>
 <body data-ma-theme="green">
@@ -33,6 +34,39 @@
         <header class="content__title">
             <h1>Addenda Crear/Editar</h1>
         </header>
+        <div class="row">
+            <div class="col-5">
+                <div class="card">
+                    <div class="card-header">
+                        General
+                    </div>
+                    <div class="card-body">
+                        <div class="row form-group">
+                            <input type="text" data-validation="required" class="form-control" placeholder="Nombre Addenda">
+                            <i class="form-group__bar"></i>
+                        </div>
+                        <div class="row form-group text-center">
+                            <form enctype="multipart/form-data" class="dropzone" id="upload_xsd_form" method="post" style="width: 100% !important;">
+                                <div class="fallback">
+                                    <input type="file" name="xsd-file">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="card">
+                    <div class="card-header">
+                        Modelo
+                    </div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </section>
 </main>
 <script src="../../assets/js/vendors/jquery/jquery.min.js"></script>
@@ -43,6 +77,8 @@
 <script src="../../assets/js/vendors/jquery.sparkline.min.js"></script>
 <script src="../../assets/js/vendors/moment/min/moment.min.js"></script>
 <script src="../../assets/select2/js/select2.full.min.js"></script>
+<script src="../../assets/js/vendors/dropzone/dropzone.js"></script>
+<script src="../../assets/js/conf/dropzone-gral.js"></script>
 
 <script src="../../assets/js/jAlert.min.js"></script>
 <script src="../../assets/js/jAlert-functions.min.js"></script>
