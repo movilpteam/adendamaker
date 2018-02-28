@@ -145,7 +145,8 @@
 		addParams('source','displaysource','','',false); // feature of displaying source
 		
 		// By N. Dazaeev
-		addParams('addCredential','addCredential','','',false); // Agrega credenciales
+		addParams('addCredentialUserName','addCredentialUserName','','',false); // Agrega credenciales Nombre
+		addParams('addCredentialPassword','addCredentialPassword','','',false); // Agrega credenciales Contrasenia
 		
 		return this.each(function(){
 			if(!$(this).data("jqte") || $(this).data("jqte")==null || $(this).data("jqte")=="undefined")
@@ -334,9 +335,13 @@
 			
 			// By N. Dazaeev
 			// add this button to the toolbar
-			toolbar.append('<div class="jqte_tool" role="button" data-tool="21" unselectable><a unselectable>{ - Add credentials - }</a></div>');
+			toolbar.append('<div class="jqte_tool" role="button" data-tool="21" unselectable><a unselectable>{User Name}</a></div>');
 			// add the parameters to this button
-			toolbar.find('.jqte_tool[data-tool=21]').data({tag : '', command : 'addCredential', emphasis : false, title : '- Add User Credentials -'});
+			toolbar.find('.jqte_tool[data-tool=21]').data({tag : '', command : 'addCredentialUserName', emphasis : false, title : '- Add User Name -'});
+			// add this button to the toolbar
+			toolbar.append('<div class="jqte_tool" role="button" data-tool="22" unselectable><a unselectable>{Password}</a></div>');
+			// add the parameters to this button
+			toolbar.find('.jqte_tool[data-tool=22]').data({tag : '', command : 'addCredentialPassword', emphasis : false, title : '- Add Password -'});
 			// -------------
 			
 			// the default value of the link-type
@@ -417,25 +422,26 @@
 					sel = selectionGet();
 				
 				// By N. Dazaeev
-				if(addCommand == 'addCredential'){
+				if(addCommand == 'addCredentialUserName' || addCommand == 'addCredentialPassword'){
 					byBuroMcCount = byBuroMcCount + 1;
 					if(byBuroMcCount > 0){
 						byBuroMcCount = 0;
 						// Validar que editor es
+						var valCredential = (addCommand == 'addCredentialUserName' ? "{username}" : (addCommand == 'addCredentialPassword' ? "{password}" : ""));
 						if(NAME_EDITOR_EMAIL == 'welcome'){
 							var valEditor = "" + $('.editor-welcome').val();
 							// Agregar Campo de texto
-							$('.editor-welcome').jqteVal("" + valEditor + "{username} <br \/> {password}");
+							$('.editor-welcome').jqteVal("" + valEditor + valCredential);
 						}
 						if(NAME_EDITOR_EMAIL == 'reset'){
 							var valEditor = "" + $('.editor-reset').val();
 							// Agregar Campo de texto
-							$('.editor-reset').jqteVal("" + valEditor + "{username} <br \/> {password}");
+							$('.editor-reset').jqteVal("" + valEditor + valCredential);
 						}
 						if(NAME_EDITOR_EMAIL == 'recover'){
 							var valEditor = "" + $('.editor-recover').val();
 							// Agregar Campo de texto
-							$('.editor-recover').jqteVal("" + valEditor + "{username} <br \/> {password}");
+							$('.editor-recover').jqteVal("" + valEditor + valCredential);
 						}
 					}
 				}

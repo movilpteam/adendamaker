@@ -3,6 +3,7 @@ var NAME_EDITOR_EMAIL = '';
 var WELCOME_TEMPLATE = new CorreoPlantilla();
 var RESET_TEMPLATE = new CorreoPlantilla();
 var RECOVER_TEMPLATE = new CorreoPlantilla();
+var COUNT_TABLE = 0;
 Dropzone.prototype.defaultOptions.dictDefaultMessage = "Agregar";
 $(document).ready(function () {
     sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
@@ -53,6 +54,9 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 // Funciones de la pantalla de Email
 function loadTableEmail(data) {
     $('#tbody_email').empty();
+    if(data.length > 0){
+    	$("#btn-add-email").attr("disabled", true);
+    }
     for (var i = 0; i < data.length; i++) {
         var tr = '<tr>' +
             '<td><i style="cursor: pointer" class="zmdi zmdi-edit btn-link" onclick="onEditAction('+ data[i].id +')"></i></td>' +
