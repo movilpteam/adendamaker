@@ -61,7 +61,81 @@
                         Modelo
                     </div>
                     <div class="card-body">
-
+                        <table class="table table-bordered table-info" style="width: 100%" id="table-model">
+                            <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tr data-tt-id="prov" class="addenda-modelo-tr-parent">
+                                <td>Proveedor</td>
+                                <td></td>
+                            </tr>
+                            <tr data-tt-id="numProv" data-tt-parent-id="prov">
+                                <td>Numero Proveedor</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control addenda-modelo-input" placeholder="Ingresa valor predeterminado">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="numProv_tipoDato" data-tt-parent-id="numProv">
+                                <td>Tipo de Dato</td>
+                                <td>
+                                    <label>Cadena de Texto</label>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="numProv_mandatorio" data-tt-parent-id="numProv">
+                                <td>Opcional/Mandatorio</td>
+                                <td align="center">
+                                    <input type="checkbox" class="custom-checkbox" checked>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="orden_c" class="addenda-modelo-tr-parent">
+                                <td>Orden de Compra</td>
+                                <td></td>
+                            </tr>
+                            <tr data-tt-id="numOrden" data-tt-parent-id="orden_c">
+                                <td>Numero de Orden Compra</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control addenda-modelo-input" placeholder="Ingresa valor predeterminado">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="numOrden_tipoDato" data-tt-parent-id="numOrden">
+                                <td>Tipo de Dato</td>
+                                <td>Numerico máximo 10 digitos</td>
+                            </tr>
+                            <tr data-tt-id="numOrden_mandatorio" data-tt-parent-id="numOrden">
+                                <td>Opcional/Mandatorio</td>
+                                <td align="center">
+                                    <input type="checkbox" class="custom-checkbox" checked>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="montoOrden" data-tt-parent-id="orden_c">
+                                <td>Fecha de Orden Compra</td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control addenda-modelo-input">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-tt-id="montoOrden_tipoDato" data-tt-parent-id="montoOrden">
+                                <td>Tipo de Dato</td>
+                                <td>Fecha con formato dd/mm/yyyy</td>
+                            </tr>
+                            <tr data-tt-id="montoOrden_mandatorio" data-tt-parent-id="montoOrden">
+                                <td>Opcional/Mandatorio</td>
+                                <td align="center">
+                                    <input type="checkbox" class="custom-checkbox">
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -86,10 +160,19 @@
 <!-- JQuery Validator -->
 <script src="../../assets/js/vendors/jquery.form-validator.js"></script>
 
+<!-- Temporal por si funciona el jsTreeTable -->
+<script src="http://culmat.github.io/jsTreeTable/treeTable.js"></script>
+
 <!-- App functions and actions -->
 <script src="../../assets/material/js/app.min.js"></script>
 <script src="../../assets/js/general.js"></script>
 <script src="../../assets/js/modelos.js"></script>
 <script src="../../assets/js/addenda/addenda.js"></script>
+
+<script type="text/javascript">
+    var jsTT = com_github_culmat_jsTreeTable;
+    // alert(jsTT.jsTreeTable);
+    jsTT.treeTable($('#table-model'));
+</script>
 </body>
 </html>

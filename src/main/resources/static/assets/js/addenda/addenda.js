@@ -4,6 +4,8 @@ $(document).ready(function () {
 
 });
 
+
+
 $('.dropzone').dropzone({
     url: '/addenda/upload/xsd',
     maxFilesize: 1,

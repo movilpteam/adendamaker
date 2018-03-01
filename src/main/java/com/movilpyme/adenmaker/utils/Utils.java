@@ -27,6 +27,7 @@ public class Utils implements Serializable {
 			new File(path + src).mkdirs();
 			FileCopyUtils.copy(bytes, new File(path + src + file.getOriginalFilename()));
 			LOGGER.debug("Archivo copiado con exito " + path + src + file.getOriginalFilename());
+            System.out.println(path + src + file.getOriginalFilename());
 		} catch (Exception e) {
 			LOGGER.debug("## Exception e: " + e + "##");
 			return false;
