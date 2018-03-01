@@ -60,3 +60,10 @@ function Correo(){
 	this.issuerName = "";
 	this.certificate = true;
 }
+
+function Parametros(){
+	this.id = 0;
+	this.configuration = 0;
+	this.parametro = "";
+	this.valor = "";
+}

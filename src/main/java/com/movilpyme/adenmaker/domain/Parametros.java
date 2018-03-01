@@ -38,7 +38,7 @@ public class Parametros {
 	}
 
 	@Basic
-	@Column(name = "PARAMETRO", nullable = true, length = 20)
+	@Column(name = "PARAMETRO", nullable = true, length = 100)
 	public String getParametro() {
 		return parametro;
 	}
