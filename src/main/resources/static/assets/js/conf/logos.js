@@ -15,9 +15,11 @@ $(document).ready(function () {
 			empresa.id = $('#combo-empresa-logo').val();
 			if(empresa.id != ""){
 				sendPostAction(EMPRESA_CONTROLLER_URL + 'viewLogo', empresa, srcViewLogo);
+				$("#div-upload-widget").show();
 			}
 		});
 	}).change();
+	$("#div-upload-widget").hide();
 });
 $.validate({
     form: '#new-logo-form'
