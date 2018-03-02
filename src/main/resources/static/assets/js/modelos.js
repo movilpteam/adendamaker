@@ -63,7 +63,13 @@ function Correo(){
 
 function Parametros(){
 	this.id = 0;
-	this.configuration = 0;
+	this.name = "";
 	this.parametro = "";
+	this.valor = "";
+}
+
+function PasswordConfig(){
+	this.id = 0;
+	this.name = "";
 	this.valor = "";
 }

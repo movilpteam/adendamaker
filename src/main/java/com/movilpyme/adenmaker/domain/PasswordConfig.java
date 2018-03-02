@@ -7,17 +7,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class Parametros {
+@Table(name = "PASSWORD_CONFIG", schema = "AW_ADMIN", catalog = "")
+public class PasswordConfig {
 	private long id;
 	private String name;
-	private String parametro;
 	private String valor;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "parametros_seq_gen")
-	@SequenceGenerator(name = "parametros_seq_gen", sequenceName = "PARAMETROS_SEQ")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "passwords_seq_gen")
+	@SequenceGenerator(name = "passwords_seq_gen", sequenceName = "PASSWORD_SEQ")
 	@Column(name = "ID", nullable = false, precision = 0)
 	public long getId() {
 		return id;
@@ -28,23 +29,13 @@ public class Parametros {
 	}
 	
 	@Basic
-	@Column(name = "NAME", nullable = true, length = 100)
+	@Column(name = "NAME", nullable = false, length = 100)
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Basic
-	@Column(name = "PARAMETRO", nullable = true, length = 100)
-	public String getParametro() {
-		return parametro;
-	}
-
-	public void setParametro(String parametro) {
-		this.parametro = parametro;
 	}
 
 	@Basic
@@ -63,7 +54,6 @@ public class Parametros {
 		int result = 1;
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((parametro == null) ? 0 : parametro.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
@@ -76,18 +66,13 @@ public class Parametros {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Parametros other = (Parametros) obj;
+		PasswordConfig other = (PasswordConfig) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (parametro == null) {
-			if (other.parametro != null)
-				return false;
-		} else if (!parametro.equals(other.parametro))
 			return false;
 		if (valor == null) {
 			if (other.valor != null)
