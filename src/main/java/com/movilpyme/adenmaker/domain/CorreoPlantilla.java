@@ -2,16 +2,7 @@ package com.movilpyme.adenmaker.domain;
 
 import java.util.Objects;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CORREO_PLANTILLA", schema = "AW_ADMIN", catalog = "")
@@ -57,7 +48,8 @@ public class CorreoPlantilla {
     }
 
     @Basic
-    @Column(name = "BODY", nullable = true, length = 500)
+    @Column(name = "BODY", columnDefinition = "CLOB NOT NULL")
+    @Lob
     public String getBody() {
         return body;
     }

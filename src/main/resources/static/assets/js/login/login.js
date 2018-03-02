@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $.getScript('assets/js/SHA512.js', null);
     $('#txt_pwd_login').keyup(function (event) {
-        if (event.which === 13){
+        if (event.which === 13) {
             checkCredentials();
         }
     });
@@ -50,12 +50,12 @@ function checkCredentials() {
 function loginResponse(data) {
     if (data.token != null) {
         sessionStorage.setItem('login', JSON.stringify(data));
-        if (data.usuario.cambiarPwd){
+        if (data.usuario.cambiarPwd) {
             $('#a_chgpwd').trigger("click");
-        }else {
+        } else {
             window.location = 'home';
         }
-    }else {
+    } else {
         showDivMessage('Respuesta del Servidor Corrupta', 'alert-danger', 4000);
     }
 }

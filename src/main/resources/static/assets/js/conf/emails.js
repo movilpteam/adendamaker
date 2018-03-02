@@ -5,9 +5,41 @@ var RESET_TEMPLATE = new CorreoPlantilla();
 var RECOVER_TEMPLATE = new CorreoPlantilla();
 var COUNT_TABLE = 0;
 
-CKEDITOR.replace('text-welcome', {
+var WELCOME_EDITOR = CKEDITOR.replace('textWelcome', {
     language: 'es-mx'
 });
+var RECOVER_EDITOR = CKEDITOR.replace('textRecover', {
+    language: 'es-mx'
+});
+var RESET_EDITOR = CKEDITOR.replace('textReset', {
+    language: 'es-mx'
+});
+
+for (var ins in CKEDITOR.instances) {
+    CKEDITOR.instances[ins].addCommand('addPassword', {
+        exec: function (edt) {
+            edt.insertHtml('{password}');
+        }
+    });
+    CKEDITOR.instances[ins].addCommand('addUsername', {
+        exec: function (edt) {
+            edt.insertHtml('{username}');
+        }
+    });
+    CKEDITOR.instances[ins].ui.addButton('addUserNBtn', {
+        label: 'Usuario ID',
+        command: 'addUsername',
+        toolbar: 'others',
+        icon: '/images/icons/usericon.ico'
+    });
+    CKEDITOR.instances[ins].ui.addButton('addPwdBtn', {
+        label: 'Contraseña',
+        command: 'addPassword',
+        toolbar: 'others',
+        icon: '/images/icons/pwdicon.png'
+    });
+}
+
 $(document).ready(function () {
 	sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
@@ -34,9 +66,9 @@ $(document).ready(function () {
        return false;
     });
     // Init editors
-    $(".editor-welcome").jqte();
-    $(".editor-reset").jqte();
-    $(".editor-recover").jqte();
+   // $(".editor-welcome").jqte();
+   // $(".editor-reset").jqte();
+   // $(".editor-recover").jqte();
 });
 $.validate({
     form: '#new-email-form'
@@ -104,11 +136,15 @@ function loadTemplates(data) {
         }
     }
     $('#asunto-welcome').val(WELCOME_TEMPLATE.asunto);
-    $('.editor-welcome').jqteVal(WELCOME_TEMPLATE.body);
+  //  $('#text-welcome').jqteVal(WELCOME_TEMPLATE.body);
     $('#asunto-reset').val(RESET_TEMPLATE.asunto);
-    $('.editor-reset').jqteVal(RESET_TEMPLATE.body);
+  //  $('.editor-reset').jqteVal(RESET_TEMPLATE.body);
     $('#asunto-recover').val(RECOVER_TEMPLATE.asunto);
-    $('.editor-recover').jqteVal(RECOVER_TEMPLATE.body);
+  //  $('.editor-recover').jqteVal(RECOVER_TEMPLATE.body);
+
+    WELCOME_EDITOR.setData(WELCOME_TEMPLATE.body);
+    RECOVER_EDITOR.setData(RECOVER_TEMPLATE.body);
+    RESET_EDITOR.setData(RESET_TEMPLATE.body);
 }
 
 function onEditResponse(data) {
@@ -157,24 +193,36 @@ var modalConfirm = function(callback) {
 };
 modalConfirm(function(confirm) {
 	if (confirm) {
-		// Guardado welcome
-		WELCOME_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
-		WELCOME_TEMPLATE.nombre = 'welcome';
-		WELCOME_TEMPLATE.asunto = "" + $('#asunto-welcome').val();
-		WELCOME_TEMPLATE.body = "" + $('.editor-welcome').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', WELCOME_TEMPLATE, saveEditor);
-		
-		RESET_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
-		RESET_TEMPLATE.nombre = 'reset';
-		RESET_TEMPLATE.asunto = "" + $('#asunto-reset').val();
-		RESET_TEMPLATE.body = "" + $('.editor-reset').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RESET_TEMPLATE, saveEditor);
-		
-		RECOVER_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
-		RECOVER_TEMPLATE.nombre = 'recover';
-		RECOVER_TEMPLATE.asunto = "" + $('#asunto-recover').val();
-		RECOVER_TEMPLATE.body = "" + $('.editor-recover').val();
-		sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RECOVER_TEMPLATE, saveEditor);
+		var saveAction = false;
+        if (WELCOME_EDITOR.getData().length > 0){
+            WELCOME_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+            WELCOME_TEMPLATE.nombre = 'welcome';
+            WELCOME_TEMPLATE.asunto = "" + $('#asunto-welcome').val();
+            WELCOME_TEMPLATE.body = "" + WELCOME_EDITOR.getData();
+            saveAction = true;
+            sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', WELCOME_TEMPLATE, saveEditor);
+        }
+
+		if (RESET_EDITOR.getData().length > 0){
+            RESET_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+            RESET_TEMPLATE.nombre = 'reset';
+            RESET_TEMPLATE.asunto = "" + $('#asunto-reset').val();
+            RESET_TEMPLATE.body = "" + RESET_EDITOR.getData();
+            saveAction = true;
+            sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RESET_TEMPLATE, saveEditor);
+        }
+
+		if (RECOVER_EDITOR.getData().length > 0){
+            RECOVER_TEMPLATE.idCorreo = ID_CURRENT_EMAIL;
+            RECOVER_TEMPLATE.nombre = 'recover';
+            RECOVER_TEMPLATE.asunto = "" + $('#asunto-recover').val();
+            RECOVER_TEMPLATE.body = "" + RECOVER_EDITOR.getData();
+            saveAction = true;
+            sendPostAction(EMAIL_CONTROLLER_URL + 'saveEmailTemplate', RECOVER_TEMPLATE, saveEditor);
+        }
+		if (!saveAction){
+            showDivMessage('Plantillas vacias, no se guardo informacion', 'alert-danger', 4000);
+        }
 	} else {
 		//Acciones si el usuario no confirma
 		initEditor();
@@ -186,9 +234,9 @@ function initEditor(){
 	$('#asunto-welcome').val("");
 	$('#asunto-reset').val("");
 	$('#asunto-recover').val("");
-	$('.editor-welcome').jqteVal("");
-	$('.editor-reset').jqteVal("");
-	$('.editor-recover').jqteVal("");
+//	$('.editor-welcome').jqteVal("");
+//	$('.editor-reset').jqteVal("");
+//	$('.editor-recover').jqteVal("");
 }
 
 function saveEditor(data) {
