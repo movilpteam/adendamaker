@@ -4,7 +4,10 @@ var WELCOME_TEMPLATE = new CorreoPlantilla();
 var RESET_TEMPLATE = new CorreoPlantilla();
 var RECOVER_TEMPLATE = new CorreoPlantilla();
 var COUNT_TABLE = 0;
-Dropzone.prototype.defaultOptions.dictDefaultMessage = "Agregar";
+
+CKEDITOR.replace('text-welcome', {
+    language: 'es-mx'
+});
 $(document).ready(function () {
 	sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
     $('#btn-add-email').on('click', function () {
