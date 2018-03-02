@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="../../assets/js/vendors/dropzone/dropzone.css" />
 
 </head>
-<body data-ma-theme="green">
+<body data-ma-theme="blue">
 	<main class="main">
 	<div class="page-loader">
 		<div class="page-loader__spinner">
@@ -76,8 +76,8 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="user-name">Nombre de usuario</label> <input
-										data-validation="length alphanumeric"
-										data-validation-length="min3" type="text" id="user-name"
+										data-validation="required" placeholder="nombre@dominio.com"
+										type="text" id="user-name"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
@@ -85,8 +85,7 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="password">Contraseña</label> <input
-										data-validation="length alphanumeric"
-										data-validation-length="min3" type="password" id="password"
+										data-validation="required" type="password" id="password"
 										class="form-control form-control-lg"> <i
 										class="form-group__bar"></i>
 								</div>
@@ -94,25 +93,22 @@
 							<div class="col-4">
 								<div class="form-group">
 									<label for="end-server">Servidor</label> <input
-										data-validation="length alphanumeric"
-										data-validation-length="min3" type="text" id="end-server"
-										class="form-control form-control-lg"> <i
-										class="form-group__bar"></i>
+										data-validation="required" placeholder="127.0.0.1" type="text"
+										id="end-server" class="form-control form-control-lg">
+									<i class="form-group__bar"></i>
 								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group">
 									<label for="entrance-port">Puerto</label> <input
-										data-validation="number"
-										data-validation-length="min2" type="text" id="entrance-port"
-										class="form-control form-control-lg"> <i
-										class="form-group__bar"></i>
+										data-validation="number" placeholder="1010" type="text"
+										id="entrance-port" class="form-control form-control-lg">
+									<i class="form-group__bar"></i>
 								</div>
 							</div>
 							<div class="col-4">
 								<div class="form-group">
-									<label for="combo-ssl">SSL</label>
-                                    <select id="combo-ssl"
+									<label for="combo-ssl">SSL</label> <select id="combo-ssl"
 										class="select2" data-validation="required">
 										<option>Si</option>
 										<option>No</option>
@@ -142,7 +138,7 @@
 		</div>
 	</section>
 	</main>
-	
+
 	<div id="mi-modal-email" class="modal fade bd-example-modal-lg"
 		tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 		aria-hidden="true">
@@ -170,10 +166,9 @@
 									<div class="col-11">
 										<div class="form-group">
 											<label for="asunto-welcome">Asunto</label> <input
-												data-validation="required" data-validation-length="min3"
-												type="text" id="asunto-welcome"
-												class="form-control form-control-lg"> <i
-												class="form-group__bar"></i>
+												data-validation="required" placeholder="..." type="text"
+												id="asunto-welcome" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
 										</div>
 									</div>
 								</div>
@@ -184,10 +179,9 @@
 									<div class="col-11">
 										<div class="form-group">
 											<label for="asunto-reset">Asunto</label> <input
-												data-validation="required" data-validation-length="min3"
-												type="text" id="asunto-reset"
-												class="form-control form-control-lg"> <i
-												class="form-group__bar"></i>
+												data-validation="required" placeholder="..." type="text"
+												id="asunto-reset" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
 										</div>
 									</div>
 								</div>
@@ -198,10 +192,9 @@
 									<div class="col-11">
 										<div class="form-group">
 											<label for="asunto-recover">Asunto</label> <input
-												data-validation="required" data-validation-length="min3"
-												type="text" id="asunto-recover"
-												class="form-control form-control-lg"> <i
-												class="form-group__bar"></i>
+												data-validation="required" placeholder="..." type="text"
+												id="asunto-recover" class="form-control form-control-lg">
+											<i class="form-group__bar"></i>
 										</div>
 									</div>
 								</div>
@@ -238,7 +231,7 @@
 <!--	<script src="../../assets/js/vendors/jquery-te/uncompressed/jquery-te-1.4.0.js"></script> -->
 	<script src="../../assets/js/vendors/dropzone/dropzone.js"></script>
 	<script src="../../assets/js/conf/dropzone-gral.js"></script>
-	
+
 	<script src="../../assets/js/jAlert.min.js"></script>
 	<script src="../../assets/js/jAlert-functions.min.js"></script>
 	<script src="../../assets/js/jTimeout.min.js"></script>
