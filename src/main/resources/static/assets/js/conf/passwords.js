@@ -1,4 +1,3 @@
-var PWD = new PasswordConfig();
 $(document).ready(function() {
 	sendPostAction(PASSWORD_CONTROLLER_URL + 'byName/length', null, loadTablePwd);
 	sendPostAction(PASSWORD_CONTROLLER_URL + 'byName/customCheckUppercase', null, loadTablePwd);
@@ -14,6 +13,32 @@ $(document).ready(function() {
 		console.log('combo-renewal-password: ' + $('#combo-renewal-password').val());
 		console.log('customCheckAutoReset: ' + $('#customCheckAutoReset:checked').val());
 		// Guardar
+		var pwdConf = new PasswordConfig();
+
+		pwdConf.name  = 'length';
+		pwdConf.valor = $('#length').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+
+		pwdConf.name  = 'customCheckUppercase';
+		pwdConf.valor = $('#customCheckUppercase:checked').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+
+		pwdConf.name  = 'customCheckNumber';
+		pwdConf.valor = $('#customCheckNumber:checked').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+
+		pwdConf.name  = 'customCheckChar';
+		pwdConf.valor = $('#customCheckChar:checked').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+
+		pwdConf.name  = 'combo-renewal-password';
+		pwdConf.valor = $('#combo-renewal-password').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+
+		pwdConf.name  = 'customCheckAutoReset';
+		pwdConf.valor = $('#customCheckAutoReset:checked').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'save', pwdConf, save);
+		
 		return false;
 	});
 });
@@ -36,4 +61,13 @@ function loadTablePwd(data) {
 			$('#customCheckAutoReset').prop("checked", data[i].valor === 'on' ? true : false);
 		}
 	}
+}
+function save(data) {
+    if (data === true){
+        showDivMessage('Configuración Guardada', 'alert-info', 3000);
+        sendPostAction(EMAIL_CONTROLLER_URL + 'list', null, loadTableEmail);
+    }else {
+        showDivMessage('Error al guardar informacion', 'alert-danger', 3000);
+    }
+    showTableCard();
 }
