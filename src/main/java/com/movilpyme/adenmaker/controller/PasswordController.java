@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movilpyme.adenmaker.domain.PasswordConfig;
-import com.movilpyme.adenmaker.repository.ContraseniaPlantillaRepo;
+import com.movilpyme.adenmaker.repository.PasswordConfigRepo;
 
 @RestController
 @RequestMapping("adm/contrasenia")
 public class PasswordController {
 
-	private final ContraseniaPlantillaRepo contraseniaPlantillaRepo;
+	private final PasswordConfigRepo passwordConfigRepo;
 
 	@Autowired
-	public PasswordController(ContraseniaPlantillaRepo contraseniaPlantillaRepo) {
+	public PasswordController(PasswordConfigRepo passwordConfigRepo) {
 		super();
-		this.contraseniaPlantillaRepo = contraseniaPlantillaRepo;
+		this.passwordConfigRepo = passwordConfigRepo;
 	}
 
 	@RequestMapping(value = "byName/{name}", method = RequestMethod.POST)
@@ -31,7 +31,7 @@ public class PasswordController {
 		if (name == null) {
 			throw new ServletException("Configuraciòn Inválida");
 		}
-		List<PasswordConfig> list = contraseniaPlantillaRepo.findAllByName(name);
+		List<PasswordConfig> list = passwordConfigRepo.findAllByName(name);
 		if (list == null) {
 			throw new ServletException("No se encontro correo");
 		}
@@ -44,9 +44,9 @@ public class PasswordController {
             throw new ServletException("Password Config Inválido");
         }
         try {
-        	List<PasswordConfig> obj = contraseniaPlantillaRepo.findAllByName(passwordConfig.getName());
+        	List<PasswordConfig> obj = passwordConfigRepo.findAllByName(passwordConfig.getName());
         	passwordConfig.setId(null != obj && obj.size() > 0 ? obj.get(0).getId() : 0);
-        	contraseniaPlantillaRepo.save(passwordConfig);
+        	passwordConfigRepo.save(passwordConfig);
             return true;
         }catch (Exception e){
             throw new ServletException(e.getMessage());

@@ -21,7 +21,7 @@ public class Usuarios {
     private String telefono;
     private boolean enabled;
     @JsonIgnore
-    private String preguntaSecreta;
+    private long preguntaSecreta;
     @JsonIgnore
     private String respuestaSecreta;
     private boolean cambiarPwd;
@@ -127,11 +127,11 @@ public class Usuarios {
 
     @Basic
     @Column(name = "PREGUNTA_SECRETA", nullable = true, length = 100)
-    public String getPreguntaSecreta() {
+    public long getPreguntaSecreta() {
         return preguntaSecreta;
     }
 
-    public void setPreguntaSecreta(String preguntaSecreta) {
+    public void setPreguntaSecreta(long preguntaSecreta) {
         this.preguntaSecreta = preguntaSecreta;
     }
 

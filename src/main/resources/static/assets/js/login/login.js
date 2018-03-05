@@ -1,3 +1,5 @@
+var PWD_REGEX = '^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$';
+
 $(document).ready(function () {
     $.getScript('assets/js/SHA512.js', null);
     $('#txt_pwd_login').keyup(function (event) {
@@ -5,7 +7,21 @@ $(document).ready(function () {
             checkCredentials();
         }
     });
+    sendPostLogin(LOGIN_CONTROLLER_URL + 'autoreset', null, autoResetResponse);
+    sendPostLogin(LOGIN_CONTROLLER_URL + 'pwdregex', null, getPwdRegex);
 });
+
+function getPwdRegex(data) {
+    if (data.regex.length > 0) {
+        PWD_REGEX = data.regex;
+    }
+}
+
+function autoResetResponse(data) {
+    if (!data) {
+        $('#a-autoreset').css('display', 'none');
+    }
+}
 
 function resetPassword() {
     var model = {

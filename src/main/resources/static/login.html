@@ -54,7 +54,7 @@
             <button class="btn btn--icon login__block__btn" onclick="checkCredentials()">
                 <i class="zmdi zmdi-long-arrow-right"></i>
             </button>
-            <a class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
+            <a id="a-autoreset" class="dropdown-item" data-ma-action="login-switch" data-ma-target="#l-forget-password"
                href="">¿Olvidaste tu Contraseña?</a>
         </div>
     </div>
@@ -83,6 +83,17 @@
             <p class="mt-4">
                 Es necesario que cambies tu contraseña
             </p>
+            <div class="form-group form-group--float form-group--centered">
+                <select id="question_combo">
+                    <option value="1">¿Nombre de tu primaria?</option>
+                </select>
+                <label>Pregunta Secreta</label>
+            </div>
+            <div class="form-group form-group--float form-group--centered">
+                <input id="answer" type="text" class="form-control">
+                <label>Respuesta</label>
+                <i class="form-group__bar"></i>
+            </div>
             <div class="form-group form-group--float form-group--centered">
                 <input id="chg_pwd_actual" type="password" class="form-control">
                 <label>Contraseña Actual</label>

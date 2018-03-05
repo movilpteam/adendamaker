@@ -2,7 +2,9 @@ package com.movilpyme.adenmaker.utils;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.List;
 
+import com.movilpyme.adenmaker.domain.PasswordConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.FileCopyUtils;
@@ -34,5 +36,33 @@ public class Utils implements Serializable {
 		}
 		LOGGER.debug("## <-- Utils.copyFile() ##");
 		return true;
+	}
+
+	public static String getPwdRegex(List<PasswordConfig> configList) {
+        StringBuilder regex = new StringBuilder();
+        regex.append("^(?=.*[a-z])");
+        for (PasswordConfig config: configList) {
+            switch (config.getName()){
+                case Constantes.LENGTH:
+                    regex.append("(?=.{").append(config.getValor()).append(",})");break;
+                case Constantes.NUMBERCHAR:
+                    if (config.getValor() != null) {
+                        regex.append("(?=.*\\d)");
+                    }
+                    break;
+                case Constantes.UPPERCASE:
+                    if (config.getValor() != null) {
+                        regex.append("(?=.*[A-Z])");
+                    }
+                    break;
+                case Constantes.SPECIALCHAR:
+                    if (config.getValor() != null) {
+                        regex.append("(?=.*[@#$%&^()~*{}=])");
+                    }
+                    break;
+            }
+        }
+        regex.append(".*$");
+        return regex.toString();
 	}
 }

@@ -1,10 +1,8 @@
 package com.movilpyme.adenmaker.controller;
 
-import com.movilpyme.adenmaker.domain.Login;
-import com.movilpyme.adenmaker.domain.Roles;
-import com.movilpyme.adenmaker.domain.UserRoles;
-import com.movilpyme.adenmaker.domain.Usuarios;
+import com.movilpyme.adenmaker.domain.*;
 import com.movilpyme.adenmaker.repository.*;
+import com.movilpyme.adenmaker.utils.Constantes;
 import com.movilpyme.adenmaker.utils.PwdGenerator;
 import com.movilpyme.adenmaker.utils.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +27,23 @@ public class UsuariosController {
     private final LoginRepo loginRepo;
     private final EmailRepo emailRepo;
     private final CorreoPlantillaRepo plantillaRepo;
+    private final PasswordConfigRepo passwordConfigRepo;
 
     @Autowired
-    public UsuariosController(UsuariosRepo usuariosRepo, RolesRepo rolesRepo, UserRolesRepo userRolesRepo, LoginRepo loginRepo, EmailRepo emailRepo, CorreoPlantillaRepo plantillaRepo) {
+    public UsuariosController(UsuariosRepo usuariosRepo,
+                              RolesRepo rolesRepo,
+                              UserRolesRepo userRolesRepo,
+                              LoginRepo loginRepo,
+                              EmailRepo emailRepo,
+                              CorreoPlantillaRepo plantillaRepo,
+                              PasswordConfigRepo passwordConfigRepo) {
         this.usuariosRepo = usuariosRepo;
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
         this.loginRepo = loginRepo;
         this.emailRepo = emailRepo;
         this.plantillaRepo = plantillaRepo;
+        this.passwordConfigRepo = passwordConfigRepo;
     }
 
     @RequestMapping(value = "changePassword", method = RequestMethod.POST)
@@ -93,7 +99,12 @@ public class UsuariosController {
         }
         try {
             if (user.getId() == 0){
-                String str_pwd = PwdGenerator.generatePassword(8);
+                List<PasswordConfig> configList = passwordConfigRepo.findAllByName(Constantes.LENGTH);
+                int pwd_size = 8;
+                if (configList != null && configList.size() > 0){
+                    pwd_size = Integer.valueOf(configList.get(0).getValor());
+                }
+                String str_pwd = PwdGenerator.generatePassword(pwd_size);
                 String hash_pwd = PwdGenerator.passwordSHA512(str_pwd);
                 String username = user.getNombre().substring(0,1) + user.getApaterno();
                 if (usuariosRepo.countByUsername(username.toLowerCase()) > 0){

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.movilpyme.adenmaker.domain.PasswordConfig;
 
 @Repository
-public interface ContraseniaPlantillaRepo extends CrudRepository<PasswordConfig, Long> {
+public interface PasswordConfigRepo extends CrudRepository<PasswordConfig, Long> {
 	
     public List<PasswordConfig> findAllByName(String name);
 }
