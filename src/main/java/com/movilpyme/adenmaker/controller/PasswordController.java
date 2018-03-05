@@ -12,18 +12,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movilpyme.adenmaker.domain.PasswordConfig;
+import com.movilpyme.adenmaker.domain.PreguntasPwd;
 import com.movilpyme.adenmaker.repository.ContraseniaPlantillaRepo;
+import com.movilpyme.adenmaker.repository.PreguntasRepo;
 
 @RestController
 @RequestMapping("adm/contrasenia")
 public class PasswordController {
 
 	private final ContraseniaPlantillaRepo contraseniaPlantillaRepo;
+	private final PreguntasRepo preguntasRepo;
 
 	@Autowired
-	public PasswordController(ContraseniaPlantillaRepo contraseniaPlantillaRepo) {
+	public PasswordController(ContraseniaPlantillaRepo contraseniaPlantillaRepo, PreguntasRepo preguntasRepo) {
 		super();
 		this.contraseniaPlantillaRepo = contraseniaPlantillaRepo;
+		this.preguntasRepo = preguntasRepo;
 	}
 
 	@RequestMapping(value = "byName/{name}", method = RequestMethod.POST)
@@ -37,7 +41,7 @@ public class PasswordController {
 		}
 		return list;
 	}
-	
+
 	@RequestMapping(value = "save", method = RequestMethod.POST)
     public boolean save(@RequestBody PasswordConfig passwordConfig) throws ServletException {
         if (passwordConfig == null){
@@ -48,6 +52,38 @@ public class PasswordController {
         	passwordConfig.setId(null != obj && obj.size() > 0 ? obj.get(0).getId() : 0);
         	contraseniaPlantillaRepo.save(passwordConfig);
             return true;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+	
+	@RequestMapping(value = "listQuestions", method = RequestMethod.POST)
+    public List<PreguntasPwd> getQuestionsList() throws ServletException {
+        List<PreguntasPwd> preguntas = (List<PreguntasPwd>) preguntasRepo.findAll();
+        return preguntas;
+    }
+	
+	@RequestMapping(value = "saveQuestions", method = RequestMethod.POST)
+    public boolean saveQuestions(@RequestBody PreguntasPwd preguntasPwd) throws ServletException {
+        if (preguntasPwd == null){
+            throw new ServletException("Pregunta Inválida");
+        }
+        try {
+        	preguntasRepo.save(preguntasPwd);
+            return true;
+        }catch (Exception e){
+            throw new ServletException(e.getMessage());
+        }
+    }
+	
+	@RequestMapping(value = "disabledQuestion/{id}", method = RequestMethod.POST)
+    public Long disabledQuestion(@PathVariable Long id) throws ServletException {
+        if (id == 0){
+            throw new ServletException("Pregunta Inválida");
+        }
+        try {
+        	preguntasRepo.delete(id);
+            return new Long(1);
         }catch (Exception e){
             throw new ServletException(e.getMessage());
         }

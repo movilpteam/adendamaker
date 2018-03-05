@@ -73,3 +73,8 @@ function PasswordConfig(){
 	this.name = "";
 	this.valor = "";
 }
+
+function PreguntasPwd(){
+	this.id = 0;
+	this.pregunta = "";
+}
