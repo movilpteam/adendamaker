@@ -1,3 +1,4 @@
+var ID_CURRENT_PASSWORD = 0;
 $(document).ready(function() {
 	sendPostAction(PASSWORD_CONTROLLER_URL + 'byName/length', null, loadTablePwd);
 	sendPostAction(PASSWORD_CONTROLLER_URL + 'byName/customCheckUppercase', null, loadTablePwd);
@@ -46,6 +47,7 @@ $(document).ready(function() {
 		var questions = new PreguntasPwd();
 		questions.pregunta = $('#questions').val();
 		sendPostAction(PASSWORD_CONTROLLER_URL + 'saveQuestions', questions, saveQuestions);
+		initData();
 		return false;
 	});
 });
@@ -67,13 +69,25 @@ var modalConfirm = function(callback) {
 };
 modalConfirm(function(confirm) {
 	if (confirm) {
-		// 
+		// Guardar
+		var questions = new PreguntasPwd();
+		questions.id = ID_CURRENT_PASSWORD;
+		questions.pregunta = $('#edit-questions').val();
+		sendPostAction(PASSWORD_CONTROLLER_URL + 'saveQuestions', questions, saveQuestions);
+		initData();
 	} else {
 		// Acciones si el usuario no confirma
 		// Iniciar campos
+		initData();
 		showDivMessage('Acción Cancelada en Pregunta. No se guardaron los cambios', 'alert-danger', 3000);
 	}
 });
+function initData(){
+	ID_CURRENT_PASSWORD = 0;
+	$('#questions').val("");
+	$('#id-questions').text("");
+	$('#edit-questions').val("");
+}
 function viewTablePwd(data){
 	if(data){
 		document.getElementById("div-table").style.display = "block";
@@ -165,7 +179,9 @@ function deleteQuestionsResponse(data) {
 }
 function modifyQuestionsAction(id, pregunta){
 	console.log(id + ' - ' + pregunta);
+	ID_CURRENT_PASSWORD = id;
 	// Llenar edicion
-	
-    $("#mi-modal-questions").modal('show');
+	$('#id-questions').text("ID: " + id);
+	$('#edit-questions').val(pregunta);
+	$("#mi-modal-questions").modal('show');
 }
