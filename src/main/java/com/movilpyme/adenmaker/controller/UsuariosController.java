@@ -61,6 +61,8 @@ public class UsuariosController {
         try {
             user.setPassword(BCrypt.hashpw(requestData.get("nuevo"), BCrypt.gensalt()));
             user.setCambiarPwd(requestData.get("changePwd") != null);
+            user.setRespuestaSecreta(requestData.get("answer"));
+            user.setPreguntaSecreta(new Long(requestData.get("idpregunta")));
             usuariosRepo.save(user);
             return true;
         } catch (Exception e) {

@@ -8,7 +8,7 @@ function Usuarios() {
     this.password = "";
     this.telefono = "";
     this.enabled = "";
-    this.preguntaSecreta = "";
+    this.preguntaSecreta = 0;
     this.respuestaSecreta = "";
     this.cambiarPwd = false;
     this.lasPwdChg = new Date();

@@ -20,7 +20,6 @@ public class Usuarios {
     private String password;
     private String telefono;
     private boolean enabled;
-    @JsonIgnore
     private long preguntaSecreta;
     @JsonIgnore
     private String respuestaSecreta;
@@ -126,7 +125,7 @@ public class Usuarios {
     }
 
     @Basic
-    @Column(name = "PREGUNTA_SECRETA", nullable = true, length = 100)
+    @Column(name = "PREGUNTA_SECRETA")
     public long getPreguntaSecreta() {
         return preguntaSecreta;
     }

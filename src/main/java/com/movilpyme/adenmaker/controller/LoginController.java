@@ -2,6 +2,7 @@ package com.movilpyme.adenmaker.controller;
 
 import com.movilpyme.adenmaker.domain.Login;
 import com.movilpyme.adenmaker.domain.PasswordConfig;
+import com.movilpyme.adenmaker.domain.PreguntasPwd;
 import com.movilpyme.adenmaker.domain.Usuarios;
 import com.movilpyme.adenmaker.repository.*;
 import com.movilpyme.adenmaker.security.TokenHelper;
@@ -35,6 +36,7 @@ public class LoginController {
     private final EmailRepo emailRepo;
     private final CorreoPlantillaRepo plantillaRepo;
     private final PasswordConfigRepo passwordConfigRepo;
+    private final PreguntasRepo preguntasRepo;
     private final TokenHelper tokenHelper;
 
     private SendMail sendMail;
@@ -47,7 +49,8 @@ public class LoginController {
                            EmailRepo emailRepo,
                            CorreoPlantillaRepo plantillaRepo,
                            TokenHelper tokenHelper,
-                           PasswordConfigRepo passwordConfigRepo) {
+                           PasswordConfigRepo passwordConfigRepo,
+                           PreguntasRepo preguntasRepo) {
         this.usuariosRepo = usuariosRepo;
         this.rolesRepo = rolesRepo;
         this.userRolesRepo = userRolesRepo;
@@ -56,6 +59,7 @@ public class LoginController {
         this.plantillaRepo = plantillaRepo;
         this.tokenHelper = tokenHelper;
         this.passwordConfigRepo = passwordConfigRepo;
+        this.preguntasRepo = preguntasRepo;
     }
 
     @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
@@ -65,6 +69,11 @@ public class LoginController {
         }
         Usuarios user = usuariosRepo.findByUsername(requestData.get("username"));
         if (user != null){
+            if (requestData.get("answer") != null && !requestData.get("answer").equalsIgnoreCase("NA")){
+                if (!user.getRespuestaSecreta().equalsIgnoreCase(requestData.get("answer"))){
+                    return true;
+                }
+            }
             try {
                 sendMail = new SendMail(emailRepo, plantillaRepo);
                 List<PasswordConfig> configList = passwordConfigRepo.findAllByName(Constantes.LENGTH);
@@ -135,5 +144,31 @@ public class LoginController {
         Map<String, String> response = new HashMap<>();
         response.put("regex", Utils.getPwdRegex(configList));
         return response;
+    }
+
+    @RequestMapping(value = "preguntas", method = RequestMethod.POST)
+    public List<PreguntasPwd> getSecretQuestion() throws ServletException {
+        List<PreguntasPwd> list = (List<PreguntasPwd>) preguntasRepo.findAll();
+        return list;
+    }
+
+    @RequestMapping(value = "user/pregunta", method = RequestMethod.POST)
+    public Map<String, String> getQuestionByUser(@RequestBody Map<String, String> requestData) throws ServletException {
+        if (requestData.get("username") == null){
+            throw new ServletException("Usuario Inválido ó Pregunta Inválida");
+        }
+        Usuarios user = usuariosRepo.findByUsername(requestData.get("username"));
+        if (user == null){
+            throw new ServletException("Usuario Inválido");
+        }
+        Map<String, String> responseData = new HashMap<>();
+        if (user.getPreguntaSecreta() == 0){
+            responseData.put("NA", "true");
+            return responseData;
+        }
+        PreguntasPwd pregunta = preguntasRepo.findOne(user.getPreguntaSecreta());
+        responseData.put("NA", "false");
+        responseData.put("pregunta", pregunta.getPregunta());
+        return responseData;
     }
 }

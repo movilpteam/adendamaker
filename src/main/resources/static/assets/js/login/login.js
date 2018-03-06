@@ -1,4 +1,5 @@
 var PWD_REGEX = '^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$';
+var GET_QUESTION = true;
 
 $(document).ready(function () {
     $.getScript('assets/js/SHA512.js', null);
@@ -10,6 +11,16 @@ $(document).ready(function () {
     sendPostLogin(LOGIN_CONTROLLER_URL + 'autoreset', null, autoResetResponse);
     sendPostLogin(LOGIN_CONTROLLER_URL + 'pwdregex', null, getPwdRegex);
 });
+
+function getPreguntas(data) {
+    var combo = $('#question_combo');
+    var user = JSON.parse(sessionStorage.getItem("login")).usuario;
+    for (var i = 0; i < data.length; i++){
+        var option = new Option(data[i].pregunta, data[i].id);
+        option.selected = (i + 1) === user.preguntaSecreta;
+        combo.append(option);
+    }
+}
 
 function getPwdRegex(data) {
     if (data.regex.length > 0) {
@@ -27,22 +38,51 @@ function resetPassword() {
     var model = {
         username: $('#username_reset').val()
     };
-    sendPostLogin(LOGIN_CONTROLLER_URL + 'resetPwd', model, resetPasswordSend);
+    if (GET_QUESTION){
+        sendPostLogin(LOGIN_CONTROLLER_URL + 'user/pregunta', model, getQuestionForReset);
+    }else {
+        model['answer'] = $('#answer-reset').val();
+        sendPostLogin(LOGIN_CONTROLLER_URL + 'resetPwd', model, resetPasswordSend);
+        GET_QUESTION = true;
+    }
 }
 
-function resetPasswordSend() {
+function getQuestionForReset(data){
+    if (data.NA.toLowerCase() === 'true') {
+        var model = {
+            answer: 'NA',
+            username: $('#username_reset').val()
+        };
+        sendPostLogin(LOGIN_CONTROLLER_URL + 'resetPwd', model, resetPasswordSend);
+    }else {
+        $('#div-reset-q').css('display', 'block');
+        $('#pregunta-reset').text(data.pregunta);
+    }
+    GET_QUESTION = false;
+}
+
+function resetPasswordSend(data) {
     $('#a_login').trigger('click');
     showDivMessage('Correo Enviado. Ingrese con su nueva Contraseña', 'alert-info', 4000);
 }
 
 function btnchangeInitPwd() {
-    var login = JSON.parse(sessionStorage.getItem('login'));
-    var model = {
-        username: login.usuario.username,
-        actual: SHA512($('#chg_pwd_actual').val()),
-        nuevo: SHA512($('#chg_pwd_new').val())
-    };
-    sendPostAction(USER_CONTROLLER_URL + 'changePassword', model, changeInitPwd);
+    var respuesta = $('#answer');
+    if (respuesta.val().length === 0){
+        showDivMessage('Debe escribir una respuesta', 'alert-danger', 5000);
+        respuesta.focus();
+    }else {
+        var login = JSON.parse(sessionStorage.getItem('login'));
+        var model = {
+            username: login.usuario.username,
+            actual: SHA512($('#chg_pwd_actual').val()),
+            nuevo: SHA512($('#chg_pwd_new').val()),
+            idpregunta: $('#question_combo').val(),
+            answer: respuesta.val()
+        };
+        sendPostAction(USER_CONTROLLER_URL + 'changePassword', model, changeInitPwd);
+    }
+
 }
 
 function changeInitPwd(data) {
@@ -67,6 +107,7 @@ function loginResponse(data) {
     if (data.token != null) {
         sessionStorage.setItem('login', JSON.stringify(data));
         if (data.usuario.cambiarPwd) {
+            sendPostLogin(LOGIN_CONTROLLER_URL + 'preguntas', null, getPreguntas);
             $('#a_chgpwd').trigger("click");
         } else {
             window.location = 'home';
