@@ -11,6 +11,7 @@ public class Empresa {
     private long id;
     private String nombre;
     private String logo;
+    private String bodyLogo;
     private String direccion;
     private String telefono;
     private String responsable;
@@ -53,8 +54,19 @@ public class Empresa {
     public void setLogo(String logo) {
         this.logo = logo;
     }
-
+    
     @Basic
+    @Column(name = "BODY_LOGO", columnDefinition = "CLOB")
+    @Lob
+    public String getBodyLogo() {
+		return bodyLogo;
+	}
+
+	public void setBodyLogo(String bodyLogo) {
+		this.bodyLogo = bodyLogo;
+	}
+
+	@Basic
     @Column(name = "DIRECCION", nullable = true, length = 200)
     public String getDireccion() {
         return direccion;
