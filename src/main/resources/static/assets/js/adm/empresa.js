@@ -31,7 +31,10 @@ function loadTableEmpresa(data) {
     $('#tbody_empresa').empty();
     for (var i = 0; i < data.length; i++) {
         var tr = '<tr>' +
-            '<td><i style="cursor: pointer" class="zmdi zmdi-edit btn-link" onclick="onEditAction('+ data[i].id +')"></i></td>' +
+            '<td>' +
+            '<i style="cursor: pointer" class="zmdi zmdi-edit zmdi-hc-2x" onclick="onEditAction('+ data[i].id +')" title="Editar Empresa"></i>' +
+            '<i style="cursor: pointer;margin-left: 5px" class="zmdi zmdi-delete zmdi-hc-2x" title="Eliminar Empresa" onclick="onDeleteAction('+ data[i].id +')"></i> ' +
+            '</td>' +
             '<td>'+ data[i].id +'</td>' +
             '<td>'+ data[i].nombre +'</td>' +
             '<td>'+ data[i].responsable +'</td>' +
@@ -47,6 +50,36 @@ function cleanForm() {
     $('#emp-telefono').val('');
     $('#emp-resp').val('');
     $('#emp-correo').val('');
+}
+
+function onDeleteAction(id) {
+    $.jAlert({
+        'type': 'confirm',
+        'title': 'Confirmación',
+        'confirmQuestion': '¿ Seguro de eliminar la Empresa Seleccionada ?',
+        'confirmBtnText': 'Confirmación',
+        'denyBtnText': 'Cancelar',
+        'theme': 'red',
+        'size': 'md',
+        'showAnimation': 'fadeInUp',
+        'hideAnimation': 'fadeOutDown',
+        'onConfirm': function (e, btn) {
+            sendPostAction(EMPRESA_CONTROLLER_URL + 'delete/' + id, null, onDeleteResponse);
+        },
+        'onDeny': function (e, btn) {
+            errorAlert('Accion Cancelada');
+        }
+    });
+
+}
+
+function onDeleteResponse(data) {
+    if (data){
+        showDivMessage('Empresa Eliminada', 'alert-info', 3000);
+    }else {
+        showDivMessage('Error al eliminar empresa', 'alert-danger', 3000);
+    }
+    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadTableEmpresa);
 }
 
 function onEditAction(id) {

@@ -24,11 +24,9 @@ public class PasswordController {
 	private final PreguntasRepo preguntasRepo;
 
 	@Autowired
-	public PasswordController(ContraseniaPlantillaRepo contraseniaPlantillaRepo, PreguntasRepo preguntasRepo) {
-	public PasswordController(PasswordConfigRepo passwordConfigRepo) {
+	public PasswordController(PasswordConfigRepo passwordConfigRepo, PreguntasRepo preguntasRepo) {
 		super();
 		this.passwordConfigRepo = passwordConfigRepo;
-		this.contraseniaPlantillaRepo = contraseniaPlantillaRepo;
 		this.preguntasRepo = preguntasRepo;
 	}
 

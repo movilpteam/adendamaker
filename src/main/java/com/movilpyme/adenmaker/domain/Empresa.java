@@ -1,6 +1,7 @@
 package com.movilpyme.adenmaker.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -16,6 +17,7 @@ public class Empresa {
     private String telefono;
     private String responsable;
     private String correoContacto;
+    private boolean enabled;
     @JsonIgnore
     private Collection<Addenda> addendaById;
     @JsonIgnore
@@ -104,6 +106,17 @@ public class Empresa {
 
     public void setCorreoContacto(String correoContacto) {
         this.correoContacto = correoContacto;
+    }
+
+    @Basic
+    @Type(type = "yes_no")
+    @Column(name = "ENABLED")
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override

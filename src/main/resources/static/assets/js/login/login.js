@@ -31,6 +31,11 @@ function getPwdRegex(data) {
 function autoResetResponse(data) {
     if (!data) {
         $('#a-autoreset').css('display', 'none');
+        $('#div-question-change').css('display', 'none');
+        $('#div-answer-change').css('display', 'none');
+        GET_QUESTION = false;
+    }else {
+        GET_QUESTION = true;
     }
 }
 
@@ -68,7 +73,7 @@ function resetPasswordSend(data) {
 
 function btnchangeInitPwd() {
     var respuesta = $('#answer');
-    if (respuesta.val().length === 0){
+    if (respuesta.val().length === 0 && GET_QUESTION){
         showDivMessage('Debe escribir una respuesta', 'alert-danger', 5000);
         respuesta.focus();
     }else {

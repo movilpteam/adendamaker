@@ -138,9 +138,13 @@ function deleteUserResponse(data) {
 }
 
 function loadRolesByUser(data) {
+    var rolestr = '';
+    var iduser = 0;
     for (var i = 0; i < data.length; i++){
-
+        rolestr += data[i].rolesByIdRole.nombre;
+        iduser = data[i].idUser;
     }
+    $('#role' + iduser).html(rolestr);
 }
 
 function loadEmpresaCombo(data) {

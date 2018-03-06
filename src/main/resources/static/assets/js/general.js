@@ -80,7 +80,7 @@ function GetURLParameter(sParam) {
     }
 }
 
-function showDivMessage(message,divclass, time) {
+function showDivMessage(message, divclass, time) {
     var div_message = $('#div-message');
     $('#message-content').html(message);
     div_message.addClass(divclass);

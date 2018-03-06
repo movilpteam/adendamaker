@@ -28,6 +28,20 @@ public class EmpresaController {
         this.empresaRepo = empresaRepo;
     }
 
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    public boolean disableEmpresa(@PathVariable Long id) throws ServletException {
+        if (id == 0){
+            throw new ServletException("ID Inválido");
+        }
+        Empresa empresa = empresaRepo.findOne(id);
+        if (empresa == null){
+            throw new ServletException("No se encontro empresa");
+        }
+        empresa.setEnabled(false);
+        empresaRepo.save(empresa);
+        return true;
+    }
+
     @RequestMapping(value = "byId/{id}", method = RequestMethod.POST)
     public Empresa getEmpresaById(@PathVariable Long id) throws ServletException {
         if (id == 0){
@@ -42,7 +56,7 @@ public class EmpresaController {
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
     public List<Empresa> getEmpresaList() throws ServletException {
-        List<Empresa> empresaList = (List<Empresa>) empresaRepo.findAll();
+        List<Empresa> empresaList = empresaRepo.findAllByEnabledTrue();
         return empresaList;
     }
 

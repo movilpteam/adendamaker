@@ -132,15 +132,15 @@ function loadTableQuestions(data) {
         var tr = "<tr id='questions_"+ data[i].id +"'>" +
 	        "<td>" +
 	        "<i class='zmdi zmdi-edit zmdi-hc-2x' title='Modificar Pregunta' style='cursor: pointer;margin-left: 5px' onclick='modifyQuestionsAction("+ data[i].id +",\""+ data[i].pregunta +"\")'></i>" +
-	        "<i class='zmdi zmdi-delete zmdi-hc-2x' title='Eliminar Pregunta' style='cursor: pointer' onclick='deleteQuestionsAction("+ data[i].id +")'></i>" +
+	        "<i class='zmdi zmdi-delete zmdi-hc-2x' title='Eliminar Pregunta' style='cursor: pointer;margin-left: 5px' onclick='deleteQuestionsAction("+ data[i].id +")'></i>" +
 	        "</td>" +
-	        "<td>"+ data[i].id +"</td>" +
+	      //  "<td>"+ data[i].id +"</td>" +
 	        "<td>"+ data[i].pregunta +"</td>";
         tr += "</tr>";
         $('#tbody_questions').append(tr);
     }
     // Questions Default
-    if(data.length == 0){
+    if(data.length === 0){
     	var questions = new PreguntasPwd();
 		questions.pregunta = '¿Nombre de tu primaria?';
 		sendPostAction(PASSWORD_CONTROLLER_URL + 'saveQuestions', questions, saveQuestions);
@@ -161,7 +161,7 @@ function deleteQuestionsAction(id) {
     $.jAlert({
         'type': 'confirm',
         'title': 'Confirmación',
-        'confirmQuestion': '¿ Seguro de eliminar pregunta secreta con ID = ' + id + ' ?',
+        'confirmQuestion': '¿ Seguro de eliminar la pregunta secreta ?',
         'confirmBtnText': 'Eliminar',
         'denyBtnText': 'Cancelar',
         'theme': 'red',
