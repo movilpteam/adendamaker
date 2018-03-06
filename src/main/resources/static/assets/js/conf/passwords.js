@@ -70,10 +70,14 @@ var modalConfirm = function(callback) {
 modalConfirm(function(confirm) {
 	if (confirm) {
 		// Guardar
-		var questions = new PreguntasPwd();
-		questions.id = ID_CURRENT_PASSWORD;
-		questions.pregunta = $('#edit-questions').val();
-		sendPostAction(PASSWORD_CONTROLLER_URL + 'saveQuestions', questions, saveQuestions);
+		if(null === $('#edit-questions').val() || $('#edit-questions').val() == ''){
+			showDivMessage('Pregunta con ID: ' + ID_CURRENT_PASSWORD + ' no puede ser modificada con valor vacio', 'alert-danger', 3000);
+		} else {
+			var questions = new PreguntasPwd();
+			questions.id = ID_CURRENT_PASSWORD;
+			questions.pregunta = $('#edit-questions').val();
+			sendPostAction(PASSWORD_CONTROLLER_URL + 'saveQuestions', questions, saveQuestions);
+		}
 		initData();
 	} else {
 		// Acciones si el usuario no confirma

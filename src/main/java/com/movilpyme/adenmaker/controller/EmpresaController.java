@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.movilpyme.adenmaker.domain.Empresa;
 import com.movilpyme.adenmaker.repository.EmpresaRepo;
-import com.movilpyme.adenmaker.utils.Utils;
 
 @RestController
 @RequestMapping("adm/empresa")
@@ -61,15 +60,19 @@ public class EmpresaController {
     }
     
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public boolean updateEmpresa(@RequestBody Empresa empresa) throws ServletException {
+    public HashMap<String, String> updateEmpresa(@RequestBody Empresa empresa) throws ServletException {
         if (empresa == null){
             throw new ServletException("Empresa Inválida");
         }
         try {
         	Empresa empresaFind = empresaRepo.findOne(empresa.getId());
         	empresaFind.setLogo(empresa.getLogo());
+        	empresaFind.setBodyLogo(empresa.getBodyLogo());
         	empresaRepo.save(empresaFind);
-            return true;
+        	HashMap<String, String> responseData = new HashMap<>();
+        	responseData.put("status", "1");
+            responseData.put("bodyLogo", empresaFind.getBodyLogo());
+            return responseData;
         }catch (Exception e){
             throw new ServletException(e.getMessage());
         }
@@ -85,6 +88,7 @@ public class EmpresaController {
             System.out.println("empresaFind.getLogo(): " + empresaFind.getLogo());
             HashMap<String, String> responseData = new HashMap<>();
             responseData.put("logo", empresaFind.getLogo());
+            responseData.put("bodyLogo", empresaFind.getBodyLogo());
             return responseData;
         }catch (Exception e){
             throw new ServletException(e.getMessage());
@@ -97,8 +101,8 @@ public class EmpresaController {
             throw new ServletException("file Inválido");
         }
         try {
-        	System.out.println("file: " + file);
-        	return new Utils().copyFile(file, "/static/images/logos/");
+        	System.out.println("file: " + file.getOriginalFilename());
+        	return true;
         }catch (Exception e){
         	System.out.println(e);
             throw new ServletException(e.getMessage());

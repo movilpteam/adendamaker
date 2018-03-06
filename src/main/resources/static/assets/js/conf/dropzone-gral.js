@@ -10,6 +10,7 @@ Dropzone.prototype.defaultOptions.dictRemoveFile = "Eliminar archivo";
 Dropzone.prototype.defaultOptions.dictMaxFilesExceeded = "No puede cargar más archivos.";
 Dropzone.prototype.submitRequest = function(xhr, formData, files) {
 	nameImageDrop = files[0].name;
+	DATA_FILE = files[0].dataURL;
 	return xhr.send(formData);
 };
 Dropzone.options.uploadWidget = {

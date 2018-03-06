@@ -20,6 +20,7 @@ function Empresa() {
     this.id = 0;
     this.nombre = "";
     this.logo = "";
+    this.bodyLogo = "";
     this.direccion = "";
     this.telefono= "";
     this.responsable = "";

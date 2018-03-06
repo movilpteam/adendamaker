@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.movilpyme.adenmaker.domain.PasswordConfig;
-import com.movilpyme.adenmaker.repository.PasswordConfigRepo;
 import com.movilpyme.adenmaker.domain.PreguntasPwd;
+import com.movilpyme.adenmaker.repository.PasswordConfigRepo;
 import com.movilpyme.adenmaker.repository.PreguntasRepo;
 
 @RestController
@@ -24,9 +24,11 @@ public class PasswordController {
 	private final PreguntasRepo preguntasRepo;
 
 	@Autowired
-	public PasswordController(PasswordConfigRepo passwordConfigRepo, PreguntasRepo preguntasRepo) {
+	public PasswordController(ContraseniaPlantillaRepo contraseniaPlantillaRepo, PreguntasRepo preguntasRepo) {
+	public PasswordController(PasswordConfigRepo passwordConfigRepo) {
 		super();
 		this.passwordConfigRepo = passwordConfigRepo;
+		this.contraseniaPlantillaRepo = contraseniaPlantillaRepo;
 		this.preguntasRepo = preguntasRepo;
 	}
 

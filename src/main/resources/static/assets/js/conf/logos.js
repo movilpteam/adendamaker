@@ -1,3 +1,4 @@
+var DATA_FILE = "";
 Dropzone.prototype.defaultOptions.dictDefaultMessage = "Arrastre una imagen aquí para cargar, o haga clic para seleccionar una";
 $(document).ready(function () {
 	sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
@@ -5,7 +6,8 @@ $(document).ready(function () {
        var empresa = new Empresa();
 	   empresa.id = $('#combo-empresa-logo').val();
        empresa.logo = nameImageDrop;
-	   sendPostAction(EMPRESA_CONTROLLER_URL + 'update', empresa, saveEmpresa);
+       empresa.bodyLogo = DATA_FILE;
+	   sendPostAction(EMPRESA_CONTROLLER_URL + 'update', empresa, saveLogo);
 	   return false;
     });
 	$("select").change(function() {
@@ -25,7 +27,7 @@ $.validate({
     form: '#new-logo-form'
 });
 function addImage(op){
-	document.getElementById("imagen-actual").src="../../images/logos/" + op;
+	document.getElementById("imagen-actual").src = "" + op;
 }
 function loadEmpresaCombo(data) {
     for (var i = 0; i < data.length; i++){
@@ -33,9 +35,9 @@ function loadEmpresaCombo(data) {
         $('#combo-empresa-logo').append(op);
     }
 }
-function saveEmpresa(data) {
-    if (data === true){
-    	addImage(nameImageDrop);
+function saveLogo(data) {
+    if (data.status === '1'){
+    	addImage(data.bodyLogo);
     	showDivMessage('Logo Guardado', 'alert-info', 3000);
     }else {
         showDivMessage('Error al guardar informacion', 'alert-danger', 3000);
@@ -45,6 +47,6 @@ function srcViewLogo(data){
 	if (data === null){
 		showDivMessage('No existe logo para esa empresa.', 'alert-danger', 3000);
 	} else{
-		addImage(data.logo);
+		addImage(data.bodyLogo);
 	}
 }
