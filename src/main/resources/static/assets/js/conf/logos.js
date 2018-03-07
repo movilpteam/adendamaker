@@ -22,12 +22,18 @@ $(document).ready(function () {
 		});
 	}).change();
 	$("#div-upload-widget").hide();
+	document.getElementById("div-imagen-actual").style.display = "none";
 });
 $.validate({
     form: '#new-logo-form'
 });
 function addImage(op){
-	document.getElementById("imagen-actual").src = "" + op;
+	if(null == op || op == ""){
+		document.getElementById("div-imagen-actual").style.display = "none";
+	} else{
+		document.getElementById("div-imagen-actual").style.display = "block";
+		document.getElementById("imagen-actual").src = "" + op;
+	}
 }
 function loadEmpresaCombo(data) {
     for (var i = 0; i < data.length; i++){
