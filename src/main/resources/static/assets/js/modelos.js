@@ -25,6 +25,7 @@ function Empresa() {
     this.telefono= "";
     this.responsable = "";
     this.correoContacto = "";
+    this.enabled = true;
 }
 
 function Roles() {
