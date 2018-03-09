@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="csrf-token" content="XYZ123">
     <title>Addenda Maker - Usuarios</title>
     <!-- Vendor styles -->
     <link rel="stylesheet" href="../../assets/css/bootstrap/bootstrap.css">
@@ -46,9 +46,13 @@
                             <i class="form-group__bar"></i>
                         </div>
                         <div class="row form-group text-center">
-                            <form enctype="multipart/form-data" class="dropzone" id="upload_xsd_form" method="post" style="width: 100% !important;">
+							<!-- <form enctype="multipart/form-data" class="dropzone" id="upload-xsd" method="post" style="width: 100% !important;"> -->
+                            <form id="upload-addenda-xsd" method="post"
+								action="/addenda/upload/xsd" enctype="multipart/form-data"
+								class="dropzone" style="width: 100% !important;text-align: center !important;">
+                            
                                 <div class="fallback">
-                                    <input type="file" name="xsd-file">
+                                    <input name="file" type="file" />
                                 </div>
                             </form>
                         </div>
