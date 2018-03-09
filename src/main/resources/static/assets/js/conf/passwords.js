@@ -134,7 +134,6 @@ function loadTableQuestions(data) {
 	        "<i class='zmdi zmdi-edit zmdi-hc-2x' title='Modificar Pregunta' style='cursor: pointer;margin-left: 5px' onclick='modifyQuestionsAction("+ data[i].id +",\""+ data[i].pregunta +"\")'></i>" +
 	        "<i class='zmdi zmdi-delete zmdi-hc-2x' title='Eliminar Pregunta' style='cursor: pointer;margin-left: 5px' onclick='deleteQuestionsAction("+ data[i].id +")'></i>" +
 	        "</td>" +
-	      //  "<td>"+ data[i].id +"</td>" +
 	        "<td>"+ data[i].pregunta +"</td>";
         tr += "</tr>";
         $('#tbody_questions').append(tr);

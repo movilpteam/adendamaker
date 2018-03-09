@@ -57,7 +57,6 @@ Dropzone.options.uploadWidgetEmail = {
 	paramName : 'file',
 	maxFilesize : 5, // MB
 	maxFiles : 1,
-	// dictDefaultMessage: 'Arrastre una imagen aquí para cargar, o haga clic para seleccionar una',
 	headers : {
 		'x-csrf-token' : document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
 	},
@@ -117,3 +116,31 @@ Dropzone.options.uploadWidgetEmail = {
 		};
 	}
 };
+// Addenda
+var currentFileXsd = null;
+Dropzone.options.uploadAddendaXsd = {
+	paramName : 'file',
+	maxFilesize : 5, // MB
+	maxFiles : 1,
+	headers : {
+		'x-csrf-token' : document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
+	},
+	acceptedFiles: '.xsd',
+	init : function() {
+		this.on('success', function(file, resp) {
+			console.log(file);
+			console.log(resp);
+		});
+		this.on("addedfile", function(file) {
+			if (currentFileXsd) {
+				this.removeFile(currentFileXsd);
+			}
+			currentFileXsd = file;
+		});
+		this.on('error', function(file, response) {
+			console.log(response.message);
+			showDivMessage('Error: ' + response.message, 'alert-danger', 8000);
+		});
+	}
+};
+

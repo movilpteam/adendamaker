@@ -124,4 +124,4 @@ var USER_CONTROLLER_URL = '/adm/usuarios/';
 var EMPRESA_CONTROLLER_URL = '/adm/empresa/';
 var EMAIL_CONTROLLER_URL = '/adm/correo/';
 var PASSWORD_CONTROLLER_URL = '/adm/contrasenia/';
-
+var ADDENDA_CONTROLLER_URL = '/addenda/upload/';
