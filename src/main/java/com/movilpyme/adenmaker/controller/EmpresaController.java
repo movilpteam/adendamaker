@@ -1,10 +1,16 @@
 package com.movilpyme.adenmaker.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
 
+import com.movilpyme.adenmaker.domain.Roles;
+import com.movilpyme.adenmaker.domain.UserRoles;
+import com.movilpyme.adenmaker.domain.Usuarios;
+import com.movilpyme.adenmaker.repository.UserRolesRepo;
+import com.movilpyme.adenmaker.repository.UsuariosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +28,14 @@ import com.movilpyme.adenmaker.repository.EmpresaRepo;
 public class EmpresaController {
 
     private final EmpresaRepo empresaRepo;
+    private final UserRolesRepo userRolesRepo;
+    private final UsuariosRepo usuariosRepo;
 
     @Autowired
-    public EmpresaController(EmpresaRepo empresaRepo) {
+    public EmpresaController(EmpresaRepo empresaRepo, UserRolesRepo userRolesRepo, UsuariosRepo usuariosRepo) {
         this.empresaRepo = empresaRepo;
+        this.userRolesRepo = userRolesRepo;
+        this.usuariosRepo = usuariosRepo;
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
@@ -54,9 +64,23 @@ public class EmpresaController {
         return empresa;
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.POST)
-    public List<Empresa> getEmpresaList() throws ServletException {
-        List<Empresa> empresaList = empresaRepo.findAllByEnabledTrue();
+    @RequestMapping(value = "list/{iduser}", method = RequestMethod.POST)
+    public List<Empresa> getEmpresaList(@PathVariable long iduser) throws ServletException {
+        if (iduser == 0){
+            throw new ServletException("Usuario Invalido en Empresas");
+        }
+        List<UserRoles> rolesList = userRolesRepo.findByIdUser(iduser);
+        if (rolesList == null || rolesList.size() == 0){
+            throw new ServletException("Usuario no tiene configurado role");
+        }
+        List<Empresa> empresaList;
+        if (rolesList.get(0).getIdRole() == 1 || rolesList.get(0).getIdRole() == 4){
+            empresaList = empresaRepo.findAllByEnabledTrue();
+        }else {
+            Usuarios usuarios = usuariosRepo.findOne(iduser);
+            empresaList = new ArrayList<>();
+            empresaList.add(usuarios.getEmpresaByIdEmpresa());
+        }
         return empresaList;
     }
 

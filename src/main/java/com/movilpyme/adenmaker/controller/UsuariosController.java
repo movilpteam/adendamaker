@@ -7,15 +7,11 @@ import com.movilpyme.adenmaker.utils.PwdGenerator;
 import com.movilpyme.adenmaker.utils.SendMail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("adm/usuarios")
@@ -44,6 +40,46 @@ public class UsuariosController {
         this.emailRepo = emailRepo;
         this.plantillaRepo = plantillaRepo;
         this.passwordConfigRepo = passwordConfigRepo;
+    }
+
+    @RequestMapping(value = "menu/{id}", method = RequestMethod.POST)
+    public Map<String, String> getMenuforUsuario(@PathVariable long id) throws ServletException {
+        if (id == 0){
+            throw new ServletException("Usuario Invalido");
+        }
+        Usuarios usuarios = usuariosRepo.findOne(id);
+        if (usuarios == null){
+            throw new ServletException("Usuario Invalido");
+        }
+        Map<String, String> responseData = new HashMap<>();
+        List<UserRoles> userRoles = userRolesRepo.findByIdUser(usuarios.getId());
+        StringBuilder menu = new StringBuilder();
+        menu.append(Constantes.MENU_HOME);
+        if (userRoles.size() > 0){
+            if (userRoles.get(0).getIdRole() == 1 || userRoles.get(0).getIdRole() == 4){
+                menu.append(Constantes.MENU_ADMINISTRACION).append(Constantes.MENU_CONFIGURACION);
+            }else if (userRoles.get(0).getIdRole() == 2){
+                menu.append(Constantes.MENU_ADMINISTRACION);
+            }
+        }
+        menu.append(Constantes.MENU_ADDENDAS);
+        menu.append(Constantes.MENU_TEST);
+        menu.append(Constantes.MENU_REPORTES);
+        menu.append(Constantes.MENU_SALIR);
+        responseData.put("menu", menu.toString());
+        return responseData;
+    }
+
+    @RequestMapping(value = "byId/{id}", method = RequestMethod.POST)
+    public Usuarios getUserById(@PathVariable long id) throws ServletException {
+        if (id == 0){
+            throw new ServletException("Usuario Inválido");
+        }
+        Usuarios user = usuariosRepo.findOne(id);
+        if (user == null){
+            throw new ServletException("Usuario Inválido");
+        }
+        return user;
     }
 
     @RequestMapping(value = "changePassword", method = RequestMethod.POST)
@@ -94,6 +130,7 @@ public class UsuariosController {
         return rolesList;
     }
 
+    @Transactional
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public boolean saveUsuario(@RequestBody Usuarios user) throws ServletException {
         if (user == null){

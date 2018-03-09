@@ -1,10 +1,12 @@
 var EMPRESA_SELECTED = new Empresa();
+var CURRENT_USER = new Usuarios();
+var EDIT = false;
 
 $(document).ready(function () {
-    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadEmpresaCombo);
+    sendPostAction(EMPRESA_CONTROLLER_URL + 'list/' + getLoggedUser().id, null, loadEmpresaCombo);
     sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
+    sendPostAction(USER_CONTROLLER_URL + 'roles/list', null, loadRolesCombo);
     $('#btn-add-user').on('click', function () {
-        sendPostAction(USER_CONTROLLER_URL + 'roles/list', null, loadRolesCombo);
         showEditCard();
     });
     $('#btn-cancel-user').on('click', function () {
@@ -13,10 +15,18 @@ $(document).ready(function () {
     });
     $('#user-correo-2').on('change', function () {
        if ($('#user-correo').val() !== $(this).val()) {
-           alert('Correos No Coinciden');
+           errorAlert('Error Validacion', 'Correos no son Iguales');
            $(this).val('');
            $(this).focus();
        }
+    });
+    $('#user-correo').on('change', function () {
+        var correo2 = $('#user-correo-2');
+        if (correo2.val() !== $(this).val() && correo2.val().length > 0) {
+            errorAlert('Error Validacion', 'Correos no son Iguales');
+            $(this).val('');
+            $(this).focus();
+        }
     });
     $('#new-user-form').on('submit', function () {
         setEmpresaSelected();
@@ -27,16 +37,15 @@ $(document).ready(function () {
         role.nombre = dataRole[0].text;
         roleSelected.idRole = role.id;
         roleSelected.rolesByIdRole = role;
-        var user = new Usuarios();
-        user.nombre = $('#user-name').val();
-        user.apaterno = $('#user-apaterno').val();
-        user.amaterno = $('#user-amaterno').val();
-        user.correo = $('#user-correo').val();
-        user.telefono = $('#user-telefono').val();
-        user.empresaByIdEmpresa = EMPRESA_SELECTED;
-        user.userRolesById = [roleSelected];
-        user.cambiarPwd = true;
-        sendPostAction(USER_CONTROLLER_URL + 'save', user, userSaved);
+        CURRENT_USER.nombre = $('#user-name').val();
+        CURRENT_USER.apaterno = $('#user-apaterno').val();
+        CURRENT_USER.amaterno = $('#user-amaterno').val();
+        CURRENT_USER.correo = $('#user-correo').val();
+        CURRENT_USER.telefono = $('#user-telefono').val();
+        CURRENT_USER.empresaByIdEmpresa = EMPRESA_SELECTED;
+        CURRENT_USER.userRolesById = [roleSelected];
+        CURRENT_USER.cambiarPwd = true;
+        sendPostAction(USER_CONTROLLER_URL + 'save', CURRENT_USER, userSaved);
         return false;
     });
 });
@@ -49,6 +58,7 @@ $.validate({
 function userSaved(data) {
     showDivMessage("Usuario Guardado Correctamente", "alert-info", 3000);
     sendPostAction(USER_CONTROLLER_URL + 'list', null, loadTable);
+    CURRENT_USER = new Usuarios();
     showTableCard();
 }
 
@@ -67,6 +77,7 @@ function loadTable(data) {
             "<td>" +
             "<i class='zmdi zmdi-delete zmdi-hc-2x' title='Eliminar Usuario' style='cursor: pointer' onclick='deleteUserAction("+ data[i].id +")'></i>" +
             "<i class='zmdi zmdi-key zmdi-hc-2x' title='Generar Nueva Contraseña' style='cursor: pointer;margin-left: 5px' onclick='resetPasswordAction("+ data[i].id +")'></i>" +
+            "<i class='zmdi zmdi-edit zmdi-hc-2x' title='Editar Usuario' style='cursor: pointer;margin-left: 5px' onclick='editUserAction("+ data[i].id +")'></i>" +
             "</td>" +
             "<td>"+ data[i].id +"</td>" +
             "<td>"+ data[i].username +"</td>" +
@@ -78,6 +89,23 @@ function loadTable(data) {
         sendPostAction(USER_CONTROLLER_URL + 'roles/' + data[i].id, null, loadRolesByUser);
         tbody_users.append(tr);
     }
+}
+
+function editUserAction(iduser) {
+    EDIT = true;
+    sendPostAction(USER_CONTROLLER_URL + 'byId/' + iduser, null, editUserResponse);
+    sendPostAction(USER_CONTROLLER_URL + 'roles/' + iduser, null, loadRolesByUser);
+}
+
+function editUserResponse(data) {
+    $('#user-name').val(data.nombre);
+    $('#user-apaterno').val(data.apaterno);
+    $('#user-amaterno').val(data.amaterno);
+    $('#user-correo').val(data.correo);
+    $('#user-correo-2').val(data.correo);
+    $('#user-telefono').val(data.telefono);
+    CURRENT_USER = data;
+    showEditCard();
 }
 
 function resetPasswordAction(iduser) {
@@ -138,13 +166,18 @@ function deleteUserResponse(data) {
 }
 
 function loadRolesByUser(data) {
-    var rolestr = '';
-    var iduser = 0;
-    for (var i = 0; i < data.length; i++){
-        rolestr += data[i].rolesByIdRole.nombre;
-        iduser = data[i].idUser;
+    if (EDIT) {
+        $('#combo-role').val(data[0].rolesByIdRole.id).trigger('change');
+    }else {
+        var rolestr = '';
+        var iduser = 0;
+        for (var i = 0; i < data.length; i++){
+            rolestr += data[i].rolesByIdRole.nombre;
+            iduser = data[i].idUser;
+        }
+        $('#role' + iduser).html(rolestr);
     }
-    $('#role' + iduser).html(rolestr);
+
 }
 
 function loadEmpresaCombo(data) {
@@ -171,4 +204,5 @@ function showTableCard() {
     $('#table-card').css('display', 'block');
     $('#edit-card').css('display', 'none');
     $('#btn-add-user').css('display', 'block');
+    EDIT = false;
 }

@@ -15,10 +15,20 @@ $(function () {
                 logout();
             }
         });
+        sendPostAction(USER_CONTROLLER_URL + 'menu/' + login.usuario.id, null, mountMenu);
     }else {
         // window.location = '/';
     }
 });
+
+function mountMenu(data) {
+    $('#ul_menu').append(data.menu);
+}
+
+function getLoggedUser() {
+    var login = JSON.parse(sessionStorage.getItem('login'));
+    return login.usuario;
+}
 
 // Funcion para enviar las peticiones al WS
 function sendPostAction(url, model, callBackFunction) {

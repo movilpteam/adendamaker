@@ -7,7 +7,7 @@ function Usuarios() {
     this.correo = "";
     this.password = "";
     this.telefono = "";
-    this.enabled = "";
+    this.enabled = true;
     this.preguntaSecreta = 0;
     this.respuestaSecreta = "";
     this.cambiarPwd = false;

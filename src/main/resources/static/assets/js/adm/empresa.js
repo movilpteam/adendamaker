@@ -1,7 +1,7 @@
 var ID_CURRENT_EMPRESA = 0;
 
 $(document).ready(function () {
-    sendPostAction(EMPRESA_CONTROLLER_URL + 'list', null, loadTableEmpresa);
+    sendPostAction(EMPRESA_CONTROLLER_URL + 'list/' + getLoggedUser().id, null, loadTableEmpresa);
     $('#btn-add-empresa').on('click', function () {
         cleanForm();
         showEditCard();
